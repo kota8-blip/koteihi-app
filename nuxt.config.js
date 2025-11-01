@@ -14,9 +14,13 @@ module.exports = {
       { rel: 'SHORTCUT ICON', type: 'image/x-icon', href: '/favicon.ico' }
     ],
     script: [
-      { src: 'https://easytuan.gitee.io/node-elm-api/public/flexible.js' },
+      { src: '/flexible.js', defer: true },
     ],
   },
+
+  modules: ['@nuxtjs/axios'],
+
+  axios: { baseURL: 'http://localhost:3001' },
 
   loading: { color: '#3B8070' },
 
@@ -37,8 +41,12 @@ module.exports = {
   },
 
   plugins: [
-    { src: '~plugins/mint-ui' },
-    { src: '~assets/styles/base.scss' },
-  ],
+  '~/plugins/axios-rewrite.js',
+  { src: '~plugins/mint-ui' },
+  { src: '~assets/styles/base.scss' },
+
+  // ↓ここを追記（外部画像URLをローカルのダミーに差し替える）
+  { src: '~/plugins/block-external-images.client.js' }
+],
 }
 

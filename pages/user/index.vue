@@ -2,7 +2,7 @@
   <div class="user-page">
     <mt-header
       fixed
-      title="我的"/>
+      title="ユーザー"/>
     <section>
       <section class="profile-number">
         <router-link
@@ -248,6 +248,8 @@
         </router-link>
       </section>
     </section>
+    <clock />
+    <CountButton />
     <Tabbar page="3" />
   </div>
 </template>
@@ -257,14 +259,18 @@
   import {
     mapGetters
   } from "vuex";
+  import CountButton from "~/components/countButton";
+  import Clock from '../../components/clock.vue';
 
   export default {
     components: {
-      Tabbar
+      Tabbar,
+      CountButton,
+      Clock
     },
     data() {
       return {
-        profiletitle: "我的",
+        profiletitle: "ユーザー",
         username: "登录/注册", //用户名
         resetname: "",
         mobile: "登录后享受更多特权", //电话号码
@@ -283,7 +289,7 @@
       this.initData();
     },
     head: {
-      title: "我的"
+      title: "ユーザー"
     },
     methods: {
       initData() {

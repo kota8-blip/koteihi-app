@@ -46,4 +46,37 @@ const store = () => new Vuex.Store({
   }
 })
 
-export default store;
+const state = {
+  count: 0,
+  時間: '',
+};
+
+const mutations = {
+  increment(state) {
+    state.count++;
+  },
+  decrement(state) {
+    state.count--;
+  },
+  setTime(state, time) {
+    state.時間 = time;
+  }
+};
+
+const actions = {
+  addCount({ commit }, action) {
+      commit('increment');
+    },
+    downCount({ commit }, action) {
+      commit('decrement');
+    },
+  updateTime({ commit }, time) {
+    commit('setTime', time);
+  }
+};
+
+export default {
+  state,
+  mutations,
+  actions
+};

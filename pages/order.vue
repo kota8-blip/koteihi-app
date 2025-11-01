@@ -2,18 +2,29 @@
   <div class="order-page">
     <mt-header
       fixed
-      title="订单"/>
+      title="注文"
+    />
+    <clock />
+    <count-button />
     <div class="no-data">
       <img
         :src="nodata"
         class="nodata"
-        alt="">
-      <p v-if="!userInfo||!userInfo.user_id">登陆后查看外卖订单</p>
-      <p v-if="userInfo&&userInfo.user_id">暂无订单信息</p>
+        alt=""
+      >
+      <p v-if="!userInfo||!userInfo.user_id">
+        登陆后查看外卖订单
+      </p>
+      <p v-if="userInfo&&userInfo.user_id">
+        暂无订单信息
+      </p>
       <button
         v-if="!userInfo||!userInfo.user_id"
         class="login"
-        @click="$router.push('/login')">立即登录</button>
+        @click="$router.push('/login')"
+      >
+        立即登录
+      </button>
     </div>
     <Tabbar page="2" />
   </div>
@@ -25,13 +36,17 @@
   import {
     mapGetters
   } from "vuex";
+  import CountButton from "~/components/countButton";
+  import Clock from '../components/clock.vue';
 
   export default {
     components: {
-      Tabbar
+      Tabbar,
+      CountButton,
+      Clock
     },
     head: {
-      title: "订单"
+      title: "注文"
     },
     data() {
       return {
