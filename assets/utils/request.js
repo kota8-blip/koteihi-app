@@ -47,7 +47,7 @@ export default async (options = { method: 'GET' }) => {
       Object.prototype.hasOwnProperty.call(payload, 'code') &&
       payload.code !== 0
     ) {
-      Toast(payload.msg || '请求错误');
+      Toast(payload.msg || 'リクエストエラー');
     }
 
     // 返却を正規化： {data: ...} を優先、なければそのまま
@@ -60,7 +60,7 @@ export default async (options = { method: 'GET' }) => {
   } catch (err) {
     // 失敗時も .map() で落ちない形を返す
     if (typeof window !== 'undefined') {
-      try { Toast('请求错误'); } catch (_) {}
+      try { Toast('リクエストエラー'); } catch (_) {}
     }
     if (options.url && /shopping\/(restaurants|pois|food_entries)/.test(options.url)) {
       return []; // 配列を期待している系は空配列で返す

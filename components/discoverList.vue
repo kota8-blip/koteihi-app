@@ -1,13 +1,13 @@
 <template>
-  <div class="orderlist_container">
-    <h2>注文履歴</h2>
+  <div class="discoverlist_container">
+    <h2>検索リスト履歴</h2>
     <ul
-      v-if="orderListArr.length"
+      v-if="discoverListArr.length"
     >
       <li
-        v-for="item in orderListArr"
+        v-for="item in discoverListArr"
         :key="item.id"
-        class="order_li"
+        class="discover_li"
       >
         {{ item.name }}
       </li>
@@ -17,16 +17,14 @@
 
 <script>
   import {
-    food
-  } from "~/assets/services/order";
+    past
+  } from "~/assets/services/discover";
 
   export default {
-    comments: {
-      name: 'OrderList',
-    },
+    name: 'DiscoverList',
     data() {
       return {
-        orderListArr: []
+        discoverListArr: []
       }
     },
     mounted() {
@@ -34,21 +32,22 @@
     },
     methods: {
       async initData() {
-        let res = await food();
+        let res = await past();
         if (res && Array.isArray(res)) {
-          this.orderListArr = [...res];
+          this.discoverListArr = [...res];
         }
       }
     }
-  }
+  };
+
 </script>
 
 <style scoped>
-  .orderlist_container {
+  .discoverlist_container {
     padding: 10px;
-    background-color: #f8f8f8;
+    background-color: #f0f0f0;
   }
-  .order_li {
+  .discover_li {
     background-color: #fff;
     margin-bottom: 8px;
     padding: 12px;

@@ -1,12 +1,24 @@
 <template>
   <div class="login-page">
+    <div class="head">
+      <nav :style="`background-image: url('${banner}');`">
+        <i
+          class="mintui mintui-back"
+          @click="$router.go(-1);"
+        />
+        />
+        <!-- <img
+          :src="seller.avatar"
+          class="shop-logo"> -->
+      </nav>
+    </div>
     <div id="logo">
-      <svg 
-        viewBox="0 0 142 58" 
-        width="100%" 
+      <svg
+        viewBox="0 0 142 58"
+        width="100%"
         height="100%">
-        <g 
-          fill="#1B9DFF" 
+        <g
+          fill="#1B9DFF"
           fill-rule="evenodd">
           <path d="M75.689 1.189h-1.306a.64.64 0 0 0-.641.638v2.592a.64.64 0 0 0 .64.638h2.612a.64.64 0 0 0 .64-.638V3.128a1.945 1.945 0 0 0-1.945-1.94M46.802 1.188h-2.888a.64.64 0 0 0-.641.638v4.842c0 .344.274.729.64.729h4.408c.485.02.982.363.999.979V12.9a.64.64 0 0 0 .641.638h2.359a.64.64 0 0 0 .64-.638V5.459a1.943 1.943 0 0 0-1.945-1.938h-3.573V1.826a.64.64 0 0 0-.64-.638"/>
           <path d="M50.076 30.517H48.29a.848.848 0 0 1-.848-.845V10.3a.64.64 0 0 0-.64-.638h-2.609a.64.64 0 0 0-.64.638v20.42a3.682 3.682 0 0 0 3.684 3.671h2.838a.64.64 0 0 0 .64-.638v-2.6a.64.64 0 0 0-.64-.637M123.349 1.64h-3.148a1.876 1.876 0 0 0-.248.016l-.08.012a1.92 1.92 0 0 0-.46.143l-.015.007a1.89 1.89 0 0 0-.5.34c-.11.128-12.315 14.334-12.504 14.578l-.01.013a.62.62 0 0 0 .454 1.05h3.149a2.166 2.166 0 0 0 .248-.017l.085-.013c.156-.028.31-.075.455-.141l.075-.036a1.906 1.906 0 0 0 .547-.42l12.415-14.49a.62.62 0 0 0-.463-1.042M86.132 34.37h7.843c2.143 0 3.886-1.737 3.886-3.872V17.316c0-.525.193-1.03.543-1.423.086-.101 9.336-10.882 9.448-11.01.019-.022.187-.183.187-.986v-.758c0-.77-.46-1.468-1.172-1.777l-.02-.01a2.184 2.184 0 0 0-.257-.085l-.07-.017-.034-.009a.423.423 0 0 0-.045-.007l-.094-.015-.056-.008h-.014l-.02-.001-.043-.002a1.57 1.57 0 0 0-.11-.007h-.059l-25.137.005a.677.677 0 0 0-.677.675v1.721c0 .55.293 1.05.747 1.273.176.086.405.141.723.174l.174.016.396.005h18.695a.433.433 0 0 1 .33.713L94.28 14.36a2.043 2.043 0 0 0-.523 1.363v13.78c0 .489-.4.887-.891.887l-5.944-.001c-.81 0-1.468.656-1.468 1.463v1.925c0 .348.28.592.678.592M132.984 2.03a1.94 1.94 0 0 0-.456.14l-.074.037a1.932 1.932 0 0 0-.547.419L108.393 30.13c-.193.249-.393.505-.393.877v1.097c0 1.069.873 1.939 1.946 1.939h27.495c2.105 0 3.818-1.707 3.818-3.805l-.001-.01v-4.754a.085.085 0 0 1 0-.018v-.528c0-.806-.66-1.463-1.469-1.463h-1.898a.664.664 0 0 0-.664.663v5.024a.876.876 0 0 1-.877.873l-21.11.001a.435.435 0 0 1-.423-.432c0-.103.036-.201.1-.277L137.292 3.04a.62.62 0 0 0 .163-.418.625.625 0 0 0-.625-.623h-3.513a2.014 2.014 0 0 0-.248.017l-.085.012zM71.04 34.392l5.953-.002a.64.64 0 0 0 .641-.639l-.007-1.851c0-.763-.623-1.384-1.388-1.384h-4.044a.965.965 0 0 1-.95-.95v-6.489h5.879a.51.51 0 0 0 .51-.508V19.71a.51.51 0 0 0-.51-.509h-5.88v-5.664h5.74a.64.64 0 0 0 .64-.637v-2.6a.64.64 0 0 0-.64-.638h-5.74V1.827a.64.64 0 0 0-.641-.638h-2.608a.64.64 0 0 0-.64.638v7.836h-5.452V5.064h1.874a.64.64 0 0 0 .641-.638V1.828a.64.64 0 0 0-.64-.638h-8.484a.64.64 0 0 0-.64.638v2.598a.64.64 0 0 0 .64.638h2.72v4.599h-2.72a.64.64 0 0 0-.64.638v2.598a.64.64 0 0 0 .64.639h2.72v5.664h-2.85a.51.51 0 0 0-.51.509v2.858c0 .28.228.508.51.508h2.85v6.57c0 .465-.38.845-.848.845h-1.872a.64.64 0 0 0-.64.638v2.598a.64.64 0 0 0 .64.639h2.925a3.682 3.682 0 0 0 3.684-3.672v-7.618h1.937a.51.51 0 0 0 .51-.508V19.71a.51.51 0 0 0-.51-.509h-1.937v-5.664h5.451v16.974c0 2.176 1.619 3.88 3.685 3.88M9.08 2.854C.864 8.17-1.472 19.118 3.864 27.304c5.335 8.188 16.322 10.514 24.538 5.197.476-.307.931-.635 1.367-.98a.973.973 0 0 0 .208-1.288l-.001-.002-.002-.002-.819-1.257a2.566 2.566 0 0 0-3.527-.759l-.015.009-.014.01c-5.844 3.77-13.649 2.114-17.441-3.706-3.796-5.824-2.135-13.612 3.71-17.394 4.727-3.059 10.742-2.561 14.878.822a.973.973 0 0 1-.1 1.56l-10.564 6.837a2.546 2.546 0 0 0-.753 3.53l.861 1.322c.295.452.9.58 1.354.287l16.583-10.73a.974.974 0 0 0 .344-1.25l-.02-.04c-.253-.48-.53-.954-.833-1.42C28.282-.135 17.296-2.462 9.08 2.855"/>
@@ -14,27 +26,27 @@
         </g>
       </svg>
     </div>
-    <span class="login-type">短信登录</span>
-    <mt-field 
-      v-model="mobile" 
-      placeholder="手机号">
-      <span 
-        class="get-code" 
-        @click="getCode()">获取验证码</span>
+    <span class="login-type">ログインしてください</span>
+    <mt-field
+      v-model="mobile"
+      placeholder="電話番号">
+      <span
+        class="get-code"
+        @click="getCode()">確認コード取得</span>
     </mt-field>
-    <mt-field 
-      v-model="captcha" 
-      placeholder="验证码"/>
-    <mt-field 
-      v-model="password" 
-      placeholder="密码" 
+    <mt-field
+      v-model="captcha"
+      placeholder="確認コード"/>
+    <mt-field
+      v-model="password"
+      placeholder="パスワード"
       type="password"/>
     <p class="toast">
-      温馨提示：未注册的手机号，登录时将自动注册。
+      ご注意：未登録の携帯電話番号はログイン時に自動的に登録されます。
     </p>
-    <button 
-      class="login" 
-      @click="Login()">立即登录</button>
+    <button
+      class="login"
+      @click="Login()">ログインしてください</button>
   </div>
 </template>
 
@@ -49,51 +61,56 @@
   import {
     mapActions
   } from "vuex";
-  import md5 from "js-md5";
 
   export default {
     head: {
-      title: "登录"
+      title: "ログイン"
     },
     data() {
       return {
         mobile: "",
         captcha: "",
-        password: ""
+        password: "",
+        banner: "/banner1.png" // 例：ダミー画像パス
       };
     },
     methods: {
-      ...mapActions(["login"]),
+      ...mapActions(["restoreUserInfo"]),
       getCode() {
         if (!v.tel(this.mobile)) {
-          Toast("手机号格式不正确");
+          Toast("電話番号形式不正");
           return;
         }
         this.captcha = "1234";
       },
       async Login() {
         if (!v.tel(this.mobile)) {
-          Toast("手机号格式不正确");
+          Toast("電話番号形式不正");
           return;
         }
         if (!v.required(this.captcha)) {
-          Toast("请输入验证码");
+          Toast("確認コードを入力してください");
           return;
         }
         if (!v.required(this.password)) {
-          Toast("请输入密码");
+          Toast("パスワードを入力してください");
           return;
         }
         const res = await loginApi({
           mobile: this.mobile,
-          password: md5(this.password)
+          password: this.password
         });
-        if (res.code === 0) {
-          this.login(res.data);
-          Toast("登录成功,欢迎回来～～～");
-          setTimeout(() => {
-            this.$router.go(-1);
-          }, 1500);
+
+        const user = res.find(u =>
+          u.mobile === this.mobile && u.password === this.password
+        );
+
+        if (user) {
+          this.$store.dispatch("userInfo/restoreUserInfo", user);
+          Toast("ログイン成功,お帰りなさい");
+          this.$router.push("/userdetail");
+        } else {
+          Toast("電話番号またはパスワードが間違っています");
         }
       }
     }
@@ -103,6 +120,24 @@
 
 <style lang="scss">
   @import "../assets/styles/mixin";
+
+  .head {
+      height: px2rem(200px);
+
+      nav {
+        height: px2rem(200px);
+        background-position: 50%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        padding: px2rem(10px);
+        position: relative;
+
+        .mintui-back {
+          font-size: px2rem(46px);
+          color: #2694ee;
+        }
+      }
+    }
 
   .login-page {
     background: $fc;
@@ -145,6 +180,7 @@
       display: inline-block;
       @include wh(100px, 45px);
       line-height: 45px;
+      font-size: px2rem(28px);
     }
 
     .login {

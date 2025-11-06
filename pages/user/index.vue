@@ -58,22 +58,22 @@
         <ul class="clear">
           <li class="info-data-link">
             <span class="info-data-top"><b>0.00</b>元</span>
-            <span class="info-data-bottom">钱包</span>
+            <span class="info-data-bottom">財布</span>
           </li>
           <router-link
             :to="userInfo&&userInfo.user_id? '/user/benefit' : '/login'"
             class="info-data-link">
             <span class="info-data-top"><b>0</b>个</span>
-            <span class="info-data-bottom">红包</span>
+            <span class="info-data-bottom">お年玉袋</span>
           </router-link>
           <li class="info-data-link">
             <span class="info-data-top"><b>0</b>个</span>
-            <span class="info-data-bottom">金币</span>
+            <span class="info-data-bottom">金貨</span>
           </li>
         </ul>
       </section>
       <section class="profile-1reTe">
-        <!-- 我的地址 -->
+        <!-- 住所 -->
         <router-link
           :to="userInfo&&userInfo.user_id? '/user/address' : '/login'"
           class="myorder">
@@ -98,7 +98,7 @@
             </svg>
           </aside>
           <div class="myorder-div">
-            <span>我的地址</span>
+            <span>住所</span>
             <span class="myorder-divsvg">
               <svg fill="#bbb">
                 <use
@@ -110,7 +110,7 @@
         </router-link>
       </section>
       <section class="profile-1reTe">
-        <!-- 金币商城 -->
+        <!-- ゴールドコインショップ -->
         <a
           href="https://home.m.duiba.com.cn/#/chome/index"
           class="myorder">
@@ -135,7 +135,7 @@
             </svg>
           </aside>
           <div class="myorder-div">
-            <span>金币商城</span>
+            <span>ゴールドコインショップ</span>
             <span class="myorder-divsvg">
               <svg fill="#bbb">
                 <use
@@ -145,7 +145,7 @@
             </span>
           </div>
         </a>
-        <!-- 分享拿10元现金 -->
+        <!-- シェアして200円 -->
         <a
           href="https://h5.ele.me/commend/#/"
           class="myorder">
@@ -167,7 +167,7 @@
             </svg>
           </aside>
           <div class="myorder-div">
-            <span>分享拿10元现金</span>
+            <span>シェアして200円</span>
             <span class="myorder-divsvg">
               <svg fill="#bbb">
                 <use
@@ -179,7 +179,7 @@
         </a>
       </section>
       <section class="profile-1reTe">
-        <!-- 我的客服 -->
+        <!-- カスタマーサービス -->
         <router-link
           to="/user/service"
           class="myorder">
@@ -208,7 +208,7 @@
             </svg>
           </aside>
           <div class="myorder-div">
-            <span>我的客服</span>
+            <span>カスタマーサービス</span>
             <span class="myorder-divsvg">
               <svg fill="#bbb">
                 <use
@@ -218,7 +218,7 @@
             </span>
           </div>
         </router-link>
-        <!-- 下载饿了么APP -->
+        <!-- APPダウンロード -->
         <router-link
           to="/download"
           class="myorder">
@@ -236,7 +236,7 @@
           <div
             class="myorder-div"
             style="border-bottom:0;">
-            <span>下载饿了么APP</span>
+            <span>APPダウンロード</span>
             <span class="myorder-divsvg">
               <svg fill="#bbb">
                 <use
@@ -271,14 +271,14 @@
     data() {
       return {
         profiletitle: "ユーザー",
-        username: "登录/注册", //用户名
+        username: "ログイン/登録", //用户名
         resetname: "",
-        mobile: "登录后享受更多特权", //电话号码
+        mobile: "ログイン後特権を享受", //电话号码
         avatar: "" //头像地址
       };
     },
     computed: {
-      ...mapGetters(["userInfo"])
+      ...mapGetters("userInfo", ["userInfo"])
     },
     watch: {
       userInfo: function (value) {
@@ -298,8 +298,8 @@
           this.username = this.userInfo.username;
           this.mobile = this.userInfo.mobile || "登录后享受更多特权";
         } else {
-          this.username = "登录/注册";
-          this.mobile = "登录后享受更多特权";
+          this.username = "ログイン/登録";
+          this.mobile = "ログイン後特権を享受";
         }
       }
     }

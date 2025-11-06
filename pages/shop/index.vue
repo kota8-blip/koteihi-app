@@ -2,9 +2,9 @@
   <div class="shop-page">
     <Header :seller="seller" />
     <mt-navbar v-model="selected">
-      <mt-tab-item id="goods">点餐</mt-tab-item>
-      <mt-tab-item id="ratings">评价</mt-tab-item>
-      <mt-tab-item id="seller">商家</mt-tab-item>
+      <mt-tab-item id="goods">注文</mt-tab-item>
+      <mt-tab-item id="ratings">評価</mt-tab-item>
+      <mt-tab-item id="seller">お店</mt-tab-item>
     </mt-navbar>
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="goods">

@@ -19,6 +19,7 @@
     </a>
     <clock />
     <count-button />
+    <discover-list />
     <Tabbar page="1" />
   </div>
 </template>
@@ -28,12 +29,14 @@
   import Tabbar from "~/components/tabbar";
   import CountButton from "~/components/countButton";
   import Clock from '../components/clock.vue';
+  import DiscoverList from '../components/discoverList.vue';
 
   export default {
     components: {
       Tabbar,
       CountButton,
-      Clock
+      Clock,
+      DiscoverList
     },
     head: {
       title: "探す"

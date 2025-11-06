@@ -6,6 +6,7 @@
     />
     <clock />
     <count-button />
+    <order-list v-if="userInfo && userInfo.mobile" />
     <div class="no-data">
       <img
         :src="nodata"
@@ -13,17 +14,17 @@
         alt=""
       >
       <p v-if="!userInfo||!userInfo.user_id">
-        登陆后查看外卖订单
+        ログイン後にテイクアウトの注文を確認する
       </p>
       <p v-if="userInfo&&userInfo.user_id">
-        暂无订单信息
+        現在、注文情報はありません
       </p>
       <button
         v-if="!userInfo||!userInfo.user_id"
         class="login"
         @click="$router.push('/login')"
       >
-        立即登录
+        ログインしてください
       </button>
     </div>
     <Tabbar page="2" />
@@ -38,12 +39,15 @@
   } from "vuex";
   import CountButton from "~/components/countButton";
   import Clock from '../components/clock.vue';
+  import OrderList from '../components/orderList.vue';
+  // import userInfo from "../store/userInfo";
 
   export default {
     components: {
       Tabbar,
       CountButton,
-      Clock
+      Clock,
+      OrderList
     },
     head: {
       title: "注文"
@@ -51,10 +55,10 @@
     data() {
       return {
         nodata: `${config.IMG_URL}nodata.png`,
-      }
+      };
     },
     computed: {
-      ...mapGetters(["userInfo"])
+      ...mapGetters("userInfo", ["userInfo"])
     }
   };
 

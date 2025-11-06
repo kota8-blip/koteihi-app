@@ -71,7 +71,7 @@
       {{ コメント }}
     </p>
     <p class="shoplist-title">
-      —— 推荐商家 ——
+      —— おすすめの加盟店 ——
     </p>
     <ShopList />
     <Tabbar page="0" />

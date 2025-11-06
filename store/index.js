@@ -4,7 +4,7 @@ import {
   LOGIN,
 } from './types.js';
 
-import userInfo from './modules/userInfo';
+import userInfo from './userInfo.js';
 
 Vue.use(Vuex)
 

@@ -6,7 +6,7 @@ import {
   LOGIN,
   OUT_LOGIN,
   USER_INFO_UPDATA
-} from '../types.js';
+} from './types.js';
 
 const state = {
   userInfo: {}
@@ -14,14 +14,22 @@ const state = {
 
 const getters = {
   userInfo(state) {
-    if (typeof window !== "undefined" && JSON.stringify(state.userInfo) === '{}' && cookies.get('userInfo')) {
-      state.userInfo = JSON.parse(cookies.get('userInfo'));
-    }
+    // if (typeof window !== "undefined" && JSON.stringify(state.userInfo) === '{}' && cookies.get('userInfo')) {
+    //   state.userInfo = JSON.parse(cookies.get('userInfo'));
+    // }
     return state.userInfo;
   },
 }
 
 const actions = {
+  restoreUserInfo({ commit }, user) {
+  if (user) {
+    commit('SET_USERINFO', user);
+  } else if (typeof window !== "undefined" && cookies.get('userInfo')) {
+    // cookieから復元
+    commit('SET_USERINFO', JSON.parse(cookies.get('userInfo')));
+  }
+},
   login({
     commit
   }, value) {
@@ -40,6 +48,9 @@ const actions = {
 }
 
 const mutations = {
+  SET_USERINFO(state, value) {
+    state.userInfo = value;
+  },
   [LOGIN](state, value) {
     cookies.set('userInfo', {
       avatar: value.avatar,
@@ -61,6 +72,7 @@ const mutations = {
 }
 
 export default {
+  namespaced: true,
   state,
   actions,
   getters,

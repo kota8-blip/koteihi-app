@@ -10,7 +10,10 @@ import svgIcon from "../components/svg";
 export default {
   components: {
     svgIcon
-  }
+  },
+//   computed: {
+//     ...mapGetters("userInfo", ["userInfo"])
+//   }
 };
 </script>
 
