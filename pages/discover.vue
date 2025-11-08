@@ -2,24 +2,15 @@
   <div class="discover-page">
     <mt-header
       fixed
-      title="探す"
+      title="検索"
     />
-    <a href="https://h5.ele.me/exchange/">
-      <img
-        :src="discover1"
-        alt=""
-      >
-    </a>
-    <div style="height:12px;" />
-    <a href="https://goods.m.duiba.com.cn/mobile/appItemDetail?appItemId=1544968&from=login&spm=14695.1.1.1">
-      <img
-        :src="discover2"
-        alt=""
-      >
-    </a>
     <clock />
     <count-button />
-    <discover-list />
+    <login-record v-if="!userInfo || !userInfo.mobile"
+      :actionRecord="'検索なし'"
+      :loginPrompt="'ログイン後に検索履歴を確認する'"
+    />
+    <discover-list v-if="userInfo && userInfo.mobile" />
     <Tabbar page="1" />
   </div>
 </template>
@@ -30,23 +21,23 @@
   import CountButton from "~/components/countButton";
   import Clock from '../components/clock.vue';
   import DiscoverList from '../components/discoverList.vue';
+  import { mapGetters } from "vuex";
+  import LoginRecord from '../components/loginRecord.vue';
 
   export default {
     components: {
       Tabbar,
       CountButton,
       Clock,
-      DiscoverList
+      DiscoverList,
+      LoginRecord
     },
     head: {
-      title: "探す"
+      title: "検索"
     },
-    data() {
-      return {
-        discover1: `${config.IMG_URL}discover/discover1.jpg`,
-        discover2: `${config.IMG_URL}discover/discover2.jpg`,
-      }
-    }
+    computed: {
+      ...mapGetters("userInfo", ["userInfo"])
+    },
   };
 
 </script>
