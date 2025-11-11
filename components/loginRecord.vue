@@ -19,7 +19,7 @@
         class="login"
         @click="$router.push('/login')"
       >
-        ログインしてください
+        ログインする
       </button>
     </div>
   </div>
@@ -46,9 +46,9 @@
       text-align: center;
     }
       .nodata {
-        width: px2rem(400px);
-        height: px2rem(400px);
-        margin: 15vh auto px2rem(10px) auto;
+        width: 100px;
+        height: 100px;
+        margin: 15vh auto 10px auto;
       }
 
       p {

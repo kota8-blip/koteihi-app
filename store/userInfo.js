@@ -8,9 +8,9 @@ import {
   USER_INFO_UPDATA
 } from './types.js';
 
-const state = {
+const state = () => ({
   userInfo: {}
-}
+});
 
 const getters = {
   userInfo(state) {
@@ -50,6 +50,7 @@ const actions = {
 const mutations = {
   SET_USERINFO(state, value) {
     state.userInfo = value;
+    console.log('state.userInfo', state.userInfo);
   },
   [LOGIN](state, value) {
     cookies.set('userInfo', {

@@ -19,22 +19,24 @@
   import {
     food
   } from "~/assets/services/order";
+  import { mapGetters } from "vuex";
 
   export default {
-    comments: {
       name: 'OrderList',
-    },
     data() {
       return {
         orderListArr: []
       }
+    },
+    computed: {
+      ...mapGetters('userInfo', ['userInfo'])
     },
     mounted() {
       this.initData();
     },
     methods: {
       async initData() {
-        let res = await food();
+        let res = await food(this.userInfo.user_id);
         if (res && Array.isArray(res)) {
           this.orderListArr = [...res];
         }

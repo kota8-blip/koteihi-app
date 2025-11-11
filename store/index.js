@@ -46,10 +46,10 @@ const store = () => new Vuex.Store({
   }
 })
 
-const state = {
+const state = () => ({
   count: 0,
   時間: '',
-};
+});
 
 const mutations = {
   increment(state) {

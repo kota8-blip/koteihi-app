@@ -16,28 +16,38 @@
 </template>
 
 <script>
-  import {
-    past
-  } from "~/assets/services/discover";
+  // import {
+  //   past
+  // } from "~/assets/services/discover";
+  import { mapGetters } from "vuex";
 
   export default {
     name: 'DiscoverList',
-    data() {
-      return {
-        discoverListArr: []
+    // data() {
+    //   return {
+    //     discoverListArr: []
+    //   }
+    // },
+    props: {
+      discoverListArr: {
+        type: Array,
+        default: () => []
       }
     },
-    mounted() {
-      this.initData();
+    computed: {
+      ...mapGetters('userInfo', ['userInfo'])
     },
-    methods: {
-      async initData() {
-        let res = await past();
-        if (res && Array.isArray(res)) {
-          this.discoverListArr = [...res];
-        }
-      }
-    }
+    // mounted() {
+    //   this.initData();
+    // },
+    // methods: {
+    //   async initData() {
+    //     let res = await past(this.userInfo.user_id);
+    //     if (res && Array.isArray(res)) {
+    //       this.discoverListArr = [...res];
+    //     }
+    //   }
+    // },
   };
 
 </script>
@@ -45,7 +55,7 @@
 <style scoped>
   .discoverlist_container {
     padding: 10px;
-    background-color: #f0f0f0;
+    background-color: #f8f8f8;
   }
   .discover_li {
     background-color: #fff;

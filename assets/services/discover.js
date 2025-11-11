@@ -1,9 +1,9 @@
 import request from "../utils/request";
 
-export const past = (params) => {
+export const past = (user_id) => {
   return request({
     url: `/past`,
     method: 'GET',
-    data: params,
+    params: { user_id },
   })
 }

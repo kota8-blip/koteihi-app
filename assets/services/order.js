@@ -1,9 +1,9 @@
 import request from "../utils/request";
 
-export const food = (params) => {
+export const food = (user_id) => {
   return request({
     url: `/food`,
     method: 'GET',
-    data: params,
+    params: { user_id },
   })
 }

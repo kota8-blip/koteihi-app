@@ -10,10 +10,6 @@ axios.defaults.headers = config.HEADERS;
 axios.interceptors.request.use(req => {
   if (!config.IS_RELEASE) {
     try {
-      console.log(
-        `${new Date().toLocaleString()}【 M=${req && req.url} 】P=`,
-        (req && (req.params || req.data)) || null
-      );
     } catch (_) {}
   }
   return req;
@@ -28,14 +24,13 @@ export default async (options = { method: 'GET' }) => {
       method,
       url: options.url,
       data: isData ? (options.data || null) : null,
-      params: !isData ? (options.data || null) : null,
+      params: !isData ? (options.params || options.data || null) : null,
       validateStatus: s => s >= 200 && s < 400, // 3xxでも落とさない
     });
 
     const payload = res ? res.data : undefined;
 
     if (!config.IS_RELEASE) {
-      console.log(`${new Date().toLocaleString()}【接口响应：】`, payload);
     }
 
     // Toastは code フィールドが存在する時だけ

@@ -19,7 +19,7 @@
         <p>登録日: {{ userInfo.joinDate }}</p>
       </div>
     </div>
-    <Tabbar page="4" />
+    <Tabbar page="3" />
   </div>
 </template>
 

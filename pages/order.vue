@@ -6,10 +6,7 @@
     />
     <clock />
     <count-button />
-    <login-record v-if="!userInfo || !userInfo.mobile"
-      :actionRecord="注文なし"
-      :loginPrompt="loginPrompt"
-    />
+    <login-record v-if="!userInfo || !userInfo.mobile" />
     <order-list v-if="userInfo && userInfo.mobile" />
     <!-- <div
       v-if="!userInfo || !userInfo.mobile"
@@ -64,7 +61,9 @@
     },
     computed: {
       ...mapGetters("userInfo", ["userInfo"])
-    }
+    },
+    mounted() {
+    },
   };
 
 </script>
