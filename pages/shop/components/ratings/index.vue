@@ -25,18 +25,18 @@
         </div>
       </div>
       <div class="placeholder"/>
-      <ratingselect 
-        :select-type="selectType" 
-        :only-content="onlyContent" 
-        :ratings="ratings" 
+      <ratingselect
+        :select-type="selectType"
+        :only-content="onlyContent"
+        :ratings="ratings"
         @select="selectRating"
         @toggle="toggleContent" />
       <div class="rating-wrapper">
         <ul>
-          <li 
-            v-for="(rating, index) in ratings" 
-            v-show="needShow(rating.rateType, rating.text)" 
-            :key="index" 
+          <li
+            v-for="(rating, index) in ratings"
+            v-show="needShow(rating.rateType, rating.text)"
+            :key="index"
             class="rating-item">
             <div class="avatar">
               <span :style="'background-position: 0 '+rating.avatar"/>
@@ -44,17 +44,17 @@
             <div class="content">
               <h1 class="name">{{ rating.username }}</h1>
               <div class="star-wrapper">
-                <rating-star 
-                  :size="24" 
+                <rating-star
+                  :size="24"
                   :rating="rating.score" />
               </div>
               <p class="text">{{ rating.text }}</p>
-              <div 
-                v-show="rating.recommend && rating.recommend.length" 
+              <div
+                v-show="rating.recommend && rating.recommend.length"
                 class="recommend">
-                <span 
-                  v-for="(item, index) in rating.recommend" 
-                  :key="index" 
+                <span
+                  v-for="(item, index) in rating.recommend"
+                  :key="index"
                   class="item">{{ item }}</span>
               </div>
               <div class="time">
@@ -81,7 +81,8 @@
     },
     props: {
       seller: {
-        default: {}
+        type: Object,
+        default: () => ({})
       }
     },
     data() {

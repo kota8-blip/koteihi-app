@@ -6,9 +6,6 @@
           class="mintui mintui-back"
           @click="$router.go(-1);"
         />
-        <!-- <img
-          :src="seller.avatar"
-          class="shop-logo"> -->
       </nav>
     </div>
     <div class="userdetail-page">

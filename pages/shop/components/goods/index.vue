@@ -30,7 +30,7 @@
               :key="index"
               class="food-item border-1px">
               <div class="icon">
-                <img :src="food.icon" >
+                <img :src="food.icon">
               </div>
               <div class="content">
                 <h2 class="name">{{ food.name }}</h2>
@@ -52,7 +52,7 @@
       ref="shopcart"
       :select-foods="selectFoods"
       :delivery-price="seller.deliveryPrice"
-      :min-price="seller.minPrice"/>
+      :min-price="seller.minPrice" />
   </div>
 </template>
 
@@ -68,7 +68,8 @@
     },
     props: {
       seller: {
-        default: {}
+        type: Object,
+        default: () => ({})
       }
     },
     data() {

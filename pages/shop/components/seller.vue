@@ -1,14 +1,14 @@
 <template>
   <div class="seller-page">
     <div class="logo">
-      <img 
-        :src="banner" 
+      <img
+        :src="banner"
         alt="">
     </div>
     <h2>{{ seller.name }}</h2>
     <p>{{ seller.bulletin }}</p>
-    <a 
-      :href="seller.brandstory" 
+    <a
+      :href="seller.brandstory"
       class="brandstory">查看品牌故事</a>
     <div class="placeholder"/>
     <h2>配送信息</h2>
@@ -22,7 +22,8 @@
   export default {
     props: {
       seller: {
-        default: {}
+        type: Object,
+        default: () => ({})
       }
     },
     computed: {

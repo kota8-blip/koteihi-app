@@ -250,6 +250,12 @@
     </section>
     <clock />
     <CountButton />
+    <CartPage v-if="userInfo && userInfo.mobile" />
+    <input
+        type="button"
+        value="お客様情報編集"
+        @click="$router.push('/edit')"
+      />
     <Tabbar page="3" />
   </div>
 </template>
@@ -261,12 +267,14 @@
   } from "vuex";
   import CountButton from "~/components/countButton";
   import Clock from '../../components/clock.vue';
+  import CartPage from '../cart.vue';
 
   export default {
     components: {
       Tabbar,
       CountButton,
-      Clock
+      Clock,
+      CartPage,
     },
     data() {
       return {

@@ -34,9 +34,9 @@
         default: () => []
       }
     },
-    computed: {
-      ...mapGetters('userInfo', ['userInfo'])
-    },
+    // computed: {
+    //   ...mapGetters('userInfo', ['userInfo'])
+    // },
     // mounted() {
     //   this.initData();
     // },

@@ -8,30 +8,6 @@
     <count-button />
     <login-record v-if="!userInfo || !userInfo.mobile" />
     <order-list v-if="userInfo && userInfo.mobile" />
-    <!-- <div
-      v-if="!userInfo || !userInfo.mobile"
-      class="no-data">
-      <svg class="nodata" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="100" cy="100" r="80" fill="#f5f5f5" stroke="#ddd" stroke-width="3"/>
-        <path d="M70 85 Q100 65 130 85" stroke="#999" stroke-width="4" fill="none" stroke-linecap="round"/>
-        <circle cx="75" cy="90" r="8" fill="#999"/>
-        <circle cx="125" cy="90" r="8" fill="#999"/>
-        <text x="100" y="150" font-size="16" text-anchor="middle" fill="#999">注文なし</text>
-      </svg>
-      <p v-if="!userInfo||!userInfo.user_id">
-        ログイン後にテイクアウトの注文履歴を確認する
-      </p>
-      <p v-if="userInfo&&userInfo.user_id">
-        現在、注文情報はありません
-      </p>
-      <button
-        v-if="!userInfo||!userInfo.user_id"
-        class="login"
-        @click="$router.push('/login')"
-      >
-        ログインしてください
-      </button>
-    </div> -->
     <Tabbar page="2" />
   </div>
 </template>

@@ -26,8 +26,13 @@
 </template>
 
   <script>
+  import { mapGetters } from "vuex";
+
   export default {
     name: "loginRecord",
+    computed: {
+      ...mapGetters('userInfo', ['userInfo'])
+    },
     props: {
       actionRecord: {
         type: String,
@@ -35,7 +40,7 @@
       },
       loginPrompt: {
         type: String,
-        default: "ログイン後にテイクアウトの注文履歴を確認する"
+        default: "ログイン後に注文履歴を確認する"
       }
     }
   }

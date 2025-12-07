@@ -68,9 +68,9 @@
     },
     data() {
       return {
-        mobile: "",
-        captcha: "",
-        password: "",
+        mobile: "08012345678",
+        captcha: "1234",
+        password: "hashedpassword123",
         banner: "/banner1.png" // 例：ダミー画像パス
       };
     },
@@ -78,14 +78,14 @@
       ...mapActions(["restoreUserInfo"]),
       getCode() {
         if (!v.tel(this.mobile)) {
-          Toast("電話番号形式不正");
+          Toast("電話番号が間違っています");
           return;
         }
         this.captcha = "1234";
       },
       async Login() {
         if (!v.tel(this.mobile)) {
-          Toast("電話番号形式不正");
+          Toast("電話番号が間違っています");
           return;
         }
         if (!v.required(this.captcha)) {

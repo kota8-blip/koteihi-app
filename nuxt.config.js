@@ -20,6 +20,14 @@ module.exports = {
 
   modules: ['@nuxtjs/axios'],
 
+  proxy: {
+    '/api/': {
+      target: 'http://localhost:3001',
+      pathRewrite: { '^/api/': '/' },
+      changeOrigin: true
+    }
+  },
+
   axios: { baseURL: 'http://localhost:3001' },
 
   loading: { color: '#3B8070' },

@@ -1,90 +1,90 @@
 <template>
   <div class="shopcart">
-    <div 
-      class="content" 
+    <div
+      class="content"
       @click="toggleList">
       <div class="content-left">
         <div class="logo-wrapper">
-          <div 
-            :class="{'highlight':totalCount>0}" 
+          <div
+            :class="{'highlight':totalCount>0}"
             class="logo">
-            <span 
-              v-if="totalCount<=0" 
+            <span
+              v-if="totalCount<=0"
               class="icon-shopping_cart">
-              <img 
-                src="~/assets/images/cart.svg" 
+              <img
+                src="~/assets/images/cart.svg"
                 alt="">
             </span>
-            <span 
-              v-else 
+            <span
+              v-else
               class="icon-shopping_cart highlight">
-              <img 
-                src="~/assets/images/cart2.svg" 
+              <img
+                src="~/assets/images/cart2.svg"
                 alt="">
             </span>
           </div>
-          <div 
-            v-show="totalCount>0" 
+          <div
+            v-show="totalCount>0"
             class="num">{{ totalCount }}</div>
         </div>
-        <div 
-          :class="{'highlight':totalPrice>0}" 
+        <div
+          :class="{'highlight':totalPrice>0}"
           class="price">￥{{ totalPrice }}元</div>
         <div class="desc">另需配送费￥{{ deliveryPrice }}元</div>
       </div>
       <div class="content-right">
-        <div 
-          :class="payClass" 
+        <div
+          :class="payClass"
           class="pay">{{ payDesc }}</div>
       </div>
     </div>
     <div class="ball-container">
-      <div 
-        v-for="(ball, index) in balls" 
+      <div
+        v-for="(ball, index) in balls"
         :key="index">
-        <transition 
-          name="drop" 
-          @before-enter="beforeDrop" 
-          @enter="dropping" 
+        <transition
+          name="drop"
+          @before-enter="beforeDrop"
+          @enter="dropping"
           @after-enter="afterDrop">
-          <div 
-            v-show="ball.show" 
+          <div
+            v-show="ball.show"
             class="ball">
-            <div class="inner inner-hook"/>
+            <div class="inner inner-hook" />
           </div>
         </transition>
       </div>
     </div>
-    <div 
-      v-show="listShow" 
-      class="mark" 
-      @click="toggleList"/>
+    <div
+      v-show="listShow"
+      class="mark"
+      @click="toggleList" />
     <transition name="fold">
-      <div 
-        v-show="listShow" 
+      <div
+        v-show="listShow"
         class="shopcart-list">
         <div class="list-header">
           <h1 class="title">已选商品</h1>
-          <span 
-            class="empty" 
+          <span
+            class="empty"
             @click="empty">清空</span>
         </div>
-        <div 
-          ref="listContent" 
+        <div
+          ref="listContent"
           class="list-content">
           <ul>
-            <li 
-              v-for="(food, index) in selectFoods" 
-              :key="index" 
+            <li
+              v-for="(food, index) in selectFoods"
+              :key="index"
               class="food">
               <span class="name">{{ food.name }}</span>
               <div class="price">
                 <span>￥{{ food.price*food.count }}</span>
               </div>
               <div class="cartcontrol-wrapper">
-                <cartcontrol 
-                  :food="food" 
-                  @add="addFood"/>
+                <cartcontrol
+                  :food="food"
+                  @add="addFood" />
               </div>
             </li>
           </ul>

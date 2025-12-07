@@ -37,7 +37,8 @@
   export default {
     props: {
       seller: {
-        default: {}
+      type: Object,
+      default: () => ({})
       }
     },
     computed: {

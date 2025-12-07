@@ -9,7 +9,7 @@ import {
 } from './types.js';
 
 const state = () => ({
-  userInfo: {}
+  userInfo: {},
 });
 
 const getters = {
@@ -50,7 +50,6 @@ const actions = {
 const mutations = {
   SET_USERINFO(state, value) {
     state.userInfo = value;
-    console.log('state.userInfo', state.userInfo);
   },
   [LOGIN](state, value) {
     cookies.set('userInfo', {

@@ -1,34 +1,34 @@
 <template>
   <div class="shoplist_container">
-    <ul 
-      v-if="shopListArr.length" 
+    <ul
+      v-if="shopListArr.length"
       type="1">
-      <router-link 
-        v-for="item in shopListArr" 
-        :to="{ path: 'shop', query:{geohash, id: item.id }}" 
+      <router-link
+        v-for="item in shopListArr"
+        :to="{ path: 'shop', query:{geohash, id: item.id }}"
         :key="item.id"
         class="shop_li">
         <section>
-          <img 
-            :src="item.image_path" 
+          <img
+            :src="item.image_path"
             class="shop_img">
         </section>
         <hgroup class="shop_right">
           <header class="shop_detail_header">
-            <h4 
-              :class="item.is_premium? 'premium': ''" 
+            <h4
+              :class="item.is_premium? 'premium': ''"
               class="shop_title ellipsis">{{ item.name }}</h4>
             <ul class="shop_detail_ul">
-              <li 
-                v-for="item in item.supports" 
-                :key="item.id" 
-                class="supports">{{ item.icon_name }}</li>
+              <li
+                v-for="support in item.supports"
+                :key="support.id"
+                class="supports">{{ support.icon_name }}</li>
             </ul>
           </header>
           <h5 class="rating_order_num">
             <section class="rating_order_num_left">
               <section class="rating_section">
-                <rating-star :rating="item.rating"/>
+                <rating-star :rating="item.rating" />
                 <span class="rating_num">{{ item.rating }}</span>
               </section>
               <section class="order_section">
@@ -36,11 +36,11 @@
               </section>
             </section>
             <section class="rating_order_num_right">
-              <span 
-                v-if="item.delivery_mode" 
+              <span
+                v-if="item.delivery_mode"
                 class="delivery_style delivery_left">{{ item.delivery_mode.text }}</span>
-              <span 
-                v-if="zhunshi(item.supports)" 
+              <span
+                v-if="zhunshi(item.supports)"
                 class="delivery_style delivery_right">准时达</span>
             </section>
           </h5>
@@ -62,22 +62,22 @@
         </hgroup>
       </router-link>
     </ul>
-    <p 
-      v-if="touchend" 
+    <p
+      v-if="touchend"
       class="empty_data">没有更多了</p>
-    <aside 
-      v-if="showBackStatus" 
-      class="return_top" 
+    <aside
+      v-if="showBackStatus"
+      class="return_top"
       @click="backTop">
       <svg class="back_top_svg">
-        <use 
-          xmlns:xlink="http://www.w3.org/1999/xlink" 
-          xlink:href="#backtop"/>
+        <use
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xlink:href="#backtop" />
       </svg>
     </aside>
-    <div 
-      ref="abc" 
-      style="background-color: red;"/>
+    <div
+      ref="abc"
+      style="background-color: red;" />
   </div>
 </template>
 

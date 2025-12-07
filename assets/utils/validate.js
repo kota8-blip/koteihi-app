@@ -2,6 +2,26 @@
  * 表单验证工具类
  */
 export default class Validate {
+  static isValidName(name) {
+    return this.minlength(name, 2);
+  }
+
+  static isValidMobile(mobile) {
+    return /^0\d{9,10}$/.test(mobile);
+  }
+
+  static firstNumberValid(mobile) {
+    return /^0/.test(mobile);
+  }
+
+  static hasHyphen(mobile) {
+    return typeof mobile === 'string' && mobile.includes('-');
+  }
+
+  static hasAtMark(value) {
+    return typeof value === 'string' && value.includes('@');
+  }
+
   /**
    * 判断输入值是否为空
    */

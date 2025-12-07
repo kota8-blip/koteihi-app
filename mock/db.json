@@ -24,7 +24,7 @@
       "delivery_mode": { "text": "配達" },
       "float_delivery_fee": 300,
       "distance": "1.2km",
-      "order_lead_time": "30 分",
+      "order_lead_time": "25 分",
       "supports": [{ "id": 1, "icon_name": "保", "name": "保証" }]
     },
     {
@@ -41,76 +41,129 @@
     }
   ],
 
+  "shopping_seller": {
+    "id": 1,
+    "name": "デモレストラン A",
+    "banner": "/restaurant-a.png",
+    "bulletin": "新鮮な食材を使用した料理を提供しています。お客様に美味しい料理をお届けします。",
+    "brandstory": "https://example.com/brandstory",
+    "deliveryTime": 25,
+    "deliveryPrice": 300,
+    "minPrice": 1500,
+    "rating": 4.5,
+    "sellCount": 1234
+  },
+
   "food": [
     {
       "id": 1,
       "user_id": 1,
       "name": "から揚げ",
       "rating": "4",
-      "distance": "1,000m"
+      "distance": "1,000m",
+      "orderDate": "2025-11-20",
+      "shopName": "から揚げ専門店 鶏太郎",
+      "totalAmount": 1200,
+      "itemCount": 3
     },
     {
       "id": 2,
       "user_id": 1,
       "name": "ショートケーキ",
       "rating": "5",
-      "distance": "320m"
+      "distance": "320m",
+      "orderDate": "2025-11-19",
+      "shopName": "パティスリー 花子",
+      "totalAmount": 1800,
+      "itemCount": 2
     },
     {
       "id": 3,
       "user_id": 1,
       "name": "ラーメン",
       "rating": "4.5",
-      "distance": "800m"
+      "distance": "800m",
+      "orderDate": "2025-11-18",
+      "shopName": "麺屋 一郎",
+      "totalAmount": 2500,
+      "itemCount": 4
     },
     {
       "id": 4,
       "user_id": 2,
       "name": "ハンバーガー",
       "rating": "4.2",
-      "distance": "500m"
+      "distance": "500m",
+      "orderDate": "2025-11-17",
+      "shopName": "バーガーキング",
+      "totalAmount": 1500,
+      "itemCount": 2
     },
     {
       "id": 5,
       "user_id": 2,
       "name": "寿司",
       "rating": "5",
-      "distance": "1,200m"
+      "distance": "1,200m",
+      "orderDate": "2025-11-16",
+      "shopName": "寿司処 まぐろ亭",
+      "totalAmount": 3500,
+      "itemCount": 5
     },
     {
       "id": 6,
       "user_id": 2,
       "name": "ピザ",
       "rating": "4.3",
-      "distance": "600m"
+      "distance": "600m",
+      "orderDate": "2025-11-15",
+      "shopName": "ピザハット",
+      "totalAmount": 2800,
+      "itemCount": 3
     },
     {
       "id": 7,
       "user_id": 3,
       "name": "カレー",
       "rating": "4.7",
-      "distance": "900m"
+      "distance": "900m",
+      "orderDate": "2025-11-14",
+      "shopName": "インドカレー タージマハル",
+      "totalAmount": 2200,
+      "itemCount": 4
     },
     {
       "id": 8,
       "user_id": 3,
       "name": "パスタ",
       "rating": "4.4",
-      "distance": "700m"
+      "distance": "700m",
+      "orderDate": "2025-11-13",
+      "shopName": "イタリアン ロッソ",
+      "totalAmount": 1900,
+      "itemCount": 2
     },
     {
       "id": 9,
       "user_id": 1,
       "name": "うどん",
       "rating": "4.1",
-      "distance": "400m"
+      "distance": "400m",
+      "orderDate": "2025-11-12",
+      "shopName": "さぬきうどん 讃岐屋",
+      "totalAmount": 950,
+      "itemCount": 2
     },
     {
       "id": 10,
       "user_id": 2,
       "name": "たこ焼き",
       "rating": "4.6",
-      "distance": "300m"
+      "distance": "300m",
+      "orderDate": "2025-11-11",
+      "shopName": "たこ焼き 銀だこ",
+      "totalAmount": 800,
+      "itemCount": 1
     }
   ],
 
@@ -217,6 +270,172 @@
       "email": "suzuki@example.com",
       "avatar": "https://i.pravatar.cc/150?img=3",
       "joinDate": "2024-03-10"
+    }
+  ],
+  "cartItems": [
+    { "id": 1, "user_id": 1, "name": "ハンバーガー", "price": 500, "quantity": 2 },
+    { "id": 2, "user_id": 1, "name": "ポテト", "price": 300, "quantity": 1 },
+    { "id": 3, "user_id": 1, "name": "コーラ", "price": 200, "quantity": 3 },
+    { "id": 4, "user_id": 1, "name": "チーズバーガー", "price": 600, "quantity": 1 },
+    { "id": 5, "user_id": 2, "name": "ピザ", "price": 1200, "quantity": 1 },
+    { "id": 6, "user_id": 2, "name": "サラダ", "price": 400, "quantity": 2 },
+    { "id": 7, "user_id": 2, "name": "オレンジジュース", "price": 250, "quantity": 1 },
+    { "id": 8, "user_id": 3, "name": "ラーメン", "price": 800, "quantity": 2 },
+    { "id": 9, "user_id": 3, "name": "餃子", "price": 350, "quantity": 3 },
+    { "id": 10, "user_id": 3, "name": "チャーハン", "price": 700, "quantity": 1 },
+    { "id": 11, "user_id": 3, "name": "ビール", "price": 500, "quantity": 2 }
+  ],
+  "shopping_goods": [
+    {
+      "name": "おすすめ",
+      "type": 0,
+      "foods": [
+        {
+          "id": 1,
+          "name": "から揚げ弁当",
+          "price": 580,
+          "oldPrice": 650,
+          "description": "ジューシーなから揚げが6個入った人気のお弁当",
+          "sellCount": 234,
+          "rating": 95,
+          "icon": "https://fuss10.elemecdn.com/6/5c/b8b3c0e4c23c51c41e1a0658b9b5djpeg.jpeg",
+          "image": "https://fuss10.elemecdn.com/6/5c/b8b3c0e4c23c51c41e1a0658b9b5djpeg.jpeg"
+        },
+        {
+          "id": 2,
+          "name": "特製ハンバーガー",
+          "price": 680,
+          "oldPrice": 750,
+          "description": "100%ビーフパティを使用した本格派ハンバーガー",
+          "sellCount": 187,
+          "rating": 92,
+          "icon": "https://fuss10.elemecdn.com/a/3f/3ca0842c84c7dcd87c4fc17b3c6f7jpeg.jpeg",
+          "image": "https://fuss10.elemecdn.com/a/3f/3ca0842c84c7dcd87c4fc17b3c6f7jpeg.jpeg"
+        }
+      ]
+    },
+    {
+      "name": "定食",
+      "type": 1,
+      "foods": [
+        {
+          "id": 3,
+          "name": "焼き魚定食",
+          "price": 850,
+          "oldPrice": 950,
+          "description": "サバの塩焼きとご飯、味噌汁、漬物のセット",
+          "sellCount": 156,
+          "rating": 94,
+          "icon": "https://fuss10.elemecdn.com/5/8e/5e4571d0fbc7c2f3f3e7a8f4a6a5ejpeg.jpeg",
+          "image": "https://fuss10.elemecdn.com/5/8e/5e4571d0fbc7c2f3f3e7a8f4a6a5ejpeg.jpeg"
+        },
+        {
+          "id": 4,
+          "name": "とんかつ定食",
+          "price": 950,
+          "oldPrice": 1080,
+          "description": "サクサクのとんかつとキャベツの千切り、ご飯、味噌汁",
+          "sellCount": 201,
+          "rating": 96,
+          "icon": "https://fuss10.elemecdn.com/f/3a/3ca0842c84c7dcd87c4fc17b3c6f7jpeg.jpeg",
+          "image": "https://fuss10.elemecdn.com/f/3a/3ca0842c84c7dcd87c4fc17b3c6f7jpeg.jpeg"
+        }
+      ]
+    },
+    {
+      "name": "麺類",
+      "type": 2,
+      "foods": [
+        {
+          "id": 5,
+          "name": "醤油ラーメン",
+          "price": 680,
+          "oldPrice": 750,
+          "description": "あっさりとした醤油スープが特徴の定番ラーメン",
+          "sellCount": 312,
+          "rating": 93,
+          "icon": "https://fuss10.elemecdn.com/d/2a/8c0a2e6f7b5c4d3e2f1a0b9c8d7e6jpeg.jpeg",
+          "image": "https://fuss10.elemecdn.com/d/2a/8c0a2e6f7b5c4d3e2f1a0b9c8d7e6jpeg.jpeg"
+        },
+        {
+          "id": 6,
+          "name": "味噌ラーメン",
+          "price": 750,
+          "oldPrice": 820,
+          "description": "濃厚な味噌スープとコーンがトッピングされたラーメン",
+          "sellCount": 278,
+          "rating": 91,
+          "icon": "https://fuss10.elemecdn.com/e/3b/9d1b3c4e5f6a7b8c9d0e1f2a3b4c5jpeg.jpeg",
+          "image": "https://fuss10.elemecdn.com/e/3b/9d1b3c4e5f6a7b8c9d0e1f2a3b4c5jpeg.jpeg"
+        },
+        {
+          "id": 7,
+          "name": "冷やしうどん",
+          "price": 550,
+          "oldPrice": 620,
+          "description": "さっぱりとした冷たいうどん。夏におすすめ",
+          "sellCount": 143,
+          "rating": 89,
+          "icon": "https://fuss10.elemecdn.com/c/4d/5e6f7a8b9c0d1e2f3a4b5c6d7e8f9jpeg.jpeg",
+          "image": "https://fuss10.elemecdn.com/c/4d/5e6f7a8b9c0d1e2f3a4b5c6d7e8f9jpeg.jpeg"
+        }
+      ]
+    },
+    {
+      "name": "丼もの",
+      "type": 3,
+      "foods": [
+        {
+          "id": 8,
+          "name": "牛丼",
+          "price": 480,
+          "oldPrice": 550,
+          "description": "甘辛いタレで煮込んだ牛肉とご飯の定番丼",
+          "sellCount": 423,
+          "rating": 94,
+          "icon": "https://fuss10.elemecdn.com/b/5e/6f7a8b9c0d1e2f3a4b5c6d7e8f9a0jpeg.jpeg",
+          "image": "https://fuss10.elemecdn.com/b/5e/6f7a8b9c0d1e2f3a4b5c6d7e8f9a0jpeg.jpeg"
+        },
+        {
+          "id": 9,
+          "name": "親子丼",
+          "price": 650,
+          "oldPrice": 720,
+          "description": "鶏肉と卵のふんわりとした食感が楽しめる丼",
+          "sellCount": 289,
+          "rating": 92,
+          "icon": "https://fuss10.elemecdn.com/a/6f/7a8b9c0d1e2f3a4b5c6d7e8f9a0b1jpeg.jpeg",
+          "image": "https://fuss10.elemecdn.com/a/6f/7a8b9c0d1e2f3a4b5c6d7e8f9a0b1jpeg.jpeg"
+        }
+      ]
+    },
+    {
+      "name": "サイドメニュー",
+      "type": 4,
+      "foods": [
+        {
+          "id": 10,
+          "name": "枝豆",
+          "price": 280,
+          "oldPrice": 320,
+          "description": "塩ゆでした枝豆。ビールのお供に最適",
+          "sellCount": 198,
+          "rating": 88,
+          "icon": "https://fuss10.elemecdn.com/9/0c/1d2e3f4a5b6c7d8e9f0a1b2c3d4e5jpeg.jpeg",
+          "image": "https://fuss10.elemecdn.com/9/0c/1d2e3f4a5b6c7d8e9f0a1b2c3d4e5jpeg.jpeg"
+        },
+        {
+          "id": 11,
+          "name": "ポテトフライ",
+          "price": 320,
+          "oldPrice": 380,
+          "description": "カリカリに揚げたフライドポテト",
+          "sellCount": 345,
+          "rating": 90,
+          "icon": "https://fuss10.elemecdn.com/8/1d/2e3f4a5b6c7d8e9f0a1b2c3d4e5f6jpeg.jpeg",
+          "image": "https://fuss10.elemecdn.com/8/1d/2e3f4a5b6c7d8e9f0a1b2c3d4e5f6jpeg.jpeg"
+        }
+      ]
     }
   ]
 }

@@ -6,7 +6,7 @@
     />
     <clock />
     <count-button />
-    <div class="search-box">
+    <div v-if="userInfo && userInfo.mobile" class="search-box">
       <input
         type="text"
         v-model="searchWord" placeholder="検索"
@@ -16,7 +16,7 @@
         value="検索"
         @click="$router.push('/search')"
       />
-      <ul v-if="userInfo && userInfo.mobile">
+      <ul>
         <li
           v-for="item in filteredList"
           :key="item.id"
