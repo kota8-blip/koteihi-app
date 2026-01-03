@@ -31,7 +31,8 @@
       :loginPrompt="'ログイン後に検索履歴を確認する'"
     />
     <discover-list v-if="userInfo && userInfo.mobile"
-    :discoverListArr="discoverListArr" />
+      :discoverListArr="discoverListArr"
+    />
     <Tabbar page="1" />
   </div>
 </template>

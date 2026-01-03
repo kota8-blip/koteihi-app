@@ -1,32 +1,32 @@
 import request from "../utils/request";
 
-export const cartItems = (user_id) => {
+export const favoriteItems = (user_id) => {
   return request({
-    url: `/cartItems`,
+    url: `/favorites`,
     method: 'GET',
     params: { user_id },
   })
 }
 
-export const addToCart = (item) => {
+export const addToFavorite = (item) => {
   return request({
-    url: `/cartItems`,
+    url: `/favorites`,
     method: 'POST',
     data: item,
   })
 }
 
-export const updateCart = (id, item) => {
+export const updateFavorite = (id, item) => {
   return request({
-    url: `/cartItems/${id}`,
+    url: `/favorites/${id}`,
     method: 'PUT',
     data: item,
   })
 }
 
-export const deleteCart = (id) => {
+export const deleteFavorite = (id) => {
   return request({
-    url: `/cartItems/${id}`,
+    url: `/favorites/${id}`,
     method: 'DELETE',
   })
 }

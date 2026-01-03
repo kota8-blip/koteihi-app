@@ -6,13 +6,15 @@ import {
 
 import userInfo from './userInfo.js';
 import cart from './cart.js';
+import favorite from './favorite.js';
 
 Vue.use(Vuex)
 
 export default () => new Vuex.Store({
   modules: {
     userInfo,
-    cart
+    cart,
+    favorite,
   },
 
   state: {

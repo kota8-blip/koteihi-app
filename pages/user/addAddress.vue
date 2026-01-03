@@ -1,33 +1,33 @@
 <template>
   <div class="page-addAddress">
-    <mt-header 
-      fixed 
-      title="添加地址">
-      <div 
-        slot="left" 
+    <mt-header
+      fixed
+      title="住所を追加する">
+      <div
+        slot="left"
         @click="$router.go(-1)">
-        <mt-button icon="back"/>
+        <mt-button icon="back" />
       </div>
     </mt-header>
-    <mt-field 
-      v-model="name" 
-      label="联系人" 
-      placeholder="你的姓名"/>
-    <mt-field 
-      v-model="phone" 
-      label="电话" 
-      placeholder="你的手机号" 
-      type="tel"/>
-    <mt-field 
-      v-model="address" 
-      label="地址" 
-      placeholder="小区、写字楼、学校等"/>
-    <mt-field 
-      v-model="details" 
-      label="门牌号" 
-      placeholder="10号楼5层501室"/>
-    <button 
-      class="submit-btn" 
+    <mt-field
+      v-model="name"
+      label="連絡先"
+      placeholder="あなたの名前" />
+    <mt-field
+      v-model="phone"
+      label="電話番号"
+      placeholder="あなたの電話番号"
+      type="tel" />
+    <mt-field
+      v-model="address"
+      label="住所"
+      placeholder="小区、写字楼、学校等" />
+    <mt-field
+      v-model="details"
+      label="門牌番号"
+      placeholder="10号楼5层501室" />
+    <button
+      class="submit-btn"
       @click="submit()">保存</button>
   </div>
 </template>
@@ -54,7 +54,7 @@
       };
     },
     head: {
-      title: "添加地址"
+      title: "住所を追加する"
     },
     computed: {
       ...mapGetters(["userInfo"])
@@ -71,7 +71,7 @@
       async submit() {
         if (!v.required(this.name)) {
           Toast({
-            message: "请输入联系人",
+            message: "連絡先を入力してください",
             position: "bottom",
             duration: 1500
           });
@@ -79,7 +79,7 @@
         }
         if (!v.tel(this.phone)) {
           Toast({
-            message: "手机号格式不正确",
+            message: "電話番号の形式が正しくありません",
             position: "bottom",
             duration: 1500
           });
@@ -87,7 +87,7 @@
         }
         if (!v.required(this.address)) {
           Toast({
-            message: "请输入地址",
+            message: "住所を入力してください",
             position: "bottom",
             duration: 1500
           });

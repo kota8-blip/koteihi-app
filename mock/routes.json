@@ -3,6 +3,7 @@
   "/shopping/pois": "/pois",
   "/shopping/food_entries": "/restaurants",
   "/api/shopping/seller": "shopping_seller",
+  "/login": "/login",
 
   "/api/*": "/$1",
   "/v1/*": "/$1",

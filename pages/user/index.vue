@@ -250,6 +250,7 @@
     </section>
     <clock />
     <CountButton />
+    <button v-if="userInfo && userInfo.mobile" @click="toFavorites">お気に入り</button>
     <CartPage v-if="userInfo && userInfo.mobile" />
     <input
         type="button"
@@ -309,6 +310,9 @@
           this.username = "ログイン/登録";
           this.mobile = "ログイン後特権を享受";
         }
+      },
+      toFavorites() {
+        this.$router.push('/user/favorites');
       }
     }
   };

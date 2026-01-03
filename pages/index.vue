@@ -15,11 +15,11 @@
       {{ 日付 }}{{ 曜日 }}
     </div>
     <div :class="['button-space', { 'button-space-active': isClockActive }]">
-      <message
+      <Message
         :message="message"
         @messageClicked="handleMessageClicked"
       />
-      <count-button />
+      <CountButton />
     </div>
     <nav class="nav-container">
       <div

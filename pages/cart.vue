@@ -1,13 +1,14 @@
 <template>
   <div class="cart_container">
     <h3>カート内容</h3>
+
     <ul
       v-if="cartItems.length">
       <li v-for="item in cartItems" :key="item.id">
         {{ item.name }} : {{ item.price }}円 x {{ item.quantity }}
-        <button @click="addCount(item)">+</button>
-        <button @click="downCount(item)">-</button>
-        <button @click="deleteItem(item)">削除</button>
+        <button :disabled="isLoading" @click="addCount(item)">+</button>
+        <button :disabled="isLoading" @click="downCount(item)">-</button>
+        <button :disabled="isLoading" @click="deleteItem(item)">削除</button>
       </li>
       <li>
         合計: {{ totalPrice }}円
@@ -19,9 +20,17 @@
 <script>
   import { cartItems } from '~/assets/services/cart';
   import { mapGetters } from 'vuex';
+  import { updateCart, deleteCart } from '~/assets/services/cart';
+  import { Toast, Indicator } from 'mint-ui';
 
   export default {
     name: 'CartPage',
+    data() {
+      return {
+        isLoading: false,
+        errorMessage: '',
+      };
+    },
     computed: {
       ...mapGetters('userInfo', ['userInfo']),
       cartItems() {
@@ -44,18 +53,67 @@
           this.$store.commit('cart/SetCartItems', res);
           }
         },
-        addCount(item) {
-        item.quantity++;
-      },
-      downCount(item) {
-        if(item.quantity > 1) {
-          item.quantity--;
+        async addCount(item) {
+          console.log('addCount', item);
+            Indicator.open('読み込み中...');
+            try {
+              await new Promise(resolve => setTimeout(resolve, 1000));
+
+              const res = await updateCart(item.id, {
+                user_id: this.userInfo.user_id,
+                name: item.name,
+                price: item.price,
+                quantity: item.quantity + 1,
+              });
+
+              const updated = this.$store.state.cart.cartItems.map(i => i.id === item.id ? res : i);
+              this.$store.commit('cart/SetCartItems', updated);
+              Toast('数量を増やしました');
+            } catch (error) {
+              Toast('通信エラーが発生しました');
+            } finally {
+              Indicator.close();
+            }
+        },
+        async downCount(item) {
+          if(item.quantity > 1) {
+            Indicator.open('読み込み中...');
+            try {
+              await new Promise(resolve => setTimeout(resolve, 1000));
+
+              const res = await updateCart(item.id, {
+                user_id: this.userInfo.user_id,
+                name: item.name,
+                price: item.price,
+                quantity: item.quantity - 1,
+              });
+
+              const updated = this.$store.state.cart.cartItems.map(i => i.id === item.id ? res : i);
+              this.$store.commit('cart/SetCartItems', updated);
+              Toast('数量を減らしました');
+            } catch (error) {
+              Toast('通信エラーが発生しました');
+            } finally {
+              Indicator.close();
+            }
+          }
+        },
+        async deleteItem(item) {
+        Indicator.open('削除中...');
+        try {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          await deleteCart(item.id);
+
+          const updated = this.$store.state.cart.cartItems.filter(i => i.id !== item.id);
+          this.$store.commit('cart/SetCartItems', updated);
+          Toast('削除しました');
+        } catch (error) {
+          Toast('通信エラーが発生しました');
+        } finally {
+          Indicator.close();
         }
+      }
       },
-      deleteItem(item) {
-        this.$store.dispatch('cart/deleteItem', item);
-      },
-    },
   }
 </script>
 
