@@ -1,40 +1,76 @@
 <template>
   <div class="orderlist_container">
+    <div v-if="checkedFilters" class="filter_select">
+      <h3>適用中の条件</h3>
+      <span v-if="searchShopName" class="filter-tag">店舗名: {{ searchShopName }} <button @click="removeFilter('searchShopName')" class="tag-close">×</button></span>
+      <span v-if="minPrice" class="filter-tag">最小価格: {{ minPrice }} <button @click="removeFilter('minPrice')" class="tag-close">×</button></span>
+      <span v-if="maxPrice" class="filter-tag">最大価格: {{ maxPrice }} <button @click="removeFilter('maxPrice')" class="tag-close">×</button></span>
+      <span v-if="searchCategory" class="filter-tag">カテゴリー: {{ searchCategory }} <button @click="removeFilter('searchCategory')" class="tag-close">×</button></span>
+      <span v-if="searchRating" class="filter-tag">評価: {{ searchRating }} <button @click="removeFilter('searchRating')" class="tag-close">×</button></span>
+    </div>
     <h2>注文履歴</h2>
     <div class="search_controls">
       <input
-        v-if="selectedFilter === 'price'"
+        v-if="filterShopName"
+        type="text"
+        placeholder="店舗名"
+        v-model="searchShopName"
+        class="search_input"
+      >
+      <input
+        v-if="filterPrice"
         type="text"
         placeholder="最小価格"
         v-model="minPrice"
         class="search_input"
       >
-      <span v-if="selectedFilter === 'price'" class="price_separator">～</span>
+      <span v-if="filterPrice" class="price_separator">～</span>
       <input
-        v-if="selectedFilter === 'price'"
+        v-if="filterPrice"
         type="text"
         placeholder="最大価格"
         v-model="maxPrice"
         class="search_input"
       >
       <input
-        v-else
+        v-if="filterCategory"
+        type="text"
+        placeholder="カテゴリー"
+        v-model="searchCategory"
+        class="search_input"
+      >
+      <input
+        v-if="filterRating"
+        type="text"
+        placeholder="評価"
+        v-model="searchRating"
+        class="search_input"
+      >
+      <input
+        v-else-if="!filterShopName && !filterPrice && !filterCategory && !filterRating"
         type="text"
         placeholder="店舗名検索"
         v-model="searchShopName"
         class="search_input"
       >
-      <select @change="filteredOption($event.target.value)" class="filter_select">
-        <option value="">絞り込み条件を選択</option>
-        <option value="shopName">店舗名</option>
-        <option value="price">価格範囲</option>
-        <option value="category">カテゴリー</option>
-        <option value="rating">評価</option>
-      </select>
+      <button
+        @click="filteredOption()"
+      >絞り込み選択</button>
       <button
         @click="deleteFilters()"
         class="clear_button"
       >クリア</button>
+    </div>
+    <div v-if="filteredOptionModal" class="modal_overlay" @click.self="closeModal">
+      <div class="modal_content">
+        <h3>条件内容</h3>
+        <label><input type="checkbox" v-model="filterShopName">店舗名</label>
+        <label><input type="checkbox" v-model="filterPrice">価格範囲</label>
+        <label><input type="checkbox" v-model="filterCategory">カテゴリー</label>
+        <label><input type="checkbox" v-model="filterRating">評価</label>
+        <button @click="closeModal">閉じる</button>
+        <button @click="closeModal()">決定</button>
+      </div>
     </div>
     <div class="validation_errors">
       <p v-if="priceValidationError" class="error_message">{{ priceValidationError }}</p>
@@ -168,7 +204,6 @@
         showmodal: false,
         selectedOrder: null,
         searchShopName: '',
-        debounceTimer: null,
         sortOrder: 'desc',
         cartItems: [],
         orders: [],
@@ -180,7 +215,15 @@
         selectedFilter: '',
         minPrice: '',
         maxPrice: '',
-        // filteredAmount: '',
+        filteredAmount: '',
+        filteredOptionModal: false,
+        filterShopName: false,
+        filterPrice: false,
+        filterCategory: false,
+        filterRating: false,
+        searchCategory: '',
+        searchRating: '',
+        checkedFilters: false,
       }
     },
     computed: {
@@ -188,36 +231,34 @@
       filteredOrderList() {
         let result = this.originalOrderListArr;
 
+        if (this.searchShopName) {
+          result = result.filter(item => item.shopName.includes(this.searchShopName));
+        }
+
         // 店舗名フィルター
-        if (this.selectedFilter === 'shopName' && this.searchShopName) {
+        if (this.filterShopName && this.searchShopName) {
           result = result.filter(item => item.shopName.includes(this.searchShopName));
         }
 
         // 価格範囲フィルター
-        if (this.selectedFilter === 'price' && this.minPrice && this.maxPrice) {
-          result = result.filter(item => item.totalAmount <= parseFloat(this.maxPrice) && item.totalAmount >= parseFloat(this.minPrice));
+        if (this.filterPrice && this.minPrice && this.maxPrice) {
+          result = result.filter(item => item.totalAmount >= parseFloat(this.minPrice) && item.totalAmount <= parseFloat(this.maxPrice));
         }
 
         // カテゴリーフィルター
-        if (this.selectedFilter === 'category' && this.searchShopName) {
-          result = result.filter(item => item.category && item.category.includes(this.searchShopName));
+        if (this.filterCategory && this.searchCategory) {
+          result = result.filter(item => item.category && item.category.includes(this.searchCategory));
         }
 
         // 評価フィルター
-        if (this.selectedFilter === 'rating' && this.searchShopName) {
-          result = result.filter(item => String(item.rating) === this.searchShopName);
-        }
-
-        // 店舗名検索
-        if (this.searchShopName && !this.selectedFilter) {
-          result = result.filter(item => item.shopName.includes(this.searchShopName));
+        if (this.filterRating && this.searchRating) {
+          result = result.filter(item => String(item.rating) === this.searchRating);
         }
 
         // お気に入りフィルター
         if (this.showFavoriteOnly) {
           result = result.filter(item => this.isFavorite(item));
         }
-
         return result;
       },
       priceValidationError() {
@@ -250,23 +291,12 @@
       },
       totalPages() {
         return Math.ceil(this.filteredOrderList.length / this.perPage);
-        this.totalPages.push.this.filteredAmount;
       },
       paginatedOrders() {
         const start = (this.currentPage - 1) * this.perPage;
         const end = start + this.perPage;
         return this.filteredOrderList.slice(start, end);
       },
-    },
-    watch: {
-      searchShopName(newVal) {
-        if (this.debounceTimer) {
-          clearTimeout(this.debounceTimer);
-        }
-        this.debounceTimer = setTimeout(() => {
-          this.handleSearch(newVal);
-        }, 500);
-      }
     },
     mounted() {
       this.initData();
@@ -290,6 +320,13 @@
         this.searchShopName = '';
         this.minPrice = '';
         this.maxPrice = '';
+        this.filterShopName = '';
+        this.filterPrice = '';
+        this.filterCategory = '';
+        this.filterRating = '';
+        this.checkedFilters = false;
+        this.searchCategory = '';
+        this.searchRating = '';
       },
       openModal(item) {
       this.selectedOrder = item;
@@ -298,6 +335,32 @@
       closeModal() {
         this.showmodal = false;
         this.selectedOrder = null;
+        this.filteredOptionModal = false;
+        if (this.filterShopName || this.filterPrice || this.filterCategory || this.filterRating) {
+          this.checkedFilters = true;
+        }
+      },
+      removeFilter(filterType) {
+        if (filterType === 'searchShopName') {
+          this.searchShopName = '';
+        }
+        else if (filterType === 'minPrice') {
+          this.minPrice = '';
+        }
+        else if (filterType === 'maxPrice') {
+          this.maxPrice = '';
+        }
+        else if (filterType === 'searchCategory') {
+          this.searchCategory = '';
+        }
+        else if (filterType === 'searchRating') {
+          this.searchRating = '';
+        }
+      },
+      filteredOption(value) {
+        this.filteredOptionModal = true;
+        // モーダルで選択された値をvalueに設定する処理をここに追加
+        // 例: this.selectedFilter = value;
       },
       toggleSortOrder() {
         this.sortOrder = this.sortOrder === 'desc' ? 'asc' : 'desc';
@@ -398,10 +461,6 @@
       },
       async handleSearch(keyword) {
       },
-
-      filteredOption(value) {
-        this.selectedFilter = value;
-      }
     },
   };
 
@@ -423,6 +482,9 @@
     align-items: center;
     gap: 8px;
     flex-wrap: nowrap;
+  }
+  .search_controls button {
+    flex-shrink: 0;
   }
   .search_input {
     padding: 8px;
@@ -544,5 +606,21 @@
 }
 .favorite-icon.active {
   color: #ff4757;
+}
+.filter-tag {
+display: inline-block;
+background: #eee;
+color: #333;
+border-radius: 12px;
+padding: 4px 12px;
+margin-right: 8px;
+font-size: 13px;
+}
+.tag-close {
+background: none;
+border: none;
+margin-left: 4px;
+cursor: pointer;
+font-weight: bold;
 }
 </style>
