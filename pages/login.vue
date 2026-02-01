@@ -1,5 +1,6 @@
 <template>
   <div class="login-page">
+    <Toast ref="toast" />
     <div class="head">
       <nav :style="`background-image: url('${banner}');`">
         <i
@@ -51,9 +52,9 @@
 </template>
 
 <script>
-  import {
-    Toast
-  } from "mint-ui";
+  // import {
+  //   Toast
+  // } from "mint-ui";
   import v from "~/assets/utils/validate";
   import {
     loginApi
@@ -61,8 +62,12 @@
   import {
     mapActions
   } from "vuex";
+  import Toast from "../components/toast.vue";
 
   export default {
+    components: {
+      Toast
+    },
     head: {
       title: "ログイン"
     },
@@ -85,15 +90,15 @@
       },
       async Login() {
         if (!v.tel(this.mobile)) {
-          Toast("電話番号が間違っています");
+          this.$myToast('error', '電話番号が間違っています');
           return;
         }
         if (!v.required(this.captcha)) {
-          Toast("確認コードを入力してください");
+          this.$myToast('error', '確認コードを入力してください');
           return;
         }
         if (!v.required(this.password)) {
-          Toast("パスワードを入力してください");
+          this.$myToast('error', 'パスワードを入力してください');
           return;
         }
         const res = await loginApi({
@@ -107,10 +112,12 @@
 
         if (user) {
           this.$store.dispatch("userInfo/restoreUserInfo", user);
-          Toast("ログイン成功,お帰りなさい");
+            // Toast("ログイン成功,お帰りなさい");
+          // this.$myToast('success', 'ログイン成功,お帰りなさい');
+          this.$store.commit('userInfo/setToast', { type: 'success', message: 'ログイン成功' });
           this.$router.push("/userdetail");
         } else {
-          Toast("電話番号またはパスワードが間違っています");
+          this.$myToast('error', '電話番号またはパスワードが間違っています');
         }
       }
     }

@@ -1,5 +1,6 @@
 <template>
   <div favorites-header>
+    <Toast />
     <h2>お気に入り店舗</h2>
     <p
       v-if="favoriteItems.length === 0">まだお気に入り店舗がありません。</p>
@@ -35,10 +36,13 @@
   import {favoriteItems} from '~/assets/services/favorite';
   import { mapGetters } from 'vuex';
   import { updateCart, addToCart } from '~/assets/services/cart';
-  import { Toast, Indicator } from 'mint-ui';
+  import Toast from '~/components/toast.vue';
 
 export default {
   name: 'FavoritesPage',
+  components: {
+    Toast
+  },
   data() {
     return {
       favoriteItemsList: [],
@@ -78,7 +82,7 @@ export default {
       this.selectedOrder = null;
     },
     async orderAgain() {
-        Indicator.open('読み込み中...');
+        // Indicator.open('読み込み中...');
         try {
           await new Promise(resolve => setTimeout(resolve, 1000));
 
@@ -108,7 +112,7 @@ export default {
 
           this.$store.commit('cart/SetCartItems', [...this.$store.state.cart.cartItems, res]);
         }
-          Toast('カートに追加されました');
+          this.$store.commit('userInfo/setToast', { type: 'success', message: 'カートに追加されました' });
           this.closeModal();
           this.$router.push({ path: '/user' });
         } catch (error) {

@@ -54,7 +54,8 @@ module.exports = {
   { src: '~assets/styles/base.scss' },
 
   // ↓ここを追記（外部画像URLをローカルのダミーに差し替える）
-  { src: '~/plugins/block-external-images.client.js' }
+  { src: '~/plugins/block-external-images.client.js' },
+  '~/plugins/toast.js',
 ],
 }
 

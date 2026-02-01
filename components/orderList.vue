@@ -1,5 +1,6 @@
 <template>
   <div class="orderlist_container">
+    <Toast />
     <div v-if="checkedFilters" class="filter_select">
       <h3>適用中の条件</h3>
       <span v-if="searchShopName" class="filter-tag">店舗名: {{ searchShopName }} <button @click="removeFilter('searchShopName')" class="tag-close">×</button></span>
@@ -193,11 +194,15 @@
   import { mapGetters } from "vuex";
   import { addToCart, updateCart } from "../assets/services/cart";
   import { favoriteItems, addToFavorite, updateFavorite, deleteFavorite } from "~/assets/services/favorite";
-  import { Toast, Indicator } from "mint-ui";
+  // import Indicator from "mint-ui";
   import Validate from "../assets/utils/validate";
+  import Toast from "./toast.vue";
 
   export default {
       name: 'OrderList',
+      components: {
+        Toast
+      },
     data() {
       return {
         orderListArr: [],
@@ -377,7 +382,7 @@
         return this.showFavoriteOnly;
       },
       async orderAgain() {
-        Indicator.open('読み込み中...');
+        // Indicator.open('読み込み中...');
         try {
           await new Promise(resolve => setTimeout(resolve, 1000));
 
@@ -407,13 +412,13 @@
 
           this.$store.commit('cart/SetCartItems', [...this.$store.state.cart.cartItems, res]);
         }
-          Toast('カートに追加されました');
+          this.$store.commit('userInfo/setToast', { type: 'success', message: 'カートに追加されました' });
           this.closeModal();
           this.$router.push({ path: '/user' });
         } catch (error) {
-          Toast('通信エラーが発生しました');
+          this.$myToast( 'error', '通信エラーが発生しました');
         } finally {
-          Indicator.close();
+          // Indicator.close();
         }
       },
       prevPage() {

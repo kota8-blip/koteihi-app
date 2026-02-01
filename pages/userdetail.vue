@@ -1,5 +1,6 @@
 <template>
   <div class="userdetail-page">
+    <Toast ref="toast" />
     <div class="head">
       <nav :style="`background-image: url('${banner}');`">
         <i
@@ -23,8 +24,13 @@
 <script>
   import { mapGetters } from "vuex";
   import Tabbar from "~/components/tabbar";
+  import Toast from "../components/toast.vue";
+
   export default {
-  components: { Tabbar },
+  components: {
+    Tabbar,
+    Toast
+  },
     data() {
       return {
         banner: "/banner1.png", // 例：ダミー画像パス
@@ -32,7 +38,14 @@
     },
     computed: {
       ...mapGetters("userInfo", ["userInfo"])
-    }
+    },
+    mounted() {
+      if(this.$store.getters['userInfo/successToast']) {
+        console.log("Displaying success toast:", this.$store.getters['userInfo/successToast']);
+        this.$myToast('success', 'ログイン成功,お帰りなさい');
+        this.$store.commit('userInfo/setToast', { type: 'success', message: false });
+      }
+    },
   };
 </script>
 

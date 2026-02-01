@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nuxt/>
+    <nuxt />
     <svg-icon />
   </div>
 </template>

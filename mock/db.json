@@ -936,7 +936,7 @@
       "user_id": 1,
       "name": "から揚げ",
       "price": 400,
-      "quantity": 9,
+      "quantity": 15,
       "id": "5e32"
     },
     {
@@ -952,6 +952,125 @@
       "name": "うどん",
       "price": null,
       "quantity": 2
+    },
+    {
+      "id": "8895",
+      "user_id": 1,
+      "name": "から揚げ",
+      "price": 400,
+      "quantity": 3
+    },
+    {
+      "id": "feb6",
+      "user_id": 1,
+      "name": "から揚げ",
+      "price": 400,
+      "quantity": 3
+    },
+    {
+      "user_id": 1,
+      "name": "から揚げ",
+      "price": 400,
+      "quantity": 6,
+      "id": "54a4"
+    },
+    {
+      "id": "eb17",
+      "user_id": 1,
+      "name": "から揚げ",
+      "price": 400,
+      "quantity": 3
+    },
+    {
+      "id": "805d",
+      "user_id": 1,
+      "name": "から揚げ",
+      "price": 400,
+      "quantity": 3
+    },
+    {
+      "id": "2b91",
+      "user_id": 1,
+      "name": "から揚げ",
+      "price": 400,
+      "quantity": 3
+    },
+    {
+      "id": "cf28",
+      "user_id": 1,
+      "name": "から揚げ",
+      "price": 400,
+      "quantity": 3
+    },
+    {
+      "id": "edff",
+      "user_id": 1,
+      "name": "から揚げ",
+      "price": 400,
+      "quantity": 3
+    },
+    {
+      "id": "e7f3",
+      "user_id": 1,
+      "name": "から揚げ",
+      "price": 400,
+      "quantity": 3
+    },
+    {
+      "id": "dd6b",
+      "user_id": 1,
+      "name": "から揚げ",
+      "price": 400,
+      "quantity": 3
+    },
+    {
+      "id": "3755",
+      "user_id": 1,
+      "name": "から揚げ",
+      "price": 400,
+      "quantity": 3
+    },
+    {
+      "id": "6e30",
+      "user_id": 1,
+      "name": "から揚げ",
+      "price": 400,
+      "quantity": 3
+    },
+    {
+      "id": "83e5",
+      "user_id": 1,
+      "name": "から揚げ",
+      "price": 400,
+      "quantity": 3
+    },
+    {
+      "id": "f9d9",
+      "user_id": 1,
+      "name": "から揚げ",
+      "price": 400,
+      "quantity": 3
+    },
+    {
+      "user_id": 1,
+      "name": "ショートケーキ",
+      "price": null,
+      "quantity": 6,
+      "id": "6801"
+    },
+    {
+      "user_id": 1,
+      "name": "ラーメン",
+      "price": null,
+      "quantity": 8,
+      "id": "2785"
+    },
+    {
+      "id": "35e7",
+      "user_id": 1,
+      "name": "寿司",
+      "price": null,
+      "quantity": 5
     }
   ],
   "favorites": [
@@ -981,6 +1100,15 @@
       "name": "ラーメン",
       "price": 2500,
       "itemCount": 4
+    },
+    {
+      "id": "cbb9",
+      "user_id": 1,
+      "order_id": "5",
+      "shopName": "寿司処 まぐろ亭",
+      "name": "寿司",
+      "price": 3500,
+      "itemCount": 5
     }
   ],
   "shopping_goods": [

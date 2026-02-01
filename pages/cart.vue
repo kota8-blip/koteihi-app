@@ -1,5 +1,6 @@
 <template>
   <div class="cart_container">
+    <Toast />
     <h3>カート内容</h3>
 
     <ul
@@ -21,10 +22,14 @@
   import { cartItems } from '~/assets/services/cart';
   import { mapGetters } from 'vuex';
   import { updateCart, deleteCart } from '~/assets/services/cart';
-  import { Toast, Indicator } from 'mint-ui';
+  // import { Toast, Indicator } from 'mint-ui';
+  import Toast from '../components/toast.vue';
 
   export default {
     name: 'CartPage',
+    components: {
+      Toast
+    },
     data() {
       return {
         isLoading: false,
@@ -42,6 +47,12 @@
     },
     mounted() {
       this.initData();
+
+      if(this.$store.getters['userInfo/successToast']) {
+        console.log("Displaying success toast:", this.$store.getters['userInfo/successToast']);
+        this.$myToast('success', 'カートに追加されました');
+        this.$store.commit('userInfo/setToast', { type: 'success', message: false });
+      }
     },
     methods: {
       async initData() {

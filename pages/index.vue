@@ -1,5 +1,6 @@
 <template>
   <div class="home-page">
+    <Toast ref="toast" />
     <mt-header
       fixed
       title="トップページ"
@@ -10,6 +11,10 @@
         @click="$router.push('/search')"
       />
     </mt-header>
+    <button @click="showSuccessToast">成功トースト表示</button>
+    <button @click="showErrorToast">失敗トースト表示</button>
+    <button @click="showWarningToast">警告トースト表示</button>
+    <button @click="showInfoToast">情報トースト表示</button>
     <clock />
     <div class="date">
       {{ 日付 }}{{ 曜日 }}
@@ -88,6 +93,7 @@
   import Message from '../components/Message.vue';
   import CountButton from '../components/countButton.vue';
   import Clock from '../components/clock.vue';
+  import Toast from '~/components/toast.vue';
 
   export default {
     components: {
@@ -95,7 +101,8 @@
       ShopList,
       Clock,
       Message,
-      CountButton
+      CountButton,
+      Toast
     },
     data() {
       return {
@@ -142,6 +149,18 @@
     methods: {
       handleMessageClicked() {
         this.isClockActive = !this.isClockActive;
+      },
+      showSuccessToast() {
+        this.$myToast('success', '操作が成功しました');
+      },
+      showErrorToast() {
+        this.$myToast('error', 'エラーが発生しました');
+      },
+      showWarningToast() {
+        this.$myToast('warning', '警告があります');
+      },
+      showInfoToast() {
+        this.$myToast('info', '情報です');
       }
     },
   };

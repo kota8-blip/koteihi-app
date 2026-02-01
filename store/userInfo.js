@@ -10,6 +10,8 @@ import {
 
 const state = () => ({
   userInfo: {},
+  successToast: false,
+  errorToast: false,
 });
 
 const getters = {
@@ -19,6 +21,9 @@ const getters = {
     // }
     return state.userInfo;
   },
+  successToast(state) {
+    return state.successToast;
+  }
 }
 
 const actions = {
@@ -69,6 +74,19 @@ const mutations = {
     state.userInfo = Object.assign(state.userInfo, value);
     cookies.set('userInfo', state.userInfo);
   },
+  setToast(state, { type,  message }) {
+    if (type === 'success') {
+      state.successToast = message;
+      setTimeout(() => {
+        state.successToast = false;
+      }, 3000)
+    } else if (type === 'error') {
+      state.errorToast = message;
+      setTimeout(() => {
+        state.errorToast = false;
+      }, 3000)
+    }
+  }
 }
 
 export default {
