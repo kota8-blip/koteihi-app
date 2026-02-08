@@ -1,20 +1,16 @@
 {
-  "name": "nuxt-elm",
-  "version": "2.0.0",
-  "description": "Nuxt.js project",
-  "author": "[easytuan] <[easytuan@foxmail.com]>",
+  "name": "habit-tracker",
+  "version": "1.0.0",
+  "description": "習慣トラッカーアプリ",
+  "author": "Kota",
   "private": true,
-  "license": "GPL",
+  "license": "MIT",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
-    "start": "nuxt build && cross-env NODE_ENV=production pm2 start server/index.js --node-args='--harmony' --name 'nuxt-elm'",
-    "stop": "pm2 stop server/index.js --name 'nuxt-elm'",
-    "restart": "nuxt build && cross-env NODE_ENV=production pm2 restart server/index.js --node-args='--harmony' --name 'nuxt-elm'",
-    "delete": "pm2 delete nuxt-elm",
-    "lint": "eslint --cache --fix --ext .js,.vue --ignore-path .gitignore .",
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
     "generate": "nuxt generate",
-    "tep": "node template",
-    "precommit": "npm run lint"
+    "lint": "eslint --cache --fix --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
