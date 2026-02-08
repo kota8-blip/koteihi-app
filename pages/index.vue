@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>習慣トラッカー</h1>
-    <p>毎日の習慣を記録して、継続しよう！</p>
+    <!-- <p>毎日の習慣を記録して、継続しよう！</p> -->
   </div>
 </template>
 
