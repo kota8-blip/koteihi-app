@@ -1,7 +1,7 @@
 module.exports = {
   mode: 'spa',
   head: {
-    title: '習慣トラッカー',
+    title: 'Routine Tracker',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
