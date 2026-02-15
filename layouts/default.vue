@@ -1,20 +1,20 @@
 <template>
   <div>
     <nuxt />
+    <BaseFooter />
     <svg-icon />
   </div>
 </template>
 
 <script>
+import BaseFooter from "../components/baseFooter.vue";
 import svgIcon from "../components/svg";
 export default {
   components: {
+    BaseFooter,
     svgIcon
   },
-//   computed: {
-//     ...mapGetters("userInfo", ["userInfo"])
-//   }
-};
+}
 </script>
 
 <style>
@@ -28,6 +28,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  max-height: 2000px;
 }
 
 *,

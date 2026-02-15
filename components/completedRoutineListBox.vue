@@ -41,7 +41,7 @@ export default {
 }
 .container h2 {
   font-size: 24px;
-  color: #888;
+  color: black;
   margin-top: 0;
 }
 .routine-lists {
