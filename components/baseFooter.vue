@@ -1,10 +1,10 @@
 <template>
   <div class="base-footer">
     <nav>
-      <nuxt-link
+      <button
         v-for="tab in tabs"
-        :key="tab.path"
-        :to="tab.path"
+        :key="tab.label"
+        @click="tab.action ? handleAction(tab.action) : navigate(tab.path)"
         :class="{
           'tab-item': true,
           'active': isActive(tab.path),
@@ -13,7 +13,7 @@
         :event="isActive(tab.path) ? '' : 'click'"
       >
         {{ tab.label }}
-      </nuxt-link>
+      </button>
     </nav>
   </div>
 </template>
@@ -27,7 +27,7 @@ export default {
         { label: 'Home', path: '/' },
         { label: '履歴', path: '/history' },
         { label: '設定', path: '/settings' },
-        { label: '更新', path: '/update' }
+        { label: '更新', action: 'update' }
       ]
     }
   },
@@ -35,6 +35,14 @@ export default {
   methods: {
     isActive(path) {
       return this.$route.path === path;
+    },
+    handleAction(action) {
+      if (action === 'update') {
+        window.location.reload();
+      }
+    },
+    navigate(path) {
+      this.$router.push(path);
     }
   }
 }
@@ -46,7 +54,6 @@ export default {
   text-align: center;
   width: 100%;
   padding: 30px 0;
-  bottom: 0;
 }
 .tab-item.disabled {
   color: #d4cccc;
@@ -54,16 +61,16 @@ export default {
   cursor: default;
   padding: 40px 20px;
   text-align: center;
-  border: 1px solid #b9b6b6;
-  margin: 50px;
+  border: 1px solid black;
+  margin: 10px;
 }
 .tab-item {
   color: black;
   cursor: pointer;
   padding: 40px 20px;
   text-align: center;
-  border: 1px solid #b9b6b6;
-  margin: 50px;
+  border: 1px solid black;
+  margin: 10px;
   text-decoration: none;
 }
 </style>

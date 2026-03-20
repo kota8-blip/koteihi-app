@@ -46,7 +46,7 @@ module.exports = {
   },
 
   plugins: [
-    // 習慣トラッカー用のプラグインをここに追加
+    { src: '~/plugins/v-calendar.js', mode: 'client' }
   ],
 }
 

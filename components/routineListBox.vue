@@ -28,9 +28,6 @@ export default {
   data() {
     return {
       add: '',
-      // lists: [
-      //   { id: 1, name: 'Morning Routine' },
-      // ],
       addListMocdal: false
     };
   },
@@ -91,7 +88,7 @@ export default {
   width: 100%;
   padding: 40px 20px;
   text-align: center;
-  border: 1px solid #b9b6b6;
+  border: 1px solid black;
 }
 .container h2 {
   font-size: 24px;
@@ -120,7 +117,7 @@ export default {
   max-width: 600px;
   margin-top: 20px;
   padding: 40px 20px;
-  border: 1px solid #b9b6b6;
+  border: 1px solid black;
   text-align: left;
   cursor: pointer;
   display: flex;

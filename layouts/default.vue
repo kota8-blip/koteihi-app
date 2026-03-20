@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div :style="{backgroundColor: currentColor, minHeight: '100vh'}">
+    <BaseHeader />
     <nuxt />
     <BaseFooter />
     <svg-icon />
@@ -8,11 +9,28 @@
 
 <script>
 import BaseFooter from "../components/baseFooter.vue";
+import BaseHeader from "../components/baseHeader.vue";
 import svgIcon from "../components/svg";
 export default {
   components: {
+    BaseHeader,
     BaseFooter,
     svgIcon
+  },
+  computed: {
+    currentColor() {
+      return this.$store.state.currentColor;
+    }
+  },
+  watch: {
+    currentColor(val) {
+      document.documentElement.style.backgroundColor = val;
+    }
+  },
+  mounted() {
+    // ページ読み込み時にlocalStorageからデータを復元
+    this.$store.commit('LOAD_FROM_STORAGE');
+    document.documentElement.style.backgroundColor = this.currentColor;
   },
 }
 </script>
