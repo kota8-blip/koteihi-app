@@ -1,5 +1,5 @@
 <template>
-  <div :style="{backgroundColor: currentColor, minHeight: '100vh'}">
+  <div>
     <BaseHeader />
     <nuxt />
     <BaseFooter />
@@ -16,21 +16,6 @@ export default {
     BaseHeader,
     BaseFooter,
     svgIcon
-  },
-  computed: {
-    currentColor() {
-      return this.$store.state.currentColor;
-    }
-  },
-  watch: {
-    currentColor(val) {
-      document.documentElement.style.backgroundColor = val;
-    }
-  },
-  mounted() {
-    // ページ読み込み時にlocalStorageからデータを復元
-    this.$store.commit('LOAD_FROM_STORAGE');
-    document.documentElement.style.backgroundColor = this.currentColor;
   },
 }
 </script>

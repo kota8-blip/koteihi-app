@@ -24,10 +24,10 @@ export default {
   data() {
     return {
       tabs: [
-        { label: 'Home', path: '/' },
-        { label: '履歴', path: '/history' },
-        { label: '設定', path: '/settings' },
-        { label: '更新', action: 'update' }
+        { label: '入力', path: '/' },
+        { label: 'グラフ', path: '/graph' },
+        { label: 'カレンダー', path: '/calendar' },
+        { label: '設定', action: 'update' }
       ]
     }
   },
