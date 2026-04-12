@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="save" :disabled="isDisabled">{{ buttonText }}</button>
+    <button class="baseButton" @click="save" :disabled="isDisabled">{{ buttonText }}</button>
   </div>
 </template>
 
@@ -27,4 +27,20 @@ export default {
 </script>
 
 <style scoped>
+.baseButton {
+  padding: 10px 20px;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  font-size: 35px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.baseButton:disabled {
+  color: #d4cccc;
+  pointer-events: none;
+  cursor: default;
+}
 </style>

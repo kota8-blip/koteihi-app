@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 export const state = () => ({
   routineList: [],
   completedRoutineList: [],
@@ -5,18 +7,14 @@ export const state = () => ({
   cheatDay: [],
   achievementRate: null,
   income: 100000,
-  expenses: null,
-  listBox: [
-    { id: 1, category: '食事', amount: null },
-    { id: 2, category: '交通', amount: null },
-    { id: 3, category: '娯楽', amount: null },
-    { id: 4, category: 'その他', amount: null }
-  ]
+  expenses: {
+    '2026-04-09': []
+  }
 })
 
 export const getters = {
   getExpenses(state) {
-    return state.listBox.reduce((total, item) => total + (item.amount || 0), 0);
+    return Object.values(state.expenses || {}).flat().reduce((total, item) => total + (item.amount || 0), 0);
   },
   getRoutineList(state) {
     return state.routineList;
@@ -142,11 +140,16 @@ export const mutations = {
   SET_HOBBY_budget(state, payload) {
     state.hobby = payload;
   },
-  SET_lIST_BOX(state, payload) {
-    const index = state.listBox.findIndex(item => item.id === payload.id);
-    if (index !== -1) {
-      state.listBox[index].amount = payload.amount;
+  SET_LIST_BOX(state, payload) {
+    if (!state.expenses[payload.date]) {
+      Vue.set(state.expenses, payload.date, []);
     }
+    state.expenses[payload.date].push({
+      id: Date.now(),
+      category: payload.category,
+      amount: payload.amount
+    });
+    this.commit('SAVE_TO_STORAGE');
   }
 }
 export const actions = {

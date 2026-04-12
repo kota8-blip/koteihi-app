@@ -1,7 +1,9 @@
 <template>
   <div class="list-box">
     <ul>
-      <li v-for="item in filteredListBox" :key="item.id">{{ item.category }}: {{ item.amount }}円</li>
+      <div v-for="item in filteredListBox" :key="item.id">
+        {{ item.category }}: {{ item.amount }}円
+      </div>
     </ul>
   </div>
 </template>
@@ -12,9 +14,9 @@ import { mapState } from 'vuex';
 export default {
   name: 'ListBox',
   computed: {
-    ...mapState(['listBox']),
+    ...mapState(['expenses']),
     filteredListBox() {
-      return this.listBox.filter(item => item.amount)
+      return Object.values(this.expenses || {}).flat().filter(item => item.amount)
     }
   }
 }

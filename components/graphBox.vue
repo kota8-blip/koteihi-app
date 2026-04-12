@@ -14,12 +14,18 @@ export default {
   extends: Doughnut,
   computed: {
     chartData() {
-      const filtered = this.$store.state.listBox.filter(item => item.amount);
+      const categoryColors = {
+        '食事': '#FF6384',
+        '交通': '#36A2EB',
+        '娯楽': '#FFCE56',
+        'その他': '#4BC0C0',
+      };
+      const filtered = Object.values(this.$store.state.expenses || {}).flat().filter(item => item.amount);
       return {
         labels: filtered.map(item => item.category),
         datasets: [{
           data: filtered.map(item => item.amount),
-          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+          backgroundColor: filtered.map(item => categoryColors[item.category] || '#999999')
         }]
       }
     }
