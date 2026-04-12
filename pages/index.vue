@@ -15,6 +15,7 @@
           v-model="inputValue"
           @input="inputValue = inputValue.replace(/[^0-9]/g, '').replace(/^0+/, '')"
           @keyup.enter="saveAmount(inputValue)"
+          style="text-align: right;"
         >
       </div>
       <div class="categoryChoice">
@@ -90,6 +91,7 @@ export default {
   methods: {
     saveAmount(inputValue) {
       const amount = parseInt(inputValue);
+      const selectedId = this.lists.find(list => list.name === this.selectCategory)?.id;
       this.$store.commit('SET_LIST_BOX', {
         date: this.selectedDate,
         category: this.selectCategory,

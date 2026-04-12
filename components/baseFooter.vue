@@ -59,18 +59,20 @@ export default {
   color: #d4cccc;
   pointer-events: none;
   cursor: default;
-  padding: 40px 20px;
+  padding: 50px 50px;
   text-align: center;
   border: 1px solid black;
   margin: 10px;
+  font-size: 30px;
 }
 .tab-item {
   color: black;
   cursor: pointer;
-  padding: 40px 20px;
+  padding: 50px 50px;
   text-align: center;
   border: 1px solid black;
   margin: 10px;
+  font-size: 30px;
   text-decoration: none;
 }
 </style>

@@ -45,8 +45,22 @@ module.exports = {
     }
   },
 
+  if (isClient) {
+      config.node = {
+        child_process: 'empty',
+        cluster: 'empty',
+        fs: 'empty',
+        net: 'empty',
+        tls: 'empty',
+        readline: 'empty',
+        inspector: 'empty',
+        dns: 'empty',
+        dgram: 'empty',
+        repl: 'empty',
+        module: 'empty',
+      }
+  }
+}
   plugins: [
     { src: '~/plugins/v-calendar.js', mode: 'client' }
-  ],
-}
-
+  ]

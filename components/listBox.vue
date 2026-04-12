@@ -2,7 +2,9 @@
   <div class="list-box">
     <ul>
       <div v-for="item in filteredListBox" :key="item.id">
-        {{ item.category }}: {{ item.amount }}円
+        <div v-if="item.id">
+          {{ item.category }}: {{ item.amount }}円
+        </div>
       </div>
     </ul>
   </div>

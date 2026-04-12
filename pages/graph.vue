@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <div class="completed-rating">
-        <p>家計簿:{{ "日付" }}</p>
+        <p>家計簿：{{ selectedDate }}</p>
       </div>
       <button class="visibility-toggle" @click="toggle">{{ isVisible ? '非表示' : '表示' }}</button>
       <div v-if="isVisible">
@@ -36,7 +36,8 @@ export default {
   },
   data() {
     return {
-      isVisible: true
+      isVisible: true,
+      selectedDate: new Date().toISOString().split('T')[0]
     }
   },
   computed: {

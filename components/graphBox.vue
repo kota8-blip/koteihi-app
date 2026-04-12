@@ -25,7 +25,7 @@ export default {
         labels: filtered.map(item => item.category),
         datasets: [{
           data: filtered.map(item => item.amount),
-          backgroundColor: filtered.map(item => categoryColors[item.category] || '#999999')
+          backgroundColor: filtered.map(item => categoryColors[item.category] || '#000000')
         }]
       }
     }
