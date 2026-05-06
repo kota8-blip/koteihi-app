@@ -27,9 +27,9 @@
 </template>
 
 <script>
-import colorModal from '~/components/colorModal.vue';
-import cheatDayModal from '~/components/cheatDayModal.vue';
-import achievementRateModal from '~/components/achievementRateModal.vue';
+import colorModal from '~/components/_archive/colorModal.vue';
+import cheatDayModal from '~/components/_archive/cheatDayModal.vue';
+import achievementRateModal from '~/components/_archive/achievementRateModal.vue';
 export default {
   name: 'Settings',
   components: {

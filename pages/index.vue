@@ -1,11 +1,6 @@
 <template>
   <div>
     <div class="input-wrapper">
-      <div class="button-group">
-        <div v-for="item in items" :key="item.id">
-          <BaseButton :button-text="item.name" />
-        </div>
-      </div>
       <div class="yen-input-wrapper">
         <span class="yen-symbol">¥</span>
         <input
@@ -18,13 +13,29 @@
           style="text-align: right;"
         >
       </div>
-      <div class="categoryChoice">
-        <select v-model="selectCategory">
-          <option v-for="list in lists" :key="list.id" :value="list.name">{{ list.name }}</option>
-        </select>
+      <div v-if="selectedType === '支出'">
+        <div class="categoryChoice--expense">
+          <select v-model="selectExpenseCategory">
+            <option v-for="list in expensesLists" :key="list.id" :value="list.name">{{ list.name }}</option>
+          </select>
+        </div>
       </div>
-      <BaseButton :button-text="'保存'" :is-disabled="!inputValue" @click="saveAmount(inputValue)" />
+      <div v-else>
+        <div class="categoryChoice--income">
+          <select v-model="selectIncomeCategory">
+            <option v-for="list in incomeLists" :key="list.id" :value="list.name">{{ list.name }}</option>
+          </select>
+        </div>
+      </div>
+      <BaseButton
+        :button-text="'保存'"
+        :is-disabled="!inputValue"
+        :bg-color="inputValue ? '#f0f0f0' : '#f0f0f0'"
+        :text-color="inputValue ? '#000000' : '#d4cccc'"
+        @click="saveAmount(inputValue)"
+      />
       <div @click="showCalendar = !showCalendar" class="showCalendarButton">{{ selectedDate }}</div>
+      <div v-if="showCalendar">カレンダー表示中</div>
       <v-calendar v-if="showCalendar">
         <template v-slot:day-content="{ day }">
           <div class="custom-day">
@@ -51,22 +62,27 @@ export default {
     return {
       isVisible: true,
       inputValue: '',
-      items: [
-        { id: 1, name: '支出' },
-        { id: 2, name: '収入' },
-      ],
-      lists: [
+      expensesLists: [
         { id: 1, name: '食事' },
         { id: 2, name: '交通' },
         { id: 3, name: '娯楽' },
         { id: 4, name: 'その他' },
       ],
-      selectCategory: '食事',
+      incomeLists: [
+        { id: 1, name: '給料' },
+        { id: 2, name: '副業' },
+        { id: 3, name: 'その他' },
+      ],
+      selectExpenseCategory: '食事',
+      selectIncomeCategory: '給料',
       showCalendar: false,
       selectedDate: '',
     }
   },
   computed: {
+    selectedType() {
+      return this.$store.getters.getSelectedType;
+    }
   },
   watch: {
   },
@@ -87,16 +103,30 @@ export default {
         default: ['1 2 3', '4 5 6', '7 8 9', '{bksp} 0 {enter}']
       }
     });
+
+    this.$store.commit('LOAD_FROM_STORAGE');
   },
   methods: {
     saveAmount(inputValue) {
       const amount = parseInt(inputValue);
-      const selectedId = this.lists.find(list => list.name === this.selectCategory)?.id;
-      this.$store.commit('SET_LIST_BOX', {
-        date: this.selectedDate,
-        category: this.selectCategory,
-        amount
-      });
+      if (this.selectedType === '支出') {
+        this.$store.commit('SET_EXPENSES', {
+          date: this.selectedDate,
+          category: this.selectExpenseCategory,
+          amount
+        });
+      } else {
+        this.$store.commit('SET_INCOME', {
+          date: this.selectedDate,
+          category: this.selectIncomeCategory,
+          amount
+        });
+      }
+      // this.$store.commit('SET_LIST_BOX', {
+      //   date: this.selectedDate,
+      //   category: this.selectedType === '支出' ? this.selectExpenseCategory : this.selectIncomeCategory,
+      //   amount
+      // });
       this.inputValue = "";
       this.keyboard.clearInput();
     },
@@ -161,7 +191,16 @@ export default {
   border-color: #3b8070;
   box-shadow: 0 0 5px rgba(59, 128, 112, 0.5);
 }
-.categoryChoice select {
+.categoryChoice--income select {
+  padding: 10px 20px;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  font-size: 35px;
+  height: 100px;
+  color: #000000;
+  cursor: pointer;
+}
+.categoryChoice--expense select {
   padding: 10px 20px;
   border: 1px solid #000000;
   border-radius: 4px;
@@ -180,6 +219,13 @@ export default {
   height: 100px;
   display: flex;
   align-items: center;
+}
+.custom-day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 .day-number {
   font-size: 16px;

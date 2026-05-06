@@ -1,6 +1,13 @@
 <template>
   <div>
-    <button class="baseButton" @click="save" :disabled="isDisabled">{{ buttonText }}</button>
+    <button
+      class="baseButton"
+      @click="save"
+      :disabled="isDisabled"
+      :style="{ backgroundColor: bgColor, color: textColor }"
+    >
+      {{ buttonText }}
+    </button>
   </div>
 </template>
 
@@ -15,6 +22,14 @@ export default {
     isDisabled: {
       type: Boolean,
       default: false
+    },
+    bgColor: {
+      type: String,
+      default: '#ffffff'
+    },
+    textColor: {
+      type: String,
+      default: '#000000'
     }
   },
   methods: {

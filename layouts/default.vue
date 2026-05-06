@@ -10,13 +10,16 @@
 <script>
 import BaseFooter from "../components/baseFooter.vue";
 import BaseHeader from "../components/baseHeader.vue";
-import svgIcon from "../components/svg";
+import svgIcon from "../components/_archive/svg";
 export default {
   components: {
     BaseHeader,
     BaseFooter,
     svgIcon
   },
+  mounted() {
+    this.$store.commit('LOAD_FROM_STORAGE');
+  }
 }
 </script>
 

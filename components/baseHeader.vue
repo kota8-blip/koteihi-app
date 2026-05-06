@@ -1,30 +1,52 @@
 <template>
   <div class="container">
-    <p>＜</p>
-    <div class="title">{{ "カテゴリを選択" }}</div>
-    <p>×</p>
+    <div class="button-group">
+      <div v-for="item in items" :key="item.id">
+        <BaseButton
+          v-if="!(item.name === '収支' && $route.path === '/')"
+          @click="changePattern(item.id)"
+          :button-text="item.name"
+          :is-active="item.isActive"
+          :bg-color="item.isActive ? '#f0f0f0' : '#f0f0f0'"
+          :text-color="item.isActive ? '#d4cccc' : '#000000'"
+          :is-disabled="item.isActive"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
-   name: 'BaseHeader',
+import BaseButton from '~/components/BaseButton.vue';
 
+export default {
+  name: 'BaseHeader',
+  components: {
+    BaseButton
+  },
+  data() {
+    return {
+      items: [
+        { id: 1, name: '支出', isActive: true },
+        { id: 2, name: '収入', isActive: false },
+        { id: 3, name: '収支', isActive: false },
+      ],
+    }
+  },
   methods: {
     routine() {
       window.location.reload();
     },
     isActive() {
       return this.$route.path === '/settings';
-  },
-    // previous_page() {
-    //   window.history.back();
-    // },
-    //  stop() {
-    //   this.$store.commit('CLEAR_ROUTINE');
-    //   this.$store.commit('CLEAR_COMPLETED');
-    //   window.location.reload();
-    // }
+    },
+    changePattern(id) {
+      this.items.forEach(item => {
+        item.isActive = item.id === id;
+      });
+      const selectedType = this.items.find(item => item.isActive).name;
+      this.$store.commit('SET_SELECTED_TYPE', selectedType);
+    },
   }
 }
 </script>
@@ -32,22 +54,15 @@ export default {
 <style scoped>
 .container {
   display: flex;
-  font-size: 40px;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  text-align: center;
-  cursor: pointer;
+  gap: 20px;
+  color: #ccc;
+  margin: 30px;
 }
-
-.title {
-  font-size: 65px;
-  color: #333;
-  margin-bottom: 16px;
-  cursor: pointer;
-  font-weight: bold;
-  display: inline-block;
+.button-group {
+  display: flex;
+  gap: 20px;
 }
 </style>

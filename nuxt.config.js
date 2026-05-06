@@ -31,6 +31,10 @@ module.exports = {
 
   cache: true,
 
+  plugins: [
+    { src: '~/plugins/v-calendar.js', mode: 'client' }
+  ],
+
   build: {
     vendor: ['axios', 'mint-ui', 'js-cookie'],
     extend (config, { isDev, isClient }) {
@@ -42,25 +46,21 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
+      if (isClient) {
+          config.node = {
+            child_process: 'empty',
+            cluster: 'empty',
+            fs: 'empty',
+            net: 'empty',
+            tls: 'empty',
+            readline: 'empty',
+            inspector: 'empty',
+            dns: 'empty',
+            dgram: 'empty',
+            repl: 'empty',
+            module: 'empty',
+          }
+      }
     }
   },
-
-  if (isClient) {
-      config.node = {
-        child_process: 'empty',
-        cluster: 'empty',
-        fs: 'empty',
-        net: 'empty',
-        tls: 'empty',
-        readline: 'empty',
-        inspector: 'empty',
-        dns: 'empty',
-        dgram: 'empty',
-        repl: 'empty',
-        module: 'empty',
-      }
-  }
 }
-  plugins: [
-    { src: '~/plugins/v-calendar.js', mode: 'client' }
-  ]

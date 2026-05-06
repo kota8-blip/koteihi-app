@@ -1,8 +1,13 @@
 <template>
   <div class="list-box">
     <ul>
-      <div v-for="item in filteredListBox" :key="item.id">
-        <div v-if="item.id">
+      <div v-if="selectedType === '支出'">
+        <div v-for="item in filteredExpensesBox" :key="item.id">
+          {{ item.category }}: {{ item.amount }}円
+        </div>
+      </div>
+      <div v-else-if="selectedType === '収入'">
+        <div v-for="item in filteredIncomeBox" :key="item.id">
           {{ item.category }}: {{ item.amount }}円
         </div>
       </div>
@@ -15,10 +20,28 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'ListBox',
+  props: {
+    date: {
+      type: String,
+      required: true
+    }
+  },
   computed: {
-    ...mapState(['expenses']),
-    filteredListBox() {
-      return Object.values(this.expenses || {}).flat().filter(item => item.amount)
+    ...mapState(['expenses','income']),
+    filteredExpensesBox() {
+      return Object.entries(this.$store.state.expenses)
+        .filter(([date]) => date.startsWith(this.date))
+        .flatMap(([, items]) => items)
+        .filter(item => item.amount);
+    },
+    filteredIncomeBox() {
+      return Object.entries(this.$store.state.income)
+        .filter(([date]) => date.startsWith(this.date))
+        .flatMap(([, items]) => items)
+        .filter(item => item.amount);
+    },
+    selectedType() {
+      return this.$store.getters.getSelectedType;
     }
   }
 }

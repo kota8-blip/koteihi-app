@@ -1,22 +1,27 @@
 <template>
   <div>
     <div class="container">
-      <div class="completed-rating">
-        <p>家計簿：{{ selectedDate }}</p>
+      <div class="date-display">
+        <div class="categoryChoice--expense">
+          <p @click="previousDate" class="previous-btn">&lt;</p>
+          <select v-model="selectedDate">
+            <option v-for="(date, key) in availableDates" :key="key" :value="date.value">{{ date.label }}</option>
+          </select>
+          <p @click="nextDate" class="next-btn">&gt;</p>
+        </div>
       </div>
       <button class="visibility-toggle" @click="toggle">{{ isVisible ? '非表示' : '表示' }}</button>
       <div v-if="isVisible">
-        <div class="routine-list-containers">
-          <div class="chart-wrapper">
-            <GraphBox />
-            <VariousTotalBudgetBox />
+        <div>
+          <div class="routine-list-containers">
+            <GraphBox v-if="selectedType !== '収支'" :date="selectedDate" />
+            <StackedBarChart v-else :chart-data="stackedChartData" />
+            <div class="list-box-wrapper">
+              <VariousTotalBudgetBox :date="selectedDate" />
+              <ListBox :date="selectedDate" />
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div v-if="isVisible">
-      <div class="list-box-wrapper">
-        <ListBox />
       </div>
     </div>
   </div>
@@ -26,43 +31,125 @@
 import GraphBox from '../components/graphBox.vue';
 import VariousTotalBudgetBox from '../components/variousTotalBudgetBox.vue';
 import ListBox from '../components/listBox.vue';
+import StackedBarChart from '../components/StackedBarChart.vue';
 
 export default {
   name: 'Graph',
   components: {
     GraphBox,
     VariousTotalBudgetBox,
-    ListBox
+    ListBox,
+    StackedBarChart
   },
   data() {
     return {
       isVisible: true,
-      selectedDate: new Date().toISOString().split('T')[0]
-    }
+      selectedDate: (() => {
+        const d = new Date();
+        return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+      })(),
+      selectedMonth: (() => {
+        const d = new Date();
+        return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+      })(),
+      selectedYear: (() => {
+        const d = new Date();
+        return `${d.getFullYear()}`;
+      })(),
+      availableDates: (() => {
+        const d = new Date();
+      const today = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+      const month = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+      const year = `${d.getFullYear()}`;
+      return [
+        { label: today, value: today },
+        { label: month, value: month },
+        { label: year, value: year },
+      ];
+    })(),
+    today: (() => {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    })(),
+    month: (() => {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    })(),
+    year: (() => {
+      const d = new Date();
+      return `${d.getFullYear()}`;
+    })(),
+  }
+},
+computed: {
+  selectedType() {
+    return this.$store.getters.getSelectedType;
   },
-  computed: {
-  },
-  watch: {
-  },
-  methods: {
-    saveRate() {
-      // 今日の日付を取得
-      const today = new Date().toISOString().split('T')[0];
-      // 保存するデータ
-      const rateData = {
-        date: today,
+  stackedChartData() {
+  const income = Object.entries(this.$store.state.income)
+    .filter(([date]) => date.startsWith(this.selectedDate))
+    .flatMap(([, items]) => items)
+    .filter(item => item.amount);
+  const expenses = Object.entries(this.$store.state.expenses)
+    .filter(([date]) => date.startsWith(this.selectedDate))
+    .flatMap(([, items]) => items)
+    .filter(item => item.amount);
+
+  // 日付をラベルにする場合
+  const labels = [...new Set([
+    ...Object.keys(this.$store.state.income),
+    ...Object.keys(this.$store.state.expenses)
+  ])].filter(date => date.startsWith(this.selectedDate)).sort();
+
+  return {
+    labels,
+    datasets: [
+      {
+        label: '収入',
+        data: labels.map(date => (this.$store.state.income[date] || []).reduce((sum, i) => sum + i.amount, 0)),
+        backgroundColor: '#36A2EB'
+      },
+      {
+        label: '支出',
+        data: labels.map(date => -(this.$store.state.expenses[date] || []).reduce((sum, i) => sum + i.amount, 0)),
+        backgroundColor: '#FF6384'
       }
-      // 既存のデータを取得（あれば）
-      const savedData = JSON.parse(localStorage.getItem('dailyRates') || '{}');
-      // 今日の達成率を追加
-      savedData[today] = rateData.rate
-      // 保存
-      localStorage.setItem('dailyRates', JSON.stringify(savedData))
-    },
+    ]
+  }
+  }
+},
+methods: {
     toggle() {
       this.isVisible = !this.isVisible;
+    },
+    previousDate() {
+      this.navigateDate(-1);
+    },
+    nextDate() {
+      this.navigateDate(1);
+    },
+    navigateDate(delta) {
+      const date = this.selectedDate;
+      let newDate;
+      if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+        const d = new Date(date);
+        d.setDate(d.getDate() + delta);
+        newDate = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+      } else if (/^\d{4}-\d{2}$/.test(date)) {
+        const [y, m] = date.split('-').map(Number);
+        const d = new Date(y, m - 1 + delta, 1);
+        newDate = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+      } else if (/^\d{4}$/.test(date)) {
+        newDate = String(Number(date) + delta);
+      } else {
+        return;
+      }
+      if (!this.availableDates.some(d => d.value === newDate)) {
+        this.availableDates = [{ label: newDate, value: newDate }, ...this.availableDates];
+      }
+      this.selectedDate = newDate;
     }
-  }
+}
 }
 </script>
 
@@ -73,15 +160,34 @@ export default {
   align-items: stretch;
   max-width: 1700px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 20px 20px;
   text-align: center;
   border: 1px solid black;
 }
-.completed-rating {
+.date-display {
   font-size: 45px;
   color: black;
   margin-bottom: 20px;
   text-align: left;
+}
+.categoryChoice--expense {
+  display: flex;
+  align-items: center;
+}
+.categoryChoice--expense p {
+  width: 60px;
+  text-align: center;
+  cursor: pointer;
+}
+.categoryChoice--expense select {
+  margin: 0 auto;
+  padding: 10px 20px;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  font-size: 35px;
+  height: 100px;
+  color: #000000;
+  cursor: pointer;
 }
 .visibility-toggle {
   margin-bottom: 20px;

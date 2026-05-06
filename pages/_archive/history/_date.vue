@@ -3,9 +3,6 @@
     <div class="completed-rating">
       <h2>{{ date }}</h2>
       <p>達成率: {{ snapshotRate }}%</p>
-      <!-- <p>未実施: {{ snapshotRoutineList.length }}件</p>
-      <p>完了: {{ snapshotCompletedRoutineList.length }}件</p> -->
-      <!-- ここに達成率やその他の情報を表示 -->
     </div>
     <div class="routine-list-containers">
       <div class="routine-list-box-container">
@@ -34,7 +31,6 @@ export default {
   },
   mounted() {
     const date = this.$route.params.date; // URLから日付を取得
-    this.date = date;
     const savedData = JSON.parse(localStorage.getItem('dailyRates') || '{}');
     const entry = savedData[date];
     if (entry) {

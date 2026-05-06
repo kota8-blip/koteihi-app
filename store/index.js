@@ -1,20 +1,29 @@
 import Vue from 'vue';
 
 export const state = () => ({
+  selectedType: '支出',
   routineList: [],
   completedRoutineList: [],
   currentColor: '#a0bad8',
   cheatDay: [],
   achievementRate: null,
-  income: 100000,
+  income: {
+    '2026-04-09': [],
+  },
   expenses: {
-    '2026-04-09': []
+    '2026-04-09': [],
   }
 })
 
 export const getters = {
+  getSelectedType(state) {
+    return state.selectedType;
+  },
   getExpenses(state) {
     return Object.values(state.expenses || {}).flat().reduce((total, item) => total + (item.amount || 0), 0);
+  },
+  getIncome(state) {
+    return Object.values(state.income || {}).flat().reduce((total, item) => total + (item.amount || 0), 0);
   },
   getRoutineList(state) {
     return state.routineList;
@@ -65,6 +74,16 @@ export const mutations = {
         state.achievementRate = JSON.parse(achievementRate);
       }
 
+      const expenses = localStorage.getItem('expenses');
+      if (expenses) {
+        state.expenses = JSON.parse(expenses);
+      }
+
+      const income = localStorage.getItem('income');
+      if (income) {
+        state.income = JSON.parse(income);
+      }
+
       // 日付チェックとリセット処理
       const lastResetDate = localStorage.getItem('lastResetDate');
       const d = new Date();
@@ -80,6 +99,24 @@ export const mutations = {
         // 保存
         this.commit('SAVE_TO_STORAGE');
       }
+
+      if (state.expenses) {
+        for (const date in state.expenses) {
+          state.expenses[date] = state.expenses[date].filter(item => item.amount > 0);
+        }
+      }
+
+      if (state.income) {
+        for (const date in state.income) {
+          state.income[date] = state.income[date].filter(item => item.amount > 0);
+        }
+      }
+    }
+  },
+  SET_SELECTED_TYPE(state, type) {
+    state.selectedType = type;
+    if (process.client) {
+      localStorage.setItem('selectedType', type);
     }
   },
   SET_CURRENT_COLOR(state, color) {
@@ -96,6 +133,9 @@ export const mutations = {
       localStorage.setItem('currentColor', state.currentColor);
       localStorage.setItem('cheatDay', JSON.stringify(state.cheatDay));
       localStorage.setItem('achievementRate', JSON.stringify(state.achievementRate));
+      localStorage.setItem('expenses', JSON.stringify(state.expenses));
+      localStorage.setItem('income', JSON.stringify(state.income));
+      localStorage.setItem('selectedType', state.selectedType);
     }
   },
 
@@ -137,14 +177,25 @@ export const mutations = {
     }
     this.commit('SAVE_TO_STORAGE');
   },
-  SET_HOBBY_budget(state, payload) {
+  SET_HOBBY_BUDGET(state, payload) {
     state.hobby = payload;
   },
-  SET_LIST_BOX(state, payload) {
+  SET_EXPENSES(state, payload) {
     if (!state.expenses[payload.date]) {
       Vue.set(state.expenses, payload.date, []);
     }
     state.expenses[payload.date].push({
+      id: Date.now(),
+      category: payload.category,
+      amount: payload.amount
+    });
+    this.commit('SAVE_TO_STORAGE');
+  },
+  SET_INCOME(state, payload) {
+    if (!state.income[payload.date]) {
+      Vue.set(state.income, payload.date, []);
+    }
+    state.income[payload.date].push({
       id: Date.now(),
       category: payload.category,
       amount: payload.amount
