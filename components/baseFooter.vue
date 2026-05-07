@@ -4,7 +4,7 @@
       <button
         v-for="tab in tabs"
         :key="tab.label"
-        @click="tab.action ? handleAction(tab.action) : navigate(tab.path)"
+        @click="navigate(tab.path)"
         :class="{
           'tab-item': true,
           'active': isActive(tab.path),
@@ -27,7 +27,7 @@ export default {
         { label: '入力', path: '/' },
         { label: 'グラフ', path: '/graph' },
         { label: 'カレンダー', path: '/calendar' },
-        { label: '設定', action: 'update' }
+        { label: '設定', path: '/settings' }
       ]
     }
   },
@@ -35,11 +35,6 @@ export default {
   methods: {
     isActive(path) {
       return this.$route.path === path;
-    },
-    handleAction(action) {
-      if (action === 'update') {
-        window.location.reload();
-      }
     },
     navigate(path) {
       this.$router.push(path);

@@ -8,52 +8,25 @@
     <div v-if="colorModal">
       <colorModal @closeColorModal="color" />
     </div>
-    <div class="setting-row" @click="cheatDay">
-      <p>チートDay</p>
-      <button>曜日</button>
-    </div>
-    <div v-if="cheatDayModal">
-      <cheatDayModal @closeCheatDayModal="cheatDay" />
-    </div>
-    <h2>目標</h2>
-    <div class="setting-row" @click="achievementRate">
-      <p>達成率</p>
-      <button>　%</button>
-    </div>
-    <div v-if="achievementRateModal">
-      <achievementRateModal @closeAchievementRateModal="achievementRate" />
-    </div>
   </div>
 </template>
 
 <script>
 import colorModal from '~/components/_archive/colorModal.vue';
-import cheatDayModal from '~/components/_archive/cheatDayModal.vue';
-import achievementRateModal from '~/components/_archive/achievementRateModal.vue';
 export default {
   name: 'Settings',
   components: {
     colorModal,
-    cheatDayModal,
-    achievementRateModal
   },
   data() {
     return {
       colorModal: false,
-      cheatDayModal: false,
-      achievementRateModal: false
     };
   },
   methods: {
     color() {
       this.colorModal = !this.colorModal;
     },
-    cheatDay() {
-      this.cheatDayModal = !this.cheatDayModal;
-    },
-    achievementRate() {
-      this.achievementRateModal = !this.achievementRateModal;
-    }
   }
 }
 </script>

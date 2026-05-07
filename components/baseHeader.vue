@@ -3,7 +3,7 @@
     <div class="button-group">
       <div v-for="item in items" :key="item.id">
         <BaseButton
-          v-if="!(item.name === '収支' && $route.path === '/')"
+          v-if="!(item.name === '収支' && $route.path === '/') && $route.path !== '/settings'"
           @click="changePattern(item.id)"
           :button-text="item.name"
           :is-active="item.isActive"
