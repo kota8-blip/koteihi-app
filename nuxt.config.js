@@ -25,7 +25,7 @@ module.exports = {
     }
   },
 
-  axios: { baseURL: 'http://localhost:3001' },
+  axios: { baseURL: process.env.API_BASE_URL || 'http://localhost:3001' },
 
   loading: { color: '#3B8070' },
 
