@@ -75,7 +75,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import BaseButton from '~/components/BaseButton.vue';
+import BaseButton from '~/components/baseButton.vue';
 import Keyboard from 'simple-keyboard';
 import 'simple-keyboard/build/css/index.css';
 
