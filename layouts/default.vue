@@ -1,5 +1,5 @@
 <template>
-  <div :style="{ backgroundColor: $store.state.currentColor }">
+  <div class="app-wrapper" :style="{ backgroundColor: $store.state.currentColor }">
     <BaseHeader />
     <nuxt />
   </div>
@@ -39,6 +39,12 @@ html {
 body {
   overflow-x: hidden;
   width: 100%;
+}
+
+.app-wrapper {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 *,
