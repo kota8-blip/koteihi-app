@@ -33,6 +33,12 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
   max-height: 2000px;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
 }
 
 *,

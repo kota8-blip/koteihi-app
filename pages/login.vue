@@ -82,8 +82,9 @@ export default {
   border: 1px solid #ccc;
   padding: 20px;
   border-radius: 5px;
-  width: 300px;
-  margin: 20px;
+  width: 90%;
+  max-width: 300px;
+  margin: 20px auto;
 }
 .input-group {
   margin-bottom: 15px;

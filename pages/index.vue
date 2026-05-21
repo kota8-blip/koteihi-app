@@ -165,7 +165,7 @@ export default {
       return this.fixedCosts;
     },
     totalAmount() {
-      return this.fixedCosts.reduce((sum, item) => sum + item.amount, 0);
+      return this.fixedCosts.reduce((sum, item) => sum + Number(item.amount), 0);
     },
   },
   async mounted() {
