@@ -43,14 +43,10 @@ export default {
 
 <style scoped>
 .baseButton {
-  padding: 10px 20px;
+  padding: 10px 24px;
   border: 1px solid #000000;
   border-radius: 4px;
-  font-size: 35px;
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 14px;
   cursor: pointer;
 }
 .baseButton:disabled {

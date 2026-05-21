@@ -2,23 +2,21 @@
   <div :style="{ backgroundColor: $store.state.currentColor }">
     <BaseHeader />
     <nuxt />
-    <BaseFooter />
-    <svg-icon />
   </div>
 </template>
 
 <script>
-import BaseFooter from "../components/baseFooter.vue";
 import BaseHeader from "../components/baseHeader.vue";
-import svgIcon from "../components/_archive/svg";
 export default {
   components: {
-    BaseHeader,
-    BaseFooter,
-    svgIcon
+    BaseHeader
   },
-  mounted() {
+  async mounted() {
     this.$store.commit('LOAD_FROM_STORAGE');
+    if (this.$store.state.jwt) {
+      this.$axios.setHeader('Authorization', `Bearer ${this.$store.state.jwt}`);
+      await this.$store.dispatch('loadFixedCosts');
+    }
   }
 }
 </script>
