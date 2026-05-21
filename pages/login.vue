@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import BaseButton from '~/components/BaseButton.vue';
+import BaseButton from '~/components/baseButton.vue';
 export default {
   layout: 'empty',
   name: 'LogIn',
