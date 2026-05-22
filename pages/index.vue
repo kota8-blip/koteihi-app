@@ -229,6 +229,7 @@ export default {
 <style scoped>
 .page {
   padding: 16px;
+  padding-bottom: 80px;
   max-width: 800px;
   margin: 0 auto;
 }
@@ -239,13 +240,14 @@ export default {
   justify-content: space-between;
   align-items: center;
   background: #f8f8f8;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border-top: 1px solid #e0e0e0;
   padding: 16px 20px;
-  margin-bottom: 20px;
-  position: sticky;
+  position: fixed;
   bottom: 0;
+  left: 0;
+  width: 100%;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
+  z-index: 10;
 }
 .total-label {
   font-size: 16px;
