@@ -492,7 +492,7 @@ export default {
 .sort-menu {
   position: absolute;
   top: calc(100% + 6px);
-  left: 0;
+  right: 0;
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
