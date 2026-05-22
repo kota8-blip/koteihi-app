@@ -29,6 +29,7 @@ html {
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   width: 100%;
+  overflow-x: hidden;
   touch-action: manipulation;
 }
 

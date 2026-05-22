@@ -247,7 +247,7 @@ export default {
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 100%;
+  right: 0;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
   z-index: 10;
 }
