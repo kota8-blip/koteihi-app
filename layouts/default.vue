@@ -29,7 +29,7 @@ html {
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   width: 100%;
-  overflow-x: hidden;
+  touch-action: manipulation;
 }
 
 body {
@@ -40,7 +40,6 @@ body {
 
 .app-wrapper {
   width: 100%;
-  overflow-x: hidden;
 }
 
 *,
