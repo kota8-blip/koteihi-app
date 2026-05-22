@@ -4,11 +4,10 @@ module.exports = {
     title: 'Household Budget',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no' },
       { hid: 'description', name: 'description', content: '毎日の習慣を記録して継続しよう' },
       { name: 'format-detection', content: 'telephone=no' },
       { name: 'msapplication-tap-highlight', content: 'no' },
-      { name: 'apple-mobile-web-app-capable', content: 'yes' },
     ],
     link: [
       { rel: 'SHORTCUT ICON', type: 'image/x-icon', href: '/favicon.ico' }
