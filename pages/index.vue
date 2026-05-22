@@ -415,7 +415,7 @@ export default {
   padding: 10px 12px;
   border: 1px solid #ddd;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 16px;
   box-sizing: border-box;
 }
 .form-group input:focus,
