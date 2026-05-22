@@ -12,6 +12,16 @@ export default {
     BaseHeader
   },
   async mounted() {
+    // iOS Safari viewport zoom reset (SPAナビゲーション時のズーム状態リセット)
+    if (process.client) {
+      const meta = document.querySelector('meta[name="viewport"]');
+      if (meta) {
+        meta.setAttribute('content', 'width=device-width, initial-scale=1.001');
+        setTimeout(() => {
+          meta.setAttribute('content', 'width=device-width, initial-scale=1');
+        }, 50);
+      }
+    }
     this.$store.commit('LOAD_FROM_STORAGE');
     if (this.$store.state.jwt) {
       this.$axios.setHeader('Authorization', `Bearer ${this.$store.state.jwt}`);
