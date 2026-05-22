@@ -230,8 +230,11 @@ export default {
 .page {
   padding: 16px;
   padding-bottom: 80px;
+  width: 100%;
   max-width: 800px;
   margin: 0 auto;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* 合計バー */
@@ -558,5 +561,34 @@ export default {
 }
 .btn-upgrade:hover {
   background: #f57f17;
+}
+
+/* モバイル対応 */
+@media (max-width: 480px) {
+  .page {
+    padding: 12px;
+    padding-bottom: 80px;
+  }
+  .cost-amount {
+    font-size: 16px;
+  }
+  .cost-right {
+    margin-left: 8px;
+  }
+  .btn-edit,
+  .btn-delete {
+    padding: 4px 6px;
+    font-size: 11px;
+  }
+  .sort-trigger {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+  .total-bar {
+    padding: 12px 16px;
+  }
+  .total-amount {
+    font-size: 20px;
+  }
 }
 </style>

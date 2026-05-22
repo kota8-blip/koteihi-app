@@ -12,16 +12,6 @@ export default {
     BaseHeader
   },
   async mounted() {
-    // iOS Safari viewport zoom reset (SPAナビゲーション時のズーム状態リセット)
-    if (process.client) {
-      const meta = document.querySelector('meta[name="viewport"]');
-      if (meta) {
-        meta.setAttribute('content', 'width=device-width, initial-scale=1.001');
-        setTimeout(() => {
-          meta.setAttribute('content', 'width=device-width, initial-scale=1');
-        }, 50);
-      }
-    }
     this.$store.commit('LOAD_FROM_STORAGE');
     if (this.$store.state.jwt) {
       this.$axios.setHeader('Authorization', `Bearer ${this.$store.state.jwt}`);
@@ -33,25 +23,23 @@ export default {
 
 <style>
 html {
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 body {
-  overflow-x: hidden;
+  margin: 0;
   width: 100%;
+  overflow-x: hidden;
 }
 
 .app-wrapper {
   width: 100%;
-  max-width: 100%;
   overflow-x: hidden;
 }
 
