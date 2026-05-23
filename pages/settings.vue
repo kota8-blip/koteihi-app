@@ -1,41 +1,41 @@
 <template>
   <div class="settings-page">
-
-    <section class="section">
-      <div class="section-title">一般</div>
-      <div class="section-body">
-        <div class="setting-row" @click="color">
-          <span class="row-label">テーマカラー</span>
-          <span class="row-action">変更 ›</span>
+    <div class="settings-inner">
+      <section class="section">
+        <div class="section-title">一般</div>
+        <div class="section-body">
+          <div class="setting-row" @click="color">
+            <span class="row-label">テーマカラー</span>
+            <span class="row-action">変更 ›</span>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <div v-if="colorModal">
-      <colorModal @closeColorModal="color" />
+      <div v-if="colorModal">
+        <colorModal @closeColorModal="color" />
+      </div>
+
+      <section class="section">
+        <div class="section-title">プラン</div>
+        <div class="section-body">
+          <div v-if="isPremium" class="setting-row">
+            <div>
+              <span class="row-label">プレミアムプラン</span>
+              <span class="badge-premium">加入中</span>
+            </div>
+            <button class="btn-portal" :disabled="portalLoading" @click="openPortal">
+              {{ portalLoading ? '処理中...' : 'サブスク管理' }}
+            </button>
+          </div>
+          <div v-else class="setting-row">
+            <div>
+              <span class="row-label">無料プラン</span>
+              <span class="badge-free">無料</span>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-
-    <section class="section">
-      <div class="section-title">プラン</div>
-      <div class="section-body">
-        <div v-if="isPremium" class="setting-row">
-          <div>
-            <span class="row-label">プレミアムプラン</span>
-            <span class="badge-premium">加入中</span>
-          </div>
-          <button class="btn-portal" :disabled="portalLoading" @click="openPortal">
-            {{ portalLoading ? '処理中...' : 'サブスク管理' }}
-          </button>
-        </div>
-        <div v-else class="setting-row">
-          <div>
-            <span class="row-label">無料プラン</span>
-            <span class="badge-free">無料</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
   </div>
 </template>
 
@@ -77,9 +77,14 @@ export default {
 
 <style scoped>
 .settings-page {
-  padding: 24px 16px;
   background-color: #f2f2f7;
-  min-height: 100vh;
+  min-height: calc(100vh - 64px);
+}
+.settings-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  box-sizing: border-box;
 }
 .section {
   margin-bottom: 32px;

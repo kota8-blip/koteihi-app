@@ -41,6 +41,7 @@ body {
 
 .app-wrapper {
   width: 100%;
+  padding-top: 64px;
 }
 
 *,
