@@ -65,7 +65,9 @@
         <p class="upgrade-desc">{{ upgradeDesc }}</p>
         <div class="modal-actions">
           <button class="btn-cancel" @click="showUpgradeModal = false">閉じる</button>
-          <button class="btn-upgrade">プランをアップグレード</button>
+          <button class="btn-upgrade" :disabled="upgradeLoading" @click="startUpgrade">
+            {{ upgradeLoading ? '処理中...' : 'プランをアップグレード' }}
+          </button>
         </div>
       </div>
     </div>
@@ -116,6 +118,7 @@ export default {
       showModal: false,
       showUpgradeModal: false,
       upgradeDesc: '',
+      upgradeLoading: false,
       showSortMenu: false,
       sortMode: 'default',
       sortOptions: [
@@ -221,6 +224,16 @@ export default {
     },
     openUpgradeModal() {
       this.showUpgradeModal = true;
+    },
+    async startUpgrade() {
+      this.upgradeLoading = true;
+      try {
+        const res = await this.$axios.post('/api/create-checkout-session');
+        window.location.href = res.data.url;
+      } catch (err) {
+        alert('エラーが発生しました。もう一度お試しください。');
+        this.upgradeLoading = false;
+      }
     },
   },
 }
