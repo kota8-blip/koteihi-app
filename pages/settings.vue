@@ -8,6 +8,18 @@
     <div v-if="colorModal">
       <colorModal @closeColorModal="color" />
     </div>
+
+    <h2>プラン</h2>
+    <div v-if="isPremium" class="setting-row">
+      <p>プレミアムプラン加入中</p>
+      <button class="btn-portal" :disabled="portalLoading" @click="openPortal">
+        {{ portalLoading ? '処理中...' : 'サブスク管理' }}
+      </button>
+    </div>
+    <div v-else class="setting-row">
+      <p>無料プラン</p>
+      <span class="plan-label">無料</span>
+    </div>
   </div>
 </template>
 
@@ -21,13 +33,29 @@ export default {
   data() {
     return {
       colorModal: false,
+      portalLoading: false,
     };
+  },
+  computed: {
+    isPremium() {
+      return this.$store.state.isPremium;
+    },
   },
   methods: {
     color() {
       this.colorModal = !this.colorModal;
     },
-  }
+    async openPortal() {
+      this.portalLoading = true;
+      try {
+        const res = await this.$axios.post('/api/create-portal-session');
+        window.location.href = res.data.url;
+      } catch (err) {
+        alert('エラーが発生しました。もう一度お試しください。');
+        this.portalLoading = false;
+      }
+    },
+  },
 }
 </script>
 
@@ -58,6 +86,22 @@ button {
   font-size: 16px;
   color: white;
   background-color: #000000;
+}
+.btn-portal {
+  background-color: #1a73e8;
+  color: #fff;
   border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.btn-portal:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.plan-label {
+  font-size: 14px;
+  color: #888;
 }
 </style>
