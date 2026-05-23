@@ -1,25 +1,41 @@
 <template>
   <div class="settings-page">
-    <h2>一般</h2>
-    <div class="setting-row" @click="color">
-      <p>テーマ</p>
-      <button>　色</button>
-    </div>
+
+    <section class="section">
+      <div class="section-title">一般</div>
+      <div class="section-body">
+        <div class="setting-row" @click="color">
+          <span class="row-label">テーマカラー</span>
+          <span class="row-action">変更 ›</span>
+        </div>
+      </div>
+    </section>
+
     <div v-if="colorModal">
       <colorModal @closeColorModal="color" />
     </div>
 
-    <h2>プラン</h2>
-    <div v-if="isPremium" class="setting-row">
-      <p>プレミアムプラン加入中</p>
-      <button class="btn-portal" :disabled="portalLoading" @click="openPortal">
-        {{ portalLoading ? '処理中...' : 'サブスク管理' }}
-      </button>
-    </div>
-    <div v-else class="setting-row">
-      <p>無料プラン</p>
-      <span class="plan-label">無料</span>
-    </div>
+    <section class="section">
+      <div class="section-title">プラン</div>
+      <div class="section-body">
+        <div v-if="isPremium" class="setting-row">
+          <div>
+            <span class="row-label">プレミアムプラン</span>
+            <span class="badge-premium">加入中</span>
+          </div>
+          <button class="btn-portal" :disabled="portalLoading" @click="openPortal">
+            {{ portalLoading ? '処理中...' : 'サブスク管理' }}
+          </button>
+        </div>
+        <div v-else class="setting-row">
+          <div>
+            <span class="row-label">無料プラン</span>
+            <span class="badge-free">無料</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </template>
 
@@ -61,37 +77,71 @@ export default {
 
 <style scoped>
 .settings-page {
-  width: 100%;
-  padding: 40px 20px;
-  text-align: left;
-  border: 1px solid black;
-  margin-bottom: 30px;
+  padding: 24px 16px;
+  background-color: #f2f2f7;
+  min-height: 100vh;
+}
+.section {
+  margin-bottom: 32px;
+}
+.section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  padding-left: 4px;
+}
+.section-body {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
 }
 .setting-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  margin-left: -20px;
-  margin-right: -20px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f0f0f0;
   cursor: pointer;
-  background-color: rgba(157, 157, 157, 0.3);
 }
-button {
-  padding: 10px 20px;
+.setting-row:last-child {
+  border-bottom: none;
+}
+.row-label {
   font-size: 16px;
-  color: white;
-  background-color: #000000;
+  color: #111;
+}
+.row-action {
+  font-size: 15px;
+  color: #aaa;
+}
+.badge-premium {
+  display: inline-block;
+  margin-left: 8px;
+  background: #007bff;
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  vertical-align: middle;
+}
+.badge-free {
+  display: inline-block;
+  margin-left: 8px;
+  background: #e0e0e0;
+  color: #666;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  vertical-align: middle;
 }
 .btn-portal {
-  background-color: #1a73e8;
+  background-color: #007bff;
   color: #fff;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 8px 16px;
   font-size: 14px;
   cursor: pointer;
@@ -99,9 +149,5 @@ button {
 .btn-portal:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-}
-.plan-label {
-  font-size: 14px;
-  color: #888;
 }
 </style>
