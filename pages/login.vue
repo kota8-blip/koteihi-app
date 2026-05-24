@@ -129,7 +129,7 @@ export default {
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 6px;
-  font-size: 15px;
+  font-size: 16px;
 }
 .divider {
   text-align: center;

@@ -50,6 +50,7 @@
     </div>
 
     <div v-else class="empty">固定費がまだ登録されていません</div>
+
     <!-- 非プレミアム: アップグレードモーダル -->
     <div v-if="!isPremium" class="upgrade-overlay">
       <div class="upgrade-modal">
