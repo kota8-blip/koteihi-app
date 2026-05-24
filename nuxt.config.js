@@ -8,9 +8,15 @@ module.exports = {
       { hid: 'description', name: 'description', content: '毎日の習慣を記録して継続しよう' },
       { name: 'format-detection', content: 'telephone=no' },
       { name: 'msapplication-tap-highlight', content: 'no' },
+      { name: 'apple-mobile-web-app-capable', content: 'yes' },
+      { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
+      { name: 'apple-mobile-web-app-title', content: '固定費管理' },
+      { name: 'theme-color', content: '#007bff' },
     ],
     link: [
-      { rel: 'SHORTCUT ICON', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/png', href: '/favicon.png' },
+      { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+      { rel: 'manifest', href: '/manifest.json' },
     ],
   },
 

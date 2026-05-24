@@ -50,6 +50,7 @@ export const actions = {
     const isPremium = response.data.isPremium || false;
     commit('SET_JWT', jwt);
     commit('SET_IS_PREMIUM', isPremium);
+    commit('SET_CURRENT_COLOR', '#ffffff');
     if (process.client) localStorage.setItem('token', jwt);
     this.$axios.setHeader('Authorization', `Bearer ${jwt}`);
   },
