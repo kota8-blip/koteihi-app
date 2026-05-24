@@ -46,6 +46,12 @@ module.exports = {
 
   axios: { baseURL: process.env.API_BASE_URL || 'http://localhost:3001' },
 
+  router: {
+    scrollBehavior(to, from, savedPosition) {
+      return { x: 0, y: 0 };
+    },
+  },
+
   loading: { color: '#3B8070' },
 
   cache: true,
