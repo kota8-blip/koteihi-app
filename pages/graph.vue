@@ -16,8 +16,8 @@
 
     <!-- 合計カード -->
     <div class="total-card">
-      <div class="total-card-label">月の固定費合計</div>
-      <div class="total-card-amount">¥{{ totalAmount.toLocaleString() }}</div>
+      <div class="total-card-label">{{ activeTab === 'category' ? selectedMonthDisplay + 'の固定費合計' : '月の固定費合計' }}</div>
+      <div class="total-card-amount">¥{{ (activeTab === 'category' ? selectedMonthTotal : totalAmount).toLocaleString() }}</div>
     </div>
 
     <div v-if="fixedCosts.length > 0">
@@ -31,11 +31,15 @@
 
       <!-- カテゴリ別ドーナツ -->
       <template v-else>
-        <div class="chart-area">
-          <doughnut-chart :chart-data="chartData" :options="chartOptions" />
+        <div class="chart-wrapper">
+          <button class="month-nav-btn" :disabled="selectedMonthIndex <= 0" @click="prevMonth">←</button>
+          <div class="chart-area">
+            <doughnut-chart :chart-data="chartData" :options="chartOptions" />
+          </div>
+          <button class="month-nav-btn" :disabled="selectedMonthIndex >= availableMonths.length - 1" @click="nextMonth">→</button>
         </div>
         <div class="breakdown-list">
-          <div v-for="(item, i) in categoryTotals" :key="i" class="breakdown-row">
+          <div v-for="(item, i) in selectedMonthCategoryTotals" :key="i" class="breakdown-row">
             <span class="breakdown-dot" :style="{ background: chartColors[i % chartColors.length] }" />
             <span class="breakdown-name">{{ item.category }}</span>
             <span class="breakdown-pct">{{ item.pct }}%</span>
@@ -74,6 +78,8 @@ export default {
     return {
       activeTab: 'trend',
       costHistory: [],
+      allCosts: [],
+      selectedMonth: '',
       chartColors: [
         '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
         '#9966FF', '#FF9F40', '#66BB6A', '#EC407A',
@@ -123,13 +129,35 @@ export default {
     totalAmount() {
       return this.fixedCosts.reduce((sum, item) => sum + Number(item.amount), 0)
     },
-    categoryTotals() {
+    availableMonths() {
+      return this.costHistory.map(h => h.month)
+    },
+    selectedMonthIndex() {
+      return this.availableMonths.indexOf(this.selectedMonth)
+    },
+    selectedMonthDisplay() {
+      if (!this.selectedMonth) return ''
+      const [y, m] = this.selectedMonth.split('-')
+      return `${y}/${m}`
+    },
+    selectedMonthCosts() {
+      return this.allCosts.filter(cost => {
+        const created = cost.created_at ? cost.created_at.substring(0, 7) : null
+        const deleted = cost.deleted_at ? cost.deleted_at.substring(0, 7) : null
+        if (!created) return false
+        return created <= this.selectedMonth && (deleted === null || deleted > this.selectedMonth)
+      })
+    },
+    selectedMonthTotal() {
+      return this.selectedMonthCosts.reduce((sum, item) => sum + Number(item.amount), 0)
+    },
+    selectedMonthCategoryTotals() {
       const map = {}
-      this.fixedCosts.forEach(item => {
+      this.selectedMonthCosts.forEach(item => {
         const cat = item.category || 'その他'
         map[cat] = (map[cat] || 0) + Number(item.amount)
       })
-      const total = this.totalAmount || 1
+      const total = this.selectedMonthTotal || 1
       return Object.entries(map)
         .sort((a, b) => b[1] - a[1])
         .map(([category, amount]) => ({
@@ -140,10 +168,10 @@ export default {
     },
     chartData() {
       return {
-        labels: this.categoryTotals.map(i => i.category),
+        labels: this.selectedMonthCategoryTotals.map(i => i.category),
         datasets: [{
-          data: this.categoryTotals.map(i => i.amount),
-          backgroundColor: this.categoryTotals.map((_, i) => this.chartColors[i % this.chartColors.length]),
+          data: this.selectedMonthCategoryTotals.map(i => i.amount),
+          backgroundColor: this.selectedMonthCategoryTotals.map((_, i) => this.chartColors[i % this.chartColors.length]),
           borderWidth: 2,
           borderColor: '#fff',
         }]
@@ -171,6 +199,23 @@ export default {
   async mounted() {
     await this.$store.dispatch('loadFixedCosts')
     this.costHistory = await this.$store.dispatch('fetchCostHistory')
+    const res = await this.$axios.get('/api/fixed-costs/history-detail')
+    this.allCosts = res.data
+    if (this.availableMonths.length > 0) {
+      this.selectedMonth = this.availableMonths[this.availableMonths.length - 1]
+    }
+  },
+  methods: {
+    prevMonth() {
+      if (this.selectedMonthIndex > 0) {
+        this.selectedMonth = this.availableMonths[this.selectedMonthIndex - 1]
+      }
+    },
+    nextMonth() {
+      if (this.selectedMonthIndex < this.availableMonths.length - 1) {
+        this.selectedMonth = this.availableMonths[this.selectedMonthIndex + 1]
+      }
+    },
   }
 }
 </script>
@@ -231,10 +276,34 @@ export default {
   color: #222;
 }
 
+/* グラフ + 月ナビ wrapper */
+.chart-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+.month-nav-btn {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #444;
+  line-height: 1;
+}
+.month-nav-btn:disabled {
+  color: #ccc;
+  border-color: #eee;
+  cursor: not-allowed;
+}
 /* グラフ */
 .chart-area {
-  max-width: 280px;
-  margin: 0 auto 28px;
+  max-width: 260px;
+  width: 100%;
+  flex-shrink: 1;
 }
 .chart-area--line {
   max-width: 100%;
