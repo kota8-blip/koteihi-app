@@ -60,7 +60,7 @@
         <button class="btn-upgrade" :disabled="upgradeLoading" @click="startUpgrade">
           {{ upgradeLoading ? '処理中...' : 'プランをアップグレード' }}
         </button>
-        <button class="btn-close" @click="$router.go(-1)">閉じる</button>
+        <button class="btn-close" @click="$router.push('/')">閉じる</button>
       </div>
     </div>
   </div>
