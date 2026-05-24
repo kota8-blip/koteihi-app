@@ -4,16 +4,24 @@
       <section class="section">
         <div class="section-title">一般</div>
         <div class="section-body">
-          <div class="setting-row" @click="color">
+          <div class="setting-row" @click="colorExpanded = !colorExpanded">
             <span class="row-label">テーマカラー</span>
-            <span class="row-action">変更 ›</span>
+            <span class="row-action">{{ colorExpanded ? '閉じる' : '変更 ›' }}</span>
+          </div>
+          <div v-if="colorExpanded" class="color-picker">
+            <div
+              v-for="c in colors"
+              :key="c.code"
+              class="color-chip"
+              :class="{ active: currentColor === c.code }"
+              :style="{ background: c.code }"
+              @click.stop="selectColor(c.code)"
+            >
+              <span class="color-chip-label">{{ c.name }}</span>
+            </div>
           </div>
         </div>
       </section>
-
-      <div v-if="colorModal">
-        <colorModal @closeColorModal="color" />
-      </div>
 
       <section class="section">
         <div class="section-title">プラン</div>
@@ -40,26 +48,29 @@
 </template>
 
 <script>
-import colorModal from '~/components/_archive/colorModal.vue';
 export default {
   name: 'Settings',
-  components: {
-    colorModal,
-  },
   data() {
     return {
-      colorModal: false,
+      colorExpanded: false,
       portalLoading: false,
+      colors: [
+        { name: 'ライト', code: '#ffffff' },
+        { name: 'ダーク', code: '#1a1a1a' },
+      ],
     };
   },
   computed: {
     isPremium() {
       return this.$store.state.isPremium;
     },
+    currentColor() {
+      return this.$store.state.currentColor;
+    },
   },
   methods: {
-    color() {
-      this.colorModal = !this.colorModal;
+    selectColor(code) {
+      this.$store.commit('SET_CURRENT_COLOR', code);
     },
     async openPortal() {
       this.portalLoading = true;
@@ -77,7 +88,6 @@ export default {
 
 <style scoped>
 .settings-page {
-  background-color: #f2f2f7;
   min-height: calc(100vh - 64px);
 }
 .settings-inner {
@@ -121,6 +131,33 @@ export default {
 .row-action {
   font-size: 15px;
   color: #aaa;
+}
+.color-picker {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  flex-wrap: wrap;
+}
+.color-chip {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  border: 3px solid transparent;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.20);
+  transition: border-color 0.15s;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 8px;
+}
+.color-chip.active {
+  border-color: #007bff;
+}
+.color-chip-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #888;
 }
 .badge-premium {
   display: inline-block;

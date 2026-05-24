@@ -284,19 +284,19 @@ export default {
   margin-bottom: 28px;
 }
 .month-nav-btn {
-  background: none;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  width: 36px;
-  height: 36px;
-  font-size: 16px;
+  background: #e8e8e8;
+  border: none;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  font-weight: bold;
   cursor: pointer;
-  color: #444;
+  color: #000;
   line-height: 1;
 }
 .month-nav-btn:disabled {
-  color: #ccc;
-  border-color: #eee;
+  opacity: 0.25;
   cursor: not-allowed;
 }
 /* グラフ */
