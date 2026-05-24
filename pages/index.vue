@@ -174,6 +174,10 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch('loadFixedCosts');
+    if (this.$route.query.upgrade === '1') {
+      this.upgradeDesc = '無料プランでは一部機能が制限されています。プレミアムプランで全機能をご利用いただけます。';
+      this.showUpgradeModal = true;
+    }
   },
   methods: {
     openAddModal() {
@@ -229,7 +233,7 @@ export default {
     async startUpgrade() {
       this.upgradeLoading = true;
       try {
-        const res = await this.$axios.post('/api/create-checkout-session', { cancelPath: this.$route.path });
+        const res = await this.$axios.post('/api/create-checkout-session', { cancelPath: this.$route.path + '?upgrade=1' });
         window.location.href = res.data.url;
       } catch (err) {
         alert('エラーが発生しました。もう一度お試しください。');
