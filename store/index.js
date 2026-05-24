@@ -54,6 +54,16 @@ export const actions = {
     if (process.client) localStorage.setItem('token', jwt);
     this.$axios.setHeader('Authorization', `Bearer ${jwt}`);
   },
+  logout({ commit }) {
+    commit('SET_JWT', null);
+    commit('SET_IS_PREMIUM', false);
+    commit('SET_FIXED_COSTS', []);
+    if (process.client) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('isPremium');
+    }
+    this.$axios.setHeader('Authorization', null);
+  },
   async loadFixedCosts({ commit }) {
     const res = await this.$axios.get('/api/fixed-costs');
     commit('SET_FIXED_COSTS', res.data);

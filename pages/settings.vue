@@ -44,6 +44,18 @@
           </div>
         </div>
       </section>
+      <button class="btn-logout" @click="showLogoutModal = true">ログアウト</button>
+
+    </div>
+
+    <!-- ログアウト確認モーダル -->
+    <div v-if="showLogoutModal" class="modal-overlay" @click.self="showLogoutModal = false">
+      <div class="modal">
+        <p class="modal-title">ログアウトしますか？</p>
+        <p class="modal-desc">ログアウトするとログイン画面に戻ります。</p>
+        <button class="modal-btn-logout" @click="logout">ログアウト</button>
+        <button class="modal-btn-cancel" @click="showLogoutModal = false">キャンセル</button>
+      </div>
     </div>
   </div>
 </template>
@@ -55,6 +67,7 @@ export default {
     return {
       colorExpanded: false,
       portalLoading: false,
+      showLogoutModal: false,
       colors: [
         { name: 'ライト', code: '#ffffff' },
         { name: 'ダーク', code: '#1a1a1a' },
@@ -72,6 +85,11 @@ export default {
   methods: {
     selectColor(code) {
       this.$store.commit('SET_CURRENT_COLOR', code);
+    },
+    logout() {
+      this.showLogoutModal = false;
+      this.$store.dispatch('logout');
+      this.$router.push('/login');
     },
     async openPortal() {
       this.portalLoading = true;
@@ -199,5 +217,74 @@ export default {
 .btn-portal:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+.btn-logout {
+  display: block;
+  width: calc(100% - 32px);
+  margin: 8px 16px 0;
+  padding: 14px;
+  background: none;
+  border: 1.5px solid #e53935;
+  border-radius: 10px;
+  color: #e53935;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+}
+.btn-logout:hover {
+  background: #fff5f5;
+}
+/* ログアウト確認モーダル */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 24px;
+  width: 88%;
+  max-width: 320px;
+  text-align: center;
+}
+.modal-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 8px;
+}
+.modal-desc {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+.modal-btn-logout {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  background: #e53935;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.modal-btn-cancel {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+  padding: 8px;
 }
 </style>
