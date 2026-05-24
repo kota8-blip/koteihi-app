@@ -1,17 +1,29 @@
 module.exports = {
   mode: 'spa',
   head: {
-    title: 'koteihi',
+    title: 'koteihi | 固定費管理アプリ',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no' },
-      { hid: 'description', name: 'description', content: '毎日の習慣を記録して継続しよう' },
+      { hid: 'description', name: 'description', content: '毎月いくら固定で出ていくか、即答できますか？kotehiは、サブスクや家賃など毎月かかる固定費をシンプルに管理できるアプリです。' },
       { name: 'format-detection', content: 'telephone=no' },
       { name: 'msapplication-tap-highlight', content: 'no' },
       { name: 'apple-mobile-web-app-capable', content: 'yes' },
       { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
-      { name: 'apple-mobile-web-app-title', content: '固定費管理' },
+      { name: 'apple-mobile-web-app-title', content: 'koteihi' },
       { name: 'theme-color', content: '#007bff' },
+      // OGP
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      { hid: 'og:site_name', property: 'og:site_name', content: 'koteihi' },
+      { hid: 'og:title', property: 'og:title', content: 'koteihi | 固定費管理アプリ' },
+      { hid: 'og:description', property: 'og:description', content: '毎月いくら固定で出ていくか、即答できますか？kotehiは、サブスクや家賃など毎月かかる固定費をシンプルに管理できるアプリです。' },
+      { hid: 'og:url', property: 'og:url', content: 'https://koteihi-app.vercel.app' },
+      { hid: 'og:image', property: 'og:image', content: 'https://koteihi-app.vercel.app/icon-512.png' },
+      // Twitter Card
+      { hid: 'twitter:card', name: 'twitter:card', content: 'summary' },
+      { hid: 'twitter:title', name: 'twitter:title', content: 'koteihi | 固定費管理アプリ' },
+      { hid: 'twitter:description', name: 'twitter:description', content: '毎月いくら固定で出ていくか、即答できますか？kotehiは、サブスクや家賃など毎月かかる固定費をシンプルに管理できるアプリです。' },
+      { hid: 'twitter:image', name: 'twitter:image', content: 'https://koteihi-app.vercel.app/icon-512.png' },
     ],
     link: [
       { rel: 'icon', type: 'image/png', href: '/favicon.png' },

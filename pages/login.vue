@@ -116,6 +116,17 @@ export default {
   layout: 'empty',
   name: 'LogIn',
   components: { BaseButton },
+  head() {
+    return {
+      title: 'koteihi | 固定費管理アプリ',
+      meta: [
+        { hid: 'description', name: 'description', content: '毎月いくら固定で出ていくか、即答できますか？kotehiは、サブスクや家賃など毎月かかる固定費をシンプルに管理できるアプリです。無料で始められます。' },
+        { hid: 'og:title', property: 'og:title', content: 'koteihi | 固定費管理アプリ' },
+        { hid: 'og:description', property: 'og:description', content: '毎月いくら固定で出ていくか、即答できますか？kotehiは、サブスクや家賃など毎月かかる固定費をシンプルに管理できるアプリです。' },
+        { hid: 'og:url', property: 'og:url', content: 'https://koteihi-app.vercel.app/login' },
+      ],
+    };
+  },
   data() {
     return {
       username: '',
