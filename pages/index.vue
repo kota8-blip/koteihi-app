@@ -62,14 +62,12 @@
     <div v-if="showUpgradeModal" class="modal-overlay" @click.self="showUpgradeModal = false">
       <div class="modal upgrade-modal">
         <div class="upgrade-icon">🔒</div>
-        <h3>有料プランの機能です</h3>
+        <h3>プレミアムプランの機能です</h3>
         <p class="upgrade-desc">{{ upgradeDesc }}</p>
-        <div class="modal-actions">
-          <button class="btn-cancel" @click="showUpgradeModal = false">閉じる</button>
-          <button class="btn-upgrade" :disabled="upgradeLoading" @click="startUpgrade">
-            {{ upgradeLoading ? '処理中...' : 'プランをアップグレード' }}
-          </button>
-        </div>
+        <button class="btn-upgrade" :disabled="upgradeLoading" @click="startUpgrade">
+          {{ upgradeLoading ? '処理中...' : 'プランをアップグレード' }}
+        </button>
+        <button class="btn-close" @click="showUpgradeModal = false">閉じる</button>
       </div>
     </div>
 
@@ -172,17 +170,19 @@ export default {
       return this.fixedCosts.reduce((sum, item) => sum + Number(item.amount), 0);
     },
   },
-  async mounted() {
-    await this.$store.dispatch('loadFixedCosts');
+  created() {
     if (this.$route.query.upgrade === '1') {
       this.upgradeDesc = '無料プランでは一部機能が制限されています。プレミアムプランで全機能をご利用いただけます。';
       this.showUpgradeModal = true;
     }
   },
+  async mounted() {
+    await this.$store.dispatch('loadFixedCosts');
+  },
   methods: {
     openAddModal() {
       if (!this.isPremium && this.fixedCosts.length >= 3) {
-        this.upgradeDesc = '無料プランでは固定費を3件まで登録できます。4件目以降の登録は有料プランをご利用ください。';
+        this.upgradeDesc = '無料プランでは固定費を3件まで登録できます。4件目以降の登録はプレミアムプランをご利用ください。';
         this.showUpgradeModal = true;
         return;
       }
@@ -220,7 +220,7 @@ export default {
     selectSort(opt) {
       if (opt.premium && !this.isPremium) {
         this.showSortMenu = false;
-        this.upgradeDesc = '並び替え機能は有料プランでご利用いただけます。';
+        this.upgradeDesc = '並び替え機能はプレミアムプランでご利用いただけます。';
         this.showUpgradeModal = true;
         return;
       }
@@ -557,6 +557,10 @@ export default {
 /* アップグレードモーダル */
 .upgrade-modal {
   text-align: center;
+  border-radius: 16px !important;
+  padding: 36px 28px !important;
+  max-width: 320px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
 }
 .upgrade-icon {
   font-size: 40px;
@@ -564,24 +568,37 @@ export default {
 }
 .upgrade-modal h3 {
   margin: 0 0 10px;
+  color: #111;
 }
 .upgrade-desc {
   font-size: 14px;
   color: #666;
-  margin-bottom: 8px;
+  margin: 0 0 24px;
+  line-height: 1.6;
 }
 .btn-upgrade {
-  background: #f9a825;
+  background: #007bff;
   color: #fff;
   border: none;
-  border-radius: 6px;
-  padding: 10px 24px;
-  font-size: 14px;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-size: 15px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
+  width: 100%;
 }
-.btn-upgrade:hover {
-  background: #f57f17;
+.btn-upgrade:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.btn-close {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 14px;
+  margin-top: 12px;
+  cursor: pointer;
+  width: 100%;
 }
 
 /* モバイル対応 */
