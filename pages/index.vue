@@ -181,8 +181,8 @@ export default {
   },
   methods: {
     openAddModal() {
-      if (!this.isPremium && this.fixedCosts.length >= 3) {
-        this.upgradeDesc = '無料プランでは固定費を3件まで登録できます。4件目以降の登録はプレミアムプランをご利用ください。';
+      if (!this.isPremium && this.fixedCosts.length >= 5) {
+        this.upgradeDesc = '無料プランでは固定費を5件まで登録できます。6件目以降の登録はプレミアムプランをご利用ください。';
         this.showUpgradeModal = true;
         return;
       }
