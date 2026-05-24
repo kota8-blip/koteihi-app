@@ -229,7 +229,7 @@ export default {
     async startUpgrade() {
       this.upgradeLoading = true;
       try {
-        const res = await this.$axios.post('/api/create-checkout-session');
+        const res = await this.$axios.post('/api/create-checkout-session', { cancelPath: this.$route.path });
         window.location.href = res.data.url;
       } catch (err) {
         alert('エラーが発生しました。もう一度お試しください。');
