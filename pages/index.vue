@@ -416,6 +416,7 @@ export default {
   padding: 28px 24px;
   width: 90%;
   max-width: 440px;
+  color: #111;
 }
 .modal h3 {
   margin: 0 0 20px;

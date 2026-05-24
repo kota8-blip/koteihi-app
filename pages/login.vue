@@ -1,6 +1,6 @@
 <template>
   <div class="page-wrapper">
-    <div class="app-title">固定費管理</div>
+    <div class="app-title">koteihi</div>
     <p class="app-description">毎月の固定費を記録・管理するアプリです。</p>
 
     <div class="card">

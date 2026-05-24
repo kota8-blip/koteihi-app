@@ -12,12 +12,12 @@ export default {
   computed: {
     pageTitle() {
       const titles = {
-        '/': '固定費管理',
+        '/': 'koteihi',
         '/graph': 'グラフ',
         '/calendar': 'カレンダー',
         '/settings': '設定',
       };
-      return titles[this.$route.path] || '固定費管理';
+      return titles[this.$route.path] || 'koteihi';
     },
   },
 }
