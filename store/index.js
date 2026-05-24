@@ -45,7 +45,13 @@ export const actions = {
     this.$axios.setHeader('Authorization', `Bearer ${jwt}`);
   },
   async register({ commit }, payload) {
-    await this.$axios.post('/api/register', { ...payload });
+    const response = await this.$axios.post('/api/register', { ...payload });
+    const jwt = response.data.token;
+    const isPremium = response.data.isPremium || false;
+    commit('SET_JWT', jwt);
+    commit('SET_IS_PREMIUM', isPremium);
+    if (process.client) localStorage.setItem('token', jwt);
+    this.$axios.setHeader('Authorization', `Bearer ${jwt}`);
   },
   async loadFixedCosts({ commit }) {
     const res = await this.$axios.get('/api/fixed-costs');

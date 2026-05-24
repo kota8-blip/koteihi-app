@@ -45,6 +45,7 @@
         :text-color="!registername || !registerpassword ? '#d4cccc' : '#ffffff'"
         @click="register"
       />
+      <p v-if="registerError" class="error-msg">{{ registerError }}</p>
     </div>
   </div>
 </template>
@@ -60,7 +61,8 @@ export default {
       username: '',
       password: '',
       registername: '',
-      registerpassword: ''
+      registerpassword: '',
+      registerError: ''
     };
   },
   methods: {
@@ -69,8 +71,13 @@ export default {
       this.$router.push('/');
     },
     async register() {
-      await this.$store.dispatch('register', { username: this.registername, password: this.registerpassword });
-      this.$router.push('/');
+      this.registerError = '';
+      try {
+        await this.$store.dispatch('register', { username: this.registername, password: this.registerpassword });
+        this.$router.push('/');
+      } catch (err) {
+        this.registerError = err.response?.data?.error || '登録に失敗しました';
+      }
     }
   }
 };
@@ -136,5 +143,11 @@ export default {
   color: #aaa;
   font-size: 13px;
   margin: 8px 0 16px;
+}
+.error-msg {
+  color: #e53935;
+  font-size: 13px;
+  margin-top: 8px;
+  text-align: center;
 }
 </style>
