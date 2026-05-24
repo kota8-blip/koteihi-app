@@ -231,6 +231,8 @@ export default {
   font-weight: 600;
   cursor: pointer;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 .btn-logout:hover {
   background: #fff5f5;
