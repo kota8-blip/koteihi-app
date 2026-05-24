@@ -1,7 +1,7 @@
 {
   "name": "koteihi",
   "short_name": "koteihi",
-  "description": "毎月の固定費を記録・管理するアプリ",
+  "description": "毎月の固定・定期支出を記録・管理するアプリ",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

@@ -81,7 +81,7 @@
         </div>
         <div class="form-group">
           <label>金額（円）</label>
-          <input v-model.number="form.amount" type="number" min="0" placeholder="例: 1490">
+          <input v-model.number="form.amount" type="number" min="0" placeholder="例: 1490（平均額でもOK）">
         </div>
         <div class="form-group">
           <label>カテゴリ</label>

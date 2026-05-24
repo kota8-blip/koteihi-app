@@ -1,35 +1,70 @@
 <template>
   <div class="page-wrapper">
-    <div class="app-title">koteihi</div>
-    <p class="app-description">毎月の固定費を記録・管理するアプリです。</p>
 
-    <div class="card">
-      <h2>ログイン</h2>
-      <p class="section-description">すでにアカウントをお持ちの方はこちらからログインしてください。</p>
-      <div class="input-group">
-        <label for="username">ユーザー名</label>
-        <input type="text" id="username" v-model="username" placeholder="ユーザー名を入力">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="app-title">koteihi</div>
+      <p class="hero-catch">毎月いくら固定で出ていくか、<br>即答できますか？</p>
+      <p class="hero-sub">kotehiなら、固定費をまとめて一目で管理できます。</p>
+      <a href="#register" class="btn-cta">今すぐ無料で始める</a>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+      <div class="feature-item">
+        <div class="feature-icon">📋</div>
+        <div class="feature-text">
+          <div class="feature-title">固定費を一覧管理</div>
+          <div class="feature-desc">サブスクや家賃など、毎月かかる支出をまとめて記録</div>
+        </div>
       </div>
-      <div class="input-group">
-        <label for="password">パスワード</label>
-        <input type="password" id="password" v-model="password" placeholder="パスワードを入力">
+      <div class="feature-item">
+        <div class="feature-icon">📊</div>
+        <div class="feature-text">
+          <div class="feature-title">グラフで推移を確認</div>
+          <div class="feature-desc">月々の固定費の変化をグラフで見える化</div>
+        </div>
       </div>
-      <BaseButton
-        :button-text="'ログイン'"
-        :is-disabled="!username || !password"
-        :bg-color="!username || !password ? '#f0f0f0' : '#007bff'"
-        :text-color="!username || !password ? '#d4cccc' : '#ffffff'"
-        @click="login"
-      />
-    </div>
+      <div class="feature-item">
+        <div class="feature-icon">💴</div>
+        <div class="feature-text">
+          <div class="feature-title">月合計を瞬時に把握</div>
+          <div class="feature-desc">合計金額が常に表示されるので、固定費に即答できる</div>
+        </div>
+      </div>
+    </section>
 
-    <div class="divider">
-      <span>または</span>
-    </div>
+    <!-- Pricing -->
+    <section class="pricing">
+      <h2 class="pricing-title">料金プラン</h2>
+      <div class="pricing-cards">
+        <div class="pricing-card">
+          <div class="plan-name">無料プラン</div>
+          <div class="plan-price">¥0<span>/月</span></div>
+          <ul class="plan-features">
+            <li>固定費5件まで登録</li>
+            <li>月合計の確認</li>
+            <li>カテゴリ管理</li>
+          </ul>
+        </div>
+        <div class="pricing-card is-premium">
+          <div class="plan-badge">おすすめ</div>
+          <div class="plan-name">プレミアム</div>
+          <div class="plan-price">¥480<span>/月</span></div>
+          <ul class="plan-features">
+            <li>固定費 無制限登録</li>
+            <li>グラフで推移を確認</li>
+            <li>並び替え機能</li>
+            <li>カテゴリ管理</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-    <div class="card">
+    <!-- 新規登録 -->
+    <div id="register" class="card">
       <h2>新規登録</h2>
-      <p class="section-description">初めてご利用の方はこちらからアカウントを作成してください。ユーザー名とパスワードを決めるだけで登録できます。</p>
+      <p class="section-description">ユーザー名とパスワードを決めるだけで登録できます。</p>
       <div class="input-group">
         <label for="registername">ユーザー名</label>
         <input type="text" id="registername" v-model="registername" placeholder="好きなユーザー名を入力">
@@ -47,6 +82,31 @@
       />
       <p v-if="registerError" class="error-msg">{{ registerError }}</p>
     </div>
+
+    <div class="divider">
+      <span>すでにアカウントをお持ちの方</span>
+    </div>
+
+    <!-- ログイン -->
+    <div class="card">
+      <h2>ログイン</h2>
+      <div class="input-group">
+        <label for="username">ユーザー名</label>
+        <input type="text" id="username" v-model="username" placeholder="ユーザー名を入力">
+      </div>
+      <div class="input-group">
+        <label for="password">パスワード</label>
+        <input type="password" id="password" v-model="password" placeholder="パスワードを入力">
+      </div>
+      <BaseButton
+        :button-text="'ログイン'"
+        :is-disabled="!username || !password"
+        :bg-color="!username || !password ? '#f0f0f0' : '#007bff'"
+        :text-color="!username || !password ? '#d4cccc' : '#ffffff'"
+        @click="login"
+      />
+    </div>
+
   </div>
 </template>
 
@@ -87,21 +147,156 @@ export default {
 .page-wrapper {
   min-height: 100vh;
   background-color: #f5f5f5;
-  padding: 40px 16px;
+  padding: 0 0 60px;
+}
+
+/* Hero */
+.hero {
+  background: #007bff;
+  color: #fff;
+  text-align: center;
+  padding: 56px 24px 48px;
 }
 .app-title {
-  text-align: center;
-  font-size: 26px;
-  font-weight: 700;
+  font-size: 28px;
+  font-weight: 800;
   letter-spacing: 0.15em;
-  margin-bottom: 6px;
+  margin-bottom: 20px;
+  opacity: 0.95;
 }
-.app-description {
-  text-align: center;
-  color: #666;
+.hero-catch {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.hero-sub {
   font-size: 14px;
+  opacity: 0.85;
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+.btn-cta {
+  display: inline-block;
+  background: #fff;
+  color: #007bff;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 32px;
+  border-radius: 30px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Features */
+.features {
+  background: #fff;
+  padding: 32px 24px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
   margin-bottom: 24px;
 }
+.feature-item:last-child {
+  margin-bottom: 0;
+}
+.feature-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+.feature-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 4px;
+}
+.feature-desc {
+  font-size: 13px;
+  color: #888;
+  line-height: 1.6;
+}
+
+/* Pricing */
+.pricing {
+  padding: 32px 16px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.pricing-title {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 16px;
+}
+.pricing-cards {
+  display: flex;
+  gap: 12px;
+}
+.pricing-card {
+  flex: 1;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  position: relative;
+}
+.pricing-card.is-premium {
+  border: 2px solid #007bff;
+}
+.plan-badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #007bff;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.plan-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #555;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.plan-price {
+  font-size: 24px;
+  font-weight: 800;
+  color: #222;
+  text-align: center;
+  margin-bottom: 12px;
+}
+.plan-price span {
+  font-size: 13px;
+  font-weight: 400;
+  color: #999;
+}
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.plan-features li {
+  font-size: 12px;
+  color: #666;
+  padding: 4px 0;
+  border-top: 1px solid #f0f0f0;
+  line-height: 1.5;
+}
+.plan-features li:first-child {
+  border-top: none;
+}
+
+/* Forms */
 .card {
   background: #fff;
   border-radius: 10px;
@@ -149,5 +344,18 @@ export default {
   font-size: 13px;
   margin-top: 8px;
   text-align: center;
+}
+
+/* モバイル */
+@media (max-width: 360px) {
+  .hero-catch {
+    font-size: 19px;
+  }
+  .plan-price {
+    font-size: 20px;
+  }
+  .plan-features li {
+    font-size: 11px;
+  }
 }
 </style>
