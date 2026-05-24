@@ -9,10 +9,6 @@
         <span class="nav-icon">📊</span>
         <span class="nav-label">グラフ</span>
       </nuxt-link>
-      <nuxt-link to="/calendar" class="nav-item">
-        <span class="nav-icon">📅</span>
-        <span class="nav-label">カレンダー</span>
-      </nuxt-link>
       <nuxt-link to="/settings" class="nav-item">
         <span class="nav-icon">⚙</span>
         <span class="nav-label">設定</span>

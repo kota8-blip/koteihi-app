@@ -63,6 +63,10 @@ export const actions = {
     await this.$axios.put(`/api/fixed-costs/${payload.id}`, payload);
     await dispatch('loadFixedCosts');
   },
+  async fetchCostHistory() {
+    const res = await this.$axios.get('/api/fixed-costs/history');
+    return res.data;
+  },
 }
 
 

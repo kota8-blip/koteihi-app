@@ -1,214 +1,288 @@
 <template>
-  <div>
-    <div class="container">
-      <div class="date-display">
-        <div class="categoryChoice--expense">
-          <p @click="previousDate" class="previous-btn">&lt;</p>
-          <select v-model="selectedDate">
-            <option v-for="(date, key) in availableDates" :key="key" :value="date.value">{{ date.label }}</option>
-          </select>
-          <p @click="nextDate" class="next-btn">&gt;</p>
+  <div class="page">
+    <!-- タブ切替 -->
+    <div class="tab-bar">
+      <button
+        class="tab-btn"
+        :class="{ active: activeTab === 'trend' }"
+        @click="activeTab = 'trend'"
+      >月額の推移</button>
+      <button
+        class="tab-btn"
+        :class="{ active: activeTab === 'category' }"
+        @click="activeTab = 'category'"
+      >カテゴリ別</button>
+    </div>
+
+    <!-- 合計カード -->
+    <div class="total-card">
+      <div class="total-card-label">月の固定費合計</div>
+      <div class="total-card-amount">¥{{ totalAmount.toLocaleString() }}</div>
+    </div>
+
+    <div v-if="fixedCosts.length > 0">
+      <!-- 月額の推移 -->
+      <template v-if="activeTab === 'trend'">
+        <div v-if="costHistory.length > 1" class="chart-area chart-area--line">
+          <line-chart :chart-data="trendChartData" :options="trendChartOptions" />
         </div>
-      </div>
-      <button class="visibility-toggle" @click="toggle">{{ isVisible ? '非表示' : '表示' }}</button>
-      <div v-if="isVisible">
-        <div>
-          <div class="routine-list-containers">
-            <GraphBox v-if="selectedType !== '収支'" :date="selectedDate" />
-            <StackedBarChart v-else :chart-data="stackedChartData" />
-            <div class="list-box-wrapper">
-              <VariousTotalBudgetBox :date="selectedDate" />
-              <ListBox :date="selectedDate" />
-            </div>
+        <div v-else class="empty">データが1ヶ月分しかないため推移グラフを表示できません</div>
+      </template>
+
+      <!-- カテゴリ別ドーナツ -->
+      <template v-else>
+        <div class="chart-area">
+          <doughnut-chart :chart-data="chartData" :options="chartOptions" />
+        </div>
+        <div class="breakdown-list">
+          <div v-for="(item, i) in categoryTotals" :key="i" class="breakdown-row">
+            <span class="breakdown-dot" :style="{ background: chartColors[i % chartColors.length] }" />
+            <span class="breakdown-name">{{ item.category }}</span>
+            <span class="breakdown-pct">{{ item.pct }}%</span>
+            <span class="breakdown-amount">¥{{ item.amount.toLocaleString() }}</span>
           </div>
         </div>
-      </div>
+      </template>
     </div>
+
+    <div v-else class="empty">固定費がまだ登録されていません</div>
   </div>
 </template>
 
 <script>
-import GraphBox from '../components/graphBox.vue';
-import VariousTotalBudgetBox from '../components/variousTotalBudgetBox.vue';
-import ListBox from '../components/listBox.vue';
-import StackedBarChart from '../components/StackedBarChart.vue';
+import { Doughnut, Line } from 'vue-chartjs'
+
+const DoughnutChart = {
+  extends: Doughnut,
+  props: ['chartData', 'options'],
+  mounted() { this.renderChart(this.chartData, this.options) },
+  watch: { chartData(val) { this.renderChart(val, this.options) } }
+}
+
+const LineChart = {
+  extends: Line,
+  props: ['chartData', 'options'],
+  mounted() { this.renderChart(this.chartData, this.options) },
+  watch: { chartData(val) { this.renderChart(val, this.options) } }
+}
 
 export default {
-  name: 'Graph',
-  components: {
-    GraphBox,
-    VariousTotalBudgetBox,
-    ListBox,
-    StackedBarChart
-  },
+  name: 'GraphPage',
+  middleware: 'auth',
+  components: { DoughnutChart, LineChart },
   data() {
     return {
-      isVisible: true,
-      selectedDate: (() => {
-        const d = new Date();
-        return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-      })(),
-      selectedMonth: (() => {
-        const d = new Date();
-        return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-      })(),
-      selectedYear: (() => {
-        const d = new Date();
-        return `${d.getFullYear()}`;
-      })(),
-      availableDates: (() => {
-        const d = new Date();
-      const today = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-      const month = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-      const year = `${d.getFullYear()}`;
-      return [
-        { label: today, value: today },
-        { label: month, value: month },
-        { label: year, value: year },
-      ];
-    })(),
-    today: (() => {
-      const d = new Date();
-      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    })(),
-    month: (() => {
-      const d = new Date();
-      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-    })(),
-    year: (() => {
-      const d = new Date();
-      return `${d.getFullYear()}`;
-    })(),
-  }
-},
-computed: {
-  selectedType() {
-    return this.$store.getters.getSelectedType;
-  },
-  stackedChartData() {
-  const income = Object.entries(this.$store.state.income)
-    .filter(([date]) => date.startsWith(this.selectedDate))
-    .flatMap(([, items]) => items)
-    .filter(item => item.amount);
-  const expenses = Object.entries(this.$store.state.expenses)
-    .filter(([date]) => date.startsWith(this.selectedDate))
-    .flatMap(([, items]) => items)
-    .filter(item => item.amount);
-
-  // 日付をラベルにする場合
-  const labels = [...new Set([
-    ...Object.keys(this.$store.state.income),
-    ...Object.keys(this.$store.state.expenses)
-  ])].filter(date => date.startsWith(this.selectedDate)).sort();
-
-  return {
-    labels,
-    datasets: [
-      {
-        label: '収入',
-        data: labels.map(date => (this.$store.state.income[date] || []).reduce((sum, i) => sum + i.amount, 0)),
-        backgroundColor: '#36A2EB'
+      activeTab: 'trend',
+      costHistory: [],
+      chartColors: [
+        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
+        '#9966FF', '#FF9F40', '#66BB6A', '#EC407A',
+        '#26C6DA', '#8D6E63',
+      ],
+      chartOptions: {
+        responsive: true,
+        maintainAspectRatio: true,
+        legend: { display: false },
+        tooltips: {
+          callbacks: {
+            label(tooltipItem, data) {
+              const val = data.datasets[0].data[tooltipItem.index]
+              const label = data.labels[tooltipItem.index]
+              return ` ${label}：¥${Number(val).toLocaleString()}`
+            }
+          }
+        }
       },
-      {
-        label: '支出',
-        data: labels.map(date => -(this.$store.state.expenses[date] || []).reduce((sum, i) => sum + i.amount, 0)),
-        backgroundColor: '#FF6384'
+      trendChartOptions: {
+        responsive: true,
+        maintainAspectRatio: true,
+        legend: { display: false },
+        scales: {
+          xAxes: [{ gridLines: { display: false } }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: false,
+              callback: val => `¥${Number(val).toLocaleString()}`
+            }
+          }]
+        },
+        tooltips: {
+          callbacks: {
+            label(tooltipItem) {
+              return ` ¥${Number(tooltipItem.yLabel).toLocaleString()}`
+            }
+          }
+        }
       }
-    ]
-  }
-  }
-},
-methods: {
-    toggle() {
-      this.isVisible = !this.isVisible;
-    },
-    previousDate() {
-      this.navigateDate(-1);
-    },
-    nextDate() {
-      this.navigateDate(1);
-    },
-    navigateDate(delta) {
-      const date = this.selectedDate;
-      let newDate;
-      if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-        const d = new Date(date);
-        d.setDate(d.getDate() + delta);
-        newDate = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-      } else if (/^\d{4}-\d{2}$/.test(date)) {
-        const [y, m] = date.split('-').map(Number);
-        const d = new Date(y, m - 1 + delta, 1);
-        newDate = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-      } else if (/^\d{4}$/.test(date)) {
-        newDate = String(Number(date) + delta);
-      } else {
-        return;
-      }
-      if (!this.availableDates.some(d => d.value === newDate)) {
-        this.availableDates = [{ label: newDate, value: newDate }, ...this.availableDates];
-      }
-      this.selectedDate = newDate;
     }
-}
+  },
+  computed: {
+    fixedCosts() {
+      return this.$store.state.fixedCosts
+    },
+    totalAmount() {
+      return this.fixedCosts.reduce((sum, item) => sum + Number(item.amount), 0)
+    },
+    categoryTotals() {
+      const map = {}
+      this.fixedCosts.forEach(item => {
+        const cat = item.category || 'その他'
+        map[cat] = (map[cat] || 0) + Number(item.amount)
+      })
+      const total = this.totalAmount || 1
+      return Object.entries(map)
+        .sort((a, b) => b[1] - a[1])
+        .map(([category, amount]) => ({
+          category,
+          amount,
+          pct: Math.round((amount / total) * 100)
+        }))
+    },
+    chartData() {
+      return {
+        labels: this.categoryTotals.map(i => i.category),
+        datasets: [{
+          data: this.categoryTotals.map(i => i.amount),
+          backgroundColor: this.categoryTotals.map((_, i) => this.chartColors[i % this.chartColors.length]),
+          borderWidth: 2,
+          borderColor: '#fff',
+        }]
+      }
+    },
+    trendChartData() {
+      return {
+        labels: this.costHistory.map(h => {
+          const [y, m] = h.month.split('-')
+          return `${y}/${m}`
+        }),
+        datasets: [{
+          label: '月額合計',
+          data: this.costHistory.map(h => Number(h.total)),
+          borderColor: '#36A2EB',
+          backgroundColor: 'rgba(54,162,235,0.10)',
+          pointBackgroundColor: '#36A2EB',
+          pointRadius: 4,
+          fill: true,
+          tension: 0.3,
+        }]
+      }
+    }
+  },
+  async mounted() {
+    await this.$store.dispatch('loadFixedCosts')
+    this.costHistory = await this.$store.dispatch('fetchCostHistory')
+  }
 }
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  max-width: 1700px;
+.page {
+  padding: 20px 16px 136px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 20px 20px;
-  text-align: center;
-  border: 1px solid black;
+  box-sizing: border-box;
 }
-.date-display {
-  font-size: 45px;
-  color: black;
-  margin-bottom: 20px;
-  text-align: left;
-}
-.categoryChoice--expense {
+
+/* タブ */
+.tab-bar {
   display: flex;
+  background: #f2f2f7;
+  border-radius: 10px;
+  padding: 3px;
+  margin-bottom: 20px;
+}
+.tab-btn {
+  flex: 1;
+  padding: 8px 0;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #888;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
+}
+.tab-btn.active {
+  background: #fff;
+  color: #222;
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+}
+
+/* 合計カード */
+.total-card {
+  background: #f8f8f8;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
-.categoryChoice--expense p {
-  width: 60px;
-  text-align: center;
-  cursor: pointer;
+.total-card-label {
+  font-size: 14px;
+  color: #888;
+  font-weight: 500;
 }
-.categoryChoice--expense select {
-  margin: 0 auto;
-  padding: 10px 20px;
-  border: 1px solid #000000;
-  border-radius: 4px;
-  font-size: 35px;
-  height: 100px;
-  color: #000000;
-  cursor: pointer;
-}
-.visibility-toggle {
-  margin-bottom: 20px;
-  padding: 10px 20px;
-  font-size: 20px;
-  margin-left: auto;
-}
-.routine-list-containers {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  margin-top: 20px;
-  text-align: left;
-}
-.chart-wrapper {
-  display: flex;
-  margin-right: 40px;
-}
-.list-box-wrapper {
-  margin-top: 20px;
-  font-size: 50px;
+.total-card-amount {
+  font-size: 28px;
   font-weight: bold;
+  color: #222;
+}
+
+/* グラフ */
+.chart-area {
+  max-width: 280px;
+  margin: 0 auto 28px;
+}
+.chart-area--line {
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+/* 内訳リスト（共通） */
+.breakdown-list {
+  border-top: 1px solid #f0f0f0;
+}
+.breakdown-row {
+  display: flex;
+  align-items: center;
+  padding: 14px 4px;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 10px;
+}
+
+/* カテゴリ別 */
+.breakdown-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.breakdown-name {
+  flex: 1;
+  font-size: 15px;
+  color: #222;
+}
+.breakdown-pct {
+  font-size: 13px;
+  color: #aaa;
+  width: 40px;
+  text-align: right;
+}
+.breakdown-amount {
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
+  width: 100px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.empty {
+  text-align: center;
+  color: #aaa;
+  padding: 60px 0;
 }
 </style>
