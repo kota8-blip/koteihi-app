@@ -51,9 +51,23 @@ export default {
   color: #aaa;
   flex: 1;
   padding: 6px 0;
+  position: relative;
+  border-radius: 8px;
+  transition: background 0.15s;
 }
 .nav-item.nuxt-link-active {
   color: #007bff;
+  background: rgba(0, 123, 255, 0.08);
+}
+.nav-item.nuxt-link-active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 25%;
+  right: 25%;
+  height: 2px;
+  background: #007bff;
+  border-radius: 0 0 2px 2px;
 }
 .nav-icon {
   font-size: 20px;
