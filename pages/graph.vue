@@ -50,6 +50,18 @@
     </div>
 
     <div v-else class="empty">固定費がまだ登録されていません</div>
+    <!-- 非プレミアム: アップグレードモーダル -->
+    <div v-if="!isPremium" class="upgrade-overlay">
+      <div class="upgrade-modal">
+        <div class="upgrade-icon">🔒</div>
+        <h3>プレミアムプランの機能です</h3>
+        <p class="upgrade-desc">グラフ機能はプレミアムプランでご利用いただけます。</p>
+        <button class="btn-upgrade" :disabled="upgradeLoading" @click="startUpgrade">
+          {{ upgradeLoading ? '処理中...' : 'プランをアップグレード' }}
+        </button>
+        <button class="btn-close" @click="$router.go(-1)">閉じる</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -80,6 +92,7 @@ export default {
       costHistory: [],
       allCosts: [],
       selectedMonth: '',
+      upgradeLoading: false,
       chartColors: [
         '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
         '#9966FF', '#FF9F40', '#66BB6A', '#EC407A',
@@ -125,6 +138,9 @@ export default {
   computed: {
     fixedCosts() {
       return this.$store.state.fixedCosts
+    },
+    isPremium() {
+      return this.$store.state.isPremium
     },
     totalAmount() {
       return this.fixedCosts.reduce((sum, item) => sum + Number(item.amount), 0)
@@ -196,7 +212,14 @@ export default {
       }
     }
   },
+  watch: {
+    activeTab(val) {
+      localStorage.setItem('graphActiveTab', val)
+    }
+  },
   async mounted() {
+    const savedTab = localStorage.getItem('graphActiveTab')
+    if (savedTab) this.activeTab = savedTab
     await this.$store.dispatch('loadFixedCosts')
     this.costHistory = await this.$store.dispatch('fetchCostHistory')
     const res = await this.$axios.get('/api/fixed-costs/history-detail')
@@ -214,6 +237,16 @@ export default {
     nextMonth() {
       if (this.selectedMonthIndex < this.availableMonths.length - 1) {
         this.selectedMonth = this.availableMonths[this.selectedMonthIndex + 1]
+      }
+    },
+    async startUpgrade() {
+      this.upgradeLoading = true
+      try {
+        const res = await this.$axios.post('/api/create-checkout-session')
+        window.location.href = res.data.url
+      } catch (err) {
+        alert('エラーが発生しました。もう一度お試しください。')
+        this.upgradeLoading = false
       }
     },
   }
@@ -284,7 +317,7 @@ export default {
   margin-bottom: 28px;
 }
 .month-nav-btn {
-  background: #e8e8e8;
+  background: #f0f0f0;
   border: none;
   border-radius: 8px;
   width: 40px;
@@ -353,5 +386,65 @@ export default {
   text-align: center;
   color: #aaa;
   padding: 60px 0;
+}
+
+/* アップグレードモーダル */
+.upgrade-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.upgrade-modal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 36px 28px;
+  max-width: 320px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+.upgrade-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+.upgrade-modal h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  color: #111;
+}
+.upgrade-desc {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 24px;
+  line-height: 1.6;
+}
+.btn-upgrade {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+}
+.btn-upgrade:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.btn-close {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 14px;
+  margin-top: 12px;
+  cursor: pointer;
+  width: 100%;
 }
 </style>
