@@ -301,7 +301,7 @@ export default {
   z-index: 1;
 }
 .btn-logout:hover {
-  background: #fff5f5;
+  background: rgba(229, 57, 53, 0.1);
 }
 /* ログアウト確認モーダル */
 .modal-overlay {
