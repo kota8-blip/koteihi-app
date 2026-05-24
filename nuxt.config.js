@@ -24,6 +24,8 @@ module.exports = {
       { hid: 'twitter:title', name: 'twitter:title', content: 'koteihi | 固定費管理アプリ' },
       { hid: 'twitter:description', name: 'twitter:description', content: '毎月いくら固定で出ていくか、即答できますか？kotehiは、サブスクや家賃など毎月かかる固定費をシンプルに管理できるアプリです。' },
       { hid: 'twitter:image', name: 'twitter:image', content: 'https://koteihi-app.vercel.app/icon-512.png' },
+      // Google Search Console
+      { name: 'google-site-verification', content: '3w_XTAGip2c3RmZKoqRnGe_c5nhEK6NSXXXVLwoULWk' },
     ],
     link: [
       { rel: 'icon', type: 'image/png', href: '/favicon.png' },
