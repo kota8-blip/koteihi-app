@@ -1,11 +1,7 @@
 <template>
   <div class="app-header">
     <div class="header-inner">
-      <div class="header-side" />
-      <span class="app-title">{{ $route.path === '/settings' ? '設定' : '固定費管理' }}</span>
-      <nuxt-link :to="$route.path === '/settings' ? '/' : '/settings'" class="settings-icon" aria-label="設定">
-        ⚙
-      </nuxt-link>
+      <span class="app-title">{{ pageTitle }}</span>
     </div>
   </div>
 </template>
@@ -13,7 +9,17 @@
 <script>
 export default {
   name: 'BaseHeader',
-  methods: {},
+  computed: {
+    pageTitle() {
+      const titles = {
+        '/': '固定費管理',
+        '/graph': 'グラフ',
+        '/calendar': 'カレンダー',
+        '/settings': '設定',
+      };
+      return titles[this.$route.path] || '固定費管理';
+    },
+  },
 }
 </script>
 
@@ -34,14 +40,11 @@ export default {
 }
 .header-inner {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-}
-.header-side {
-  width: 28px;
 }
 .app-title {
   font-size: 22px;

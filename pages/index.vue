@@ -52,6 +52,7 @@
     </div>
 
     <!-- 合計バー -->
+
     <div class="total-bar">
       <span class="total-label">月合計</span>
       <span class="total-amount">¥{{ totalAmount.toLocaleString() }}</span>
@@ -242,7 +243,7 @@ export default {
 <style scoped>
 .page {
   padding: 16px;
-  padding-bottom: 80px;
+  padding-bottom: 136px;
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
@@ -258,7 +259,7 @@ export default {
   border-top: 1px solid #e0e0e0;
   padding: 16px 20px;
   position: fixed;
-  bottom: 0;
+  bottom: 60px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -582,7 +583,7 @@ export default {
 @media (max-width: 480px) {
   .page {
     padding: 12px;
-    padding-bottom: 80px;
+    padding-bottom: 136px;
   }
   .cost-amount {
     font-size: 16px;

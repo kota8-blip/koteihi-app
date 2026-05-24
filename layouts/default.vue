@@ -2,14 +2,17 @@
   <div class="app-wrapper" :style="{ backgroundColor: $store.state.currentColor }">
     <BaseHeader />
     <nuxt />
+    <BaseFooter />
   </div>
 </template>
 
 <script>
 import BaseHeader from "../components/baseHeader.vue";
+import BaseFooter from "../components/baseFooter.vue";
 export default {
   components: {
-    BaseHeader
+    BaseHeader,
+    BaseFooter,
   },
   async mounted() {
     this.$store.commit('LOAD_FROM_STORAGE');
