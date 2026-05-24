@@ -44,8 +44,46 @@
           </div>
         </div>
       </section>
+      <section class="section">
+        <div class="section-title">サポート</div>
+        <div class="section-body">
+          <div class="setting-row" @click="showContactModal = true">
+            <span class="row-label">お問い合わせ</span>
+            <span class="row-action">フォームを開く ›</span>
+          </div>
+        </div>
+      </section>
       <button class="btn-logout" @click="showLogoutModal = true">ログアウト</button>
 
+    </div>
+
+    <!-- お問い合わせモーダル -->
+    <div v-if="showContactModal" class="modal-overlay" @click.self="closeContact">
+      <div class="modal">
+        <p class="modal-title">お問い合わせ</p>
+        <div v-if="contactSent" class="contact-success">
+          <p>送信しました。<br>お返事お待ちください。</p>
+          <button class="modal-btn-cancel" @click="closeContact">閉じる</button>
+        </div>
+        <div v-else>
+          <div class="contact-group">
+            <label>返信用メールアドレス <span style="color:#e53935">*</span></label>
+            <input v-model="contactEmail" type="email" placeholder="example@email.com">
+          </div>
+          <div class="contact-group">
+            <label>件名</label>
+            <input v-model="contactSubject" type="text" placeholder="例: 機能の要望">
+          </div>
+          <div class="contact-group">
+            <label>内容</label>
+            <textarea v-model="contactMessage" rows="5" placeholder="ご自由にお書きください" />
+          </div>
+          <button class="modal-btn-logout" style="background:#007bff" :disabled="!contactEmail || !contactMessage || contactLoading" @click="sendContact">
+            {{ contactLoading ? '送信中...' : '送信する' }}
+          </button>
+          <button class="modal-btn-cancel" @click="closeContact">キャンセル</button>
+        </div>
+      </div>
     </div>
 
     <!-- ログアウト確認モーダル -->
@@ -68,6 +106,12 @@ export default {
       colorExpanded: false,
       portalLoading: false,
       showLogoutModal: false,
+      showContactModal: false,
+      contactEmail: '',
+      contactSubject: '',
+      contactMessage: '',
+      contactLoading: false,
+      contactSent: false,
       colors: [
         { name: 'ライト', code: '#ffffff' },
         { name: 'ダーク', code: '#1a1a1a' },
@@ -85,6 +129,28 @@ export default {
   methods: {
     selectColor(code) {
       this.$store.commit('SET_CURRENT_COLOR', code);
+    },
+    closeContact() {
+      this.showContactModal = false;
+      this.contactEmail = '';
+      this.contactSubject = '';
+      this.contactMessage = '';
+      this.contactSent = false;
+    },
+    async sendContact() {
+      this.contactLoading = true;
+      try {
+        await fetch('https://formspree.io/f/xdajlddo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ email: this.contactEmail, subject: this.contactSubject, message: this.contactMessage }),
+        });
+        this.contactSent = true;
+      } catch (err) {
+        alert('送信に失敗しました。もう一度お試しください。');
+      } finally {
+        this.contactLoading = false;
+      }
     },
     logout() {
       this.showLogoutModal = false;
@@ -288,5 +354,32 @@ export default {
   cursor: pointer;
   width: 100%;
   padding: 8px;
+}
+.contact-group {
+  margin-bottom: 14px;
+  text-align: left;
+}
+.contact-group label {
+  display: block;
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 6px;
+}
+.contact-group input,
+.contact-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+.contact-success {
+  text-align: center;
+  color: #388e3c;
+  font-size: 15px;
+  line-height: 1.8;
+  padding: 8px 0 16px;
 }
 </style>
