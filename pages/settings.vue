@@ -8,6 +8,7 @@
             <span class="row-label">テーマカラー</span>
             <span class="row-action">{{ colorExpanded ? '閉じる' : '変更 ›' }}</span>
           </div>
+          <div v-if="colorExpanded" class="color-picker-backdrop" @click="colorExpanded = false" />
           <div v-if="colorExpanded" class="color-picker">
             <div
               v-for="c in colors"
@@ -132,7 +133,14 @@ export default {
   font-size: 15px;
   color: #aaa;
 }
+.color-picker-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
 .color-picker {
+  position: relative;
+  z-index: 1;
   display: flex;
   gap: 12px;
   padding: 16px;
