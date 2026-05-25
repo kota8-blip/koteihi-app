@@ -204,6 +204,8 @@ export default {
   border-radius: 30px;
   text-decoration: none;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
 }
 
 /* Features */
