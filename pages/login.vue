@@ -6,7 +6,7 @@
       <div class="app-title">koteihi</div>
       <p class="hero-catch">毎月いくら固定で出ていくか、<br>即答できますか？</p>
       <p class="hero-sub">kotehiなら、固定費をまとめて一目で管理できます。</p>
-      <a href="#register" class="btn-cta">今すぐ無料で始める</a>
+      <a class="btn-cta" @click.prevent="scrollToRegister">今すぐ無料で始める</a>
     </section>
 
     <!-- Features -->
@@ -137,6 +137,9 @@ export default {
     };
   },
   methods: {
+    scrollToRegister() {
+      document.getElementById('register').scrollIntoView({ behavior: 'smooth' });
+    },
     async login() {
       await this.$store.dispatch('logIn', { username: this.username, password: this.password });
       document.activeElement?.blur();

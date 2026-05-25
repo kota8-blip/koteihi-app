@@ -58,7 +58,6 @@ module.exports = {
 
   plugins: [
     { src: '~/plugins/v-calendar.js', mode: 'client' },
-    { src: '~/plugins/scroll-restoration.js', mode: 'client' },
   ],
 
   build: {
