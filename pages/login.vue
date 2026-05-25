@@ -139,12 +139,16 @@ export default {
   methods: {
     async login() {
       await this.$store.dispatch('logIn', { username: this.username, password: this.password });
+      document.activeElement?.blur();
+      await this.$nextTick();
       this.$router.push('/');
     },
     async register() {
       this.registerError = '';
       try {
         await this.$store.dispatch('register', { username: this.registername, password: this.registerpassword });
+        document.activeElement?.blur();
+        await this.$nextTick();
         this.$router.push('/');
       } catch (err) {
         this.registerError = err.response?.data?.error || '登録に失敗しました';

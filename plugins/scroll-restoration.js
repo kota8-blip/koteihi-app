@@ -4,7 +4,9 @@ export default ({ app }) => {
       history.scrollRestoration = 'manual';
     }
     app.router.afterEach(() => {
-      window.scrollTo(0, 0);
+      requestAnimationFrame(() => {
+        window.scrollTo(0, 0);
+      });
     });
   }
 };
