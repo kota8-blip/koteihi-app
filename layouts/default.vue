@@ -38,6 +38,7 @@ html {
   -webkit-font-smoothing: antialiased;
   width: 100%;
   overflow-x: hidden;
+  overflow-anchor: none;
   touch-action: manipulation;
 }
 
