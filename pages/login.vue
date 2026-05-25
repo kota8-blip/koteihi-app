@@ -143,18 +143,17 @@ export default {
     async login() {
       await this.$store.dispatch('logIn', { username: this.username, password: this.password });
       document.activeElement?.blur();
-      window.scrollTo(0, 0);
       await this.$nextTick();
-      this.$router.push('/');
+      this.$router.replace('/');
     },
     async register() {
       this.registerError = '';
       try {
         await this.$store.dispatch('register', { username: this.registername, password: this.registerpassword });
         document.activeElement?.blur();
-        window.scrollTo(0, 0);
         await this.$nextTick();
-        this.$router.push('/');
+        this.$router.replace('/');
+
       } catch (err) {
         this.registerError = err.response?.data?.error || '登録に失敗しました';
       }
