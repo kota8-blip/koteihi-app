@@ -61,6 +61,30 @@
       </div>
     </section>
 
+    <!-- ログイン -->
+    <div class="card">
+      <h2>ログイン</h2>
+      <div class="input-group">
+        <label for="username">ユーザー名</label>
+        <input type="text" id="username" v-model="username" placeholder="ユーザー名を入力">
+      </div>
+      <div class="input-group">
+        <label for="password">パスワード</label>
+        <input type="password" id="password" v-model="password" placeholder="パスワードを入力">
+      </div>
+      <BaseButton
+        :button-text="'ログイン'"
+        :is-disabled="!username || !password"
+        :bg-color="!username || !password ? '#f0f0f0' : '#007bff'"
+        :text-color="!username || !password ? '#d4cccc' : '#ffffff'"
+        @click="login"
+      />
+    </div>
+
+    <div class="divider">
+      <span>まだアカウントをお持ちでない方</span>
+    </div>
+
     <!-- 新規登録 -->
     <div id="register" class="card">
       <h2>新規登録</h2>
@@ -81,30 +105,6 @@
         @click="register"
       />
       <p v-if="registerError" class="error-msg">{{ registerError }}</p>
-    </div>
-
-    <div class="divider">
-      <span>すでにアカウントをお持ちの方</span>
-    </div>
-
-    <!-- ログイン -->
-    <div class="card">
-      <h2>ログイン</h2>
-      <div class="input-group">
-        <label for="username">ユーザー名</label>
-        <input type="text" id="username" v-model="username" placeholder="ユーザー名を入力">
-      </div>
-      <div class="input-group">
-        <label for="password">パスワード</label>
-        <input type="password" id="password" v-model="password" placeholder="パスワードを入力">
-      </div>
-      <BaseButton
-        :button-text="'ログイン'"
-        :is-disabled="!username || !password"
-        :bg-color="!username || !password ? '#f0f0f0' : '#007bff'"
-        :text-color="!username || !password ? '#d4cccc' : '#ffffff'"
-        @click="login"
-      />
     </div>
 
   </div>
@@ -144,7 +144,7 @@ export default {
       await this.$store.dispatch('logIn', { username: this.username, password: this.password });
       document.activeElement?.blur();
       await this.$nextTick();
-      this.$router.replace('/');
+      this.$router.push('/');
     },
     async register() {
       this.registerError = '';
@@ -152,7 +152,7 @@ export default {
         await this.$store.dispatch('register', { username: this.registername, password: this.registerpassword });
         document.activeElement?.blur();
         await this.$nextTick();
-        this.$router.replace('/');
+        this.$router.push('/');
 
       } catch (err) {
         this.registerError = err.response?.data?.error || '登録に失敗しました';
