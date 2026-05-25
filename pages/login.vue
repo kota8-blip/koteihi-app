@@ -143,6 +143,7 @@ export default {
     async login() {
       await this.$store.dispatch('logIn', { username: this.username, password: this.password });
       document.activeElement?.blur();
+      window.scrollTo(0, 0);
       await this.$nextTick();
       this.$router.push('/');
     },
@@ -151,6 +152,7 @@ export default {
       try {
         await this.$store.dispatch('register', { username: this.registername, password: this.registerpassword });
         document.activeElement?.blur();
+        window.scrollTo(0, 0);
         await this.$nextTick();
         this.$router.push('/');
       } catch (err) {
@@ -205,7 +207,6 @@ export default {
   text-decoration: none;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   cursor: pointer;
-  transition: background 0.3s, color 0.3s;
 }
 
 /* Features */
