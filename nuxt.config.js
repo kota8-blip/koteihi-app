@@ -32,6 +32,9 @@ module.exports = {
       { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
       { rel: 'manifest', href: '/manifest.json' },
     ],
+    script: [
+      { src: '/_vercel/insights/script.js', defer: true },
+    ],
   },
 
   modules: ['@nuxtjs/axios'],
@@ -58,7 +61,6 @@ module.exports = {
 
   plugins: [
     { src: '~/plugins/v-calendar.js', mode: 'client' },
-    { src: '~/plugins/vercel-analytics.js', mode: 'client' },
   ],
 
   build: {
