@@ -58,6 +58,7 @@ module.exports = {
 
   plugins: [
     { src: '~/plugins/v-calendar.js', mode: 'client' },
+    { src: '~/plugins/vercel-analytics.js', mode: 'client' },
   ],
 
   build: {
