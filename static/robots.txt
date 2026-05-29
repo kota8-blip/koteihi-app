@@ -1,10 +1,7 @@
 User-agent: *
-Allow: /login
-Allow: /sitemap.xml
-Allow: /robots.txt
-Disallow: /
 Disallow: /settings
 Disallow: /graph
 Disallow: /calendar
+Allow: /login
 
 Sitemap: https://koteihi-app.vercel.app/sitemap.xml
